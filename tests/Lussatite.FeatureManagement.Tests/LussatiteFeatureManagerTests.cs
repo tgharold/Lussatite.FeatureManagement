@@ -31,7 +31,7 @@ public class LussatiteFeatureManagerTests
     [InlineData(false, NotRegisteredTestFeatures.NotRegisteredButInAppConfig)]
     [InlineData(false, NotRegisteredTestFeatures.NotRegisteredAndNotInAppConfig)]
     [InlineData(false, NotRegisteredTestFeatures.NotRegisteredButGarbageValueInAppConfig)]
-    public async Task IsEnabledAsync_returns_false_for_RegisteredButNotInAppConfig(
+    public async Task IsEnabledAsync_returns_expected_for_feature(
         bool expected,
         string featureName
         )
