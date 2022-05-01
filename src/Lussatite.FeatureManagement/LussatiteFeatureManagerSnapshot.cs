@@ -18,6 +18,8 @@ namespace Lussatite.FeatureManagement
         /// <inheritdoc cref="LussatiteFeatureManager.IsEnabledAsync"/>
         public override Task<bool> IsEnabledAsync(string feature)
         {
+            return Task.FromResult(GetFeatureValueFromConfigurationManager(feature));
+
             throw new System.NotImplementedException();
         }
         
