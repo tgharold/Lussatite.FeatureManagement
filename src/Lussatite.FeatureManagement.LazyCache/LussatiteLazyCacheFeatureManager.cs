@@ -5,6 +5,13 @@ using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.LazyCache
 {
+    /// <summary>An in-memory caching version of <see cref="IFeatureManagerSnapshot"/>.  Once
+    /// a key has been read via <see cref="IsEnabledAsync(string)"/> it will never be fetched
+    /// again from the underlying feature value provider.  This protects the application from
+    /// values that change in the middle of a session or a request.  For use cases where you
+    /// want a strong guarantee that all feature values were fetched at (roughly) the same
+    /// time, you should call <see cref="IsEnabledAsync(string)"/> for every known feature.
+    /// </summary>
     public class LussatiteLazyCacheFeatureManager : LussatiteFeatureManager, IFeatureManagerSnapshot
     {
         IAppCache _cache;
