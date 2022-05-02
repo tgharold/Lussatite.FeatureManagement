@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleSample.AspNetCore", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Common", "samples\Samples.Common\Samples.Common.csproj", "{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403} = {87F96538-A325-4239-9739-01B3D2059B20}
 		{E6963CE0-FD9C-4EE7-885D-26661E330C9F} = {87F96538-A325-4239-9739-01B3D2059B20}
 		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3} = {87F96538-A325-4239-9739-01B3D2059B20}
+		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EDBECF9-BF6E-40CD-B34C-64146F6000AD}
