@@ -1,10 +1,16 @@
-﻿using System.Configuration;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.Framework
 {
     /// <summary>
-    /// <para>NOTE: This is designed for .NET Framework and the use of <see cref="ConfigurationManager"/>.</para>
+    /// <para>A feature value provider for .NET Framework which uses the
+    /// <see cref="ConfigurationManager"/> static class to obtain feature flag
+    /// values.</para>
+    /// <para>The assumption is that feature flag values are stored in the "appsettings"
+    /// section of the app.config / web.config files and prefixed with a string
+    /// constant like "FeatureManagement:".  This assumption can be changed through
+    /// <see cref="ConfigurationFeatureValueProviderSettings"/>.</para>
     /// </summary>
     public class ConfigurationFeatureValueProvider : IReadOnlyFeatureValueProvider
     {
