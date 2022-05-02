@@ -35,7 +35,8 @@ namespace Lussatite.FeatureManagement.Framework
                 ? featureName
                 : $"{_providerSettings.SectionName}:{featureName}";
             var value = ConfigurationManager.AppSettings[key];
-            return bool.TryParse(value, out var result) && result;
+            if (string.IsNullOrEmpty(value)) return null;
+            return bool.TryParse(value, out var result) ? result : (bool?)null;
         }
 
         [Obsolete("Not implemented. This is a read-only session provider.")]

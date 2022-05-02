@@ -33,7 +33,8 @@ namespace Lussatite.FeatureManagement.AspNetCore
                 ? featureName
                 : $"{_providerSettings.SectionName}:{featureName}";
             var value = _configuration[key];
-            return bool.TryParse(value, out var result) && result;
+            if (string.IsNullOrEmpty(value)) return null;
+            return bool.TryParse(value, out var result) ? result : (bool?)null;
         }
 
         [Obsolete("Not implemented. This is a read-only session provider.")]
