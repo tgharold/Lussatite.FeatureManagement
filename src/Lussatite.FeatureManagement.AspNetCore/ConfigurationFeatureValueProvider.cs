@@ -1,32 +1,35 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Threading.Tasks;
 
-namespace Lussatite.FeatureManagement.AspNetCore;
-
-public class ConfigurationFeatureValueProvider : IReadOnlyFeatureValueProvider
+namespace Lussatite.FeatureManagement.AspNetCore
 {
-    private readonly IConfiguration _configuration;
-    private readonly ConfigurationFeatureValueProviderSettings _providerSettings;
-
-    public ConfigurationFeatureValueProvider(
-        IConfiguration configuration,
-        ConfigurationFeatureValueProviderSettings providerSettings = null
-        )
+    public class ConfigurationFeatureValueProvider : IReadOnlyFeatureValueProvider
     {
-        _configuration = configuration
-            ?? throw new ArgumentNullException(nameof(configuration));
-        _providerSettings = providerSettings
-            ?? new ConfigurationFeatureValueProviderSettings();
-    }
+        private readonly IConfiguration _configuration;
+        private readonly ConfigurationFeatureValueProviderSettings _providerSettings;
 
-    public async Task<bool?> GetAsync(string featureName)
-    {
-        if (string.IsNullOrWhiteSpace(featureName))
-            return await Task.FromResult((bool?)null).ConfigureAwait(false);
+        public ConfigurationFeatureValueProvider(
+            IConfiguration configuration,
+            ConfigurationFeatureValueProviderSettings providerSettings = null
+            )
+        {
+            _configuration = configuration
+                ?? throw new ArgumentNullException(nameof(configuration));
+            _providerSettings = providerSettings
+                ?? new ConfigurationFeatureValueProviderSettings();
+        }
 
-        var key = string.IsNullOrWhiteSpace(_providerSettings?.SectionName)
-            ? featureName
-            : $"{_providerSettings.SectionName}:{featureName}";
-        var value = _configuration[key];
-        return bool.TryParse(value, out var result) && result;
+        public async Task<bool?> GetAsync(string featureName)
+        {
+            if (string.IsNullOrWhiteSpace(featureName))
+                return await Task.FromResult((bool?)null).ConfigureAwait(false);
+
+            var key = string.IsNullOrWhiteSpace(_providerSettings?.SectionName)
+                ? featureName
+                : $"{_providerSettings.SectionName}:{featureName}";
+            var value = _configuration[key];
+            return bool.TryParse(value, out var result) && result;
+        }
     }
 }

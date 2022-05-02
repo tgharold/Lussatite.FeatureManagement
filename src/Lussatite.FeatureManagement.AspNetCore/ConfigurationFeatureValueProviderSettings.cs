@@ -1,6 +1,7 @@
-namespace Lussatite.FeatureManagement.AspNetCore;
-
-public class ConfigurationFeatureValueProviderSettings
+namespace Lussatite.FeatureManagement.AspNetCore
 {
-    public string SectionName { get; set; } = "FeatureManagement";
+    public class ConfigurationFeatureValueProviderSettings
+    {
+        public string SectionName { get; set; } = "FeatureManagement";
+    }
 }
