@@ -37,7 +37,7 @@ namespace Lussatite.FeatureManagement
         }
 
         /// <summary>WARNING: This is not yet implemented.
-        /// Checks whether a given feature is enabled.</summary>
+        /// Checks whether a given feature is enabled within the TContext.</summary>
         /// <param name="feature">The name of the feature to check.  If the name was not
         /// registered in the constructor, it will always return false.</param>
         /// <param name="context">A context providing information that can be used to evaluate whether a feature should be on or off.</param>
