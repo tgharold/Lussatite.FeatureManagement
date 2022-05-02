@@ -6,9 +6,11 @@ namespace Lussatite.FeatureManagement
     public class LussatiteFeatureManagerSnapshot : LussatiteFeatureManager
     {
         public LussatiteFeatureManagerSnapshot(
-            IEnumerable<string> featureNames
+            IEnumerable<string> featureNames,
+            IEnumerable<IReadOnlyFeatureValueProvider> readOnlyFeatureValueProviders
             ) : base(
-                featureNames: featureNames
+                featureNames: featureNames,
+                readOnlyFeatureValueProviders: readOnlyFeatureValueProviders
                 )
         {
         }
@@ -18,9 +20,10 @@ namespace Lussatite.FeatureManagement
         /// <inheritdoc cref="LussatiteFeatureManager.IsEnabledAsync"/>
         public override Task<bool> IsEnabledAsync(string feature)
         {
-            return Task.FromResult(GetFeatureValueFromConfigurationManager(feature));
-
             throw new System.NotImplementedException();
+
+            //TODO: Read from a caching provider (Redis, LazyCache, etc.)            
+            //return await base.IsEnabledAsync(feature);
         }
         
         /// <inheritdoc cref="LussatiteFeatureManager.IsEnabledAsync{TContext}"/>
