@@ -11,6 +11,7 @@ namespace Lussatite.FeatureManagement.LazyCache
     /// values that change in the middle of a session or a request.  For use cases where you
     /// want a strong guarantee that all feature values were fetched at (roughly) the same
     /// time, you should call <see cref="IsEnabledAsync(string)"/> for every known feature.
+    /// This should probably be registered with a scoped / per-request lifetime.
     /// </summary>
     public class LussatiteLazyCacheFeatureManager : LussatiteFeatureManager, IFeatureManagerSnapshot
     {
@@ -18,11 +19,11 @@ namespace Lussatite.FeatureManagement.LazyCache
 
         public LussatiteLazyCacheFeatureManager(
             IEnumerable<string> featureNames,
-            IEnumerable<IReadOnlyFeatureValueProvider> readOnlyFeatureValueProviders,
+            IEnumerable<ISessionManager> sessionManagers,
             IAppCache cache = null
             ) : base(
                 featureNames: featureNames,
-                readOnlyFeatureValueProviders: readOnlyFeatureValueProviders
+                sessionManagers: sessionManagers
                 )
         {
             _cache = cache ?? new CachingService();

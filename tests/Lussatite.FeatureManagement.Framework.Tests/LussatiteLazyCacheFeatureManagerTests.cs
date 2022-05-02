@@ -13,7 +13,7 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         {
             var provider = new ConfigurationFeatureValueProvider();
             var sut = new LussatiteLazyCacheFeatureManager(
-                readOnlyFeatureValueProviders: new []{ provider },
+                sessionManagers: new []{ provider },
                 featureNames: null
                 );
             Assert.NotNull(sut);
@@ -24,7 +24,7 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         {
             var provider = new ConfigurationFeatureValueProvider();
             var sut = new LussatiteLazyCacheFeatureManager(
-                readOnlyFeatureValueProviders: new []{ provider },
+                sessionManagers: new []{ provider },
                 featureNames: new List<string>()
                 );
             Assert.NotNull(sut);
@@ -49,7 +49,7 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         {
             var provider = new ConfigurationFeatureValueProvider();
             var sut = new LussatiteLazyCacheFeatureManager(
-                readOnlyFeatureValueProviders: new []{ provider },
+                sessionManagers: new []{ provider },
                 featureNames: TestFeatures.All.Value
                 );
             var result = await sut.IsEnabledAsync(featureName);
