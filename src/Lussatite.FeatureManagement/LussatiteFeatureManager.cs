@@ -1,9 +1,8 @@
+using Microsoft.FeatureManagement;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.FeatureManagement;
 
 namespace Lussatite.FeatureManagement
 {
