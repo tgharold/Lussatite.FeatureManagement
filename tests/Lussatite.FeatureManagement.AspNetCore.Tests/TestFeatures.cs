@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace Lussatite.FeatureManagement.Tests;
+namespace Lussatite.FeatureManagement.AspNetCore.Tests;
 
 public static class TestFeatures
 {

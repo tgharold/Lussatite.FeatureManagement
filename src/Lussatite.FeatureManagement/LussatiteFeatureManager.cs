@@ -9,7 +9,7 @@ namespace Lussatite.FeatureManagement
 {
     public class LussatiteFeatureManager : IFeatureManager
     {
-        private readonly IEnumerable<IReadOnlyFeatureValueProvider> _readOnlyFeatureValueProviders;
+        private readonly List<IReadOnlyFeatureValueProvider> _readOnlyFeatureValueProviders;
         private readonly List<string> _featureNames;
 
         public LussatiteFeatureManager(
@@ -18,7 +18,7 @@ namespace Lussatite.FeatureManagement
             )
         {
             _featureNames = featureNames?.ToList() ?? new List<string>();
-            _readOnlyFeatureValueProviders = readOnlyFeatureValueProviders 
+            _readOnlyFeatureValueProviders = readOnlyFeatureValueProviders?.ToList() 
                 ?? throw new ArgumentNullException(nameof(readOnlyFeatureValueProviders));
         }
         

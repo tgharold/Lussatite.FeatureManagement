@@ -15,6 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{87F9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSample", "samples\ConsoleSample\ConsoleSample.csproj", "{1CEB5E6E-498D-4D5D-895B-525205750AB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework", "src\Lussatite.FeatureManagement.Framework\Lussatite.FeatureManagement.Framework.csproj", "{548BC7F8-5295-47A8-9F41-29439D51C49D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework.Tests", "tests\Lussatite.FeatureManagement.Framework.Tests\Lussatite.FeatureManagement.Framework.Tests.csproj", "{DEF38DF1-5C73-4432-A71A-3FB57D17DF05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.AspNetCore.Tests", "tests\Lussatite.FeatureManagement.AspNetCore.Tests\Lussatite.FeatureManagement.AspNetCore.Tests.csproj", "{DD6BDA91-F091-4A53-A807-84BF9EA15747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.AspNetCore", "src\Lussatite.FeatureManagement.AspNetCore\Lussatite.FeatureManagement.AspNetCore.csproj", "{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,10 +44,30 @@ Global
 		{1CEB5E6E-498D-4D5D-895B-525205750AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CEB5E6E-498D-4D5D-895B-525205750AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CEB5E6E-498D-4D5D-895B-525205750AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEF38DF1-5C73-4432-A71A-3FB57D17DF05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEF38DF1-5C73-4432-A71A-3FB57D17DF05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEF38DF1-5C73-4432-A71A-3FB57D17DF05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEF38DF1-5C73-4432-A71A-3FB57D17DF05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6BDA91-F091-4A53-A807-84BF9EA15747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6BDA91-F091-4A53-A807-84BF9EA15747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6BDA91-F091-4A53-A807-84BF9EA15747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6BDA91-F091-4A53-A807-84BF9EA15747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B7BE354E-042E-409E-A748-4969316EF137} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 		{637D7760-8577-47CA-8EC3-4F4CC739D833} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{1CEB5E6E-498D-4D5D-895B-525205750AB9} = {87F96538-A325-4239-9739-01B3D2059B20}
+		{548BC7F8-5295-47A8-9F41-29439D51C49D} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
+		{DEF38DF1-5C73-4432-A71A-3FB57D17DF05} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
+		{DD6BDA91-F091-4A53-A807-84BF9EA15747} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
+		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 	EndGlobalSection
 EndGlobal

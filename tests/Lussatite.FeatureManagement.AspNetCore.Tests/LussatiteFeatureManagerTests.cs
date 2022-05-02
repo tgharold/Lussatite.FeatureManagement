@@ -1,22 +1,41 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Tests;
+namespace Lussatite.FeatureManagement.AspNetCore.Tests;
 
 public class LussatiteFeatureManagerTests
 {
+    private readonly IConfiguration _configuration;
+
+    public LussatiteFeatureManagerTests()
+    {
+        _configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
+    }
+    
     [Fact]
     public void Constructor_can_accept_null_featureNames_collection()
     {
-        var sut = new LussatiteFeatureManager(featureNames: null);
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManager(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: null
+            );
         Assert.NotNull(sut);
     }
     
     [Fact]
     public void Constructor_can_accept_empty_featureNames_list()
     {
-        var sut = new LussatiteFeatureManager(featureNames: new List<string>());
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManager(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: new List<string>()
+        );
         Assert.NotNull(sut);
     }
 
@@ -36,7 +55,11 @@ public class LussatiteFeatureManagerTests
         string featureName
         )
     {
-        var sut = new LussatiteFeatureManager(featureNames: TestFeatures.All.Value);
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManager(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: TestFeatures.All.Value
+            );
         var result = await sut.IsEnabledAsync(featureName);
         Assert.Equal(expected, result);
     }

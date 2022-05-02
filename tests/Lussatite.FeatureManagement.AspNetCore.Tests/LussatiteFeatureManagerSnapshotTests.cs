@@ -1,22 +1,41 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Tests;
+namespace Lussatite.FeatureManagement.AspNetCore.Tests;
 
 public class LussatiteFeatureManagerSnapshotTests
 {
+    private readonly IConfiguration _configuration;
+
+    public LussatiteFeatureManagerSnapshotTests()
+    {
+        _configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
+    }
+    
     [Fact]
     public void Constructor_can_accept_null_featureNames_collection()
     {
-        var sut = new LussatiteFeatureManagerSnapshot(featureNames: null);
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManagerSnapshot(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: null
+            );
         Assert.NotNull(sut);
     }
     
     [Fact]
     public void Constructor_can_accept_empty_featureNames_list()
     {
-        var sut = new LussatiteFeatureManagerSnapshot(featureNames: new List<string>());
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManagerSnapshot(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: new List<string>()
+            );
         Assert.NotNull(sut);
     }
     
@@ -37,7 +56,11 @@ public class LussatiteFeatureManagerSnapshotTests
         string featureName
         )
     {
-        var sut = new LussatiteFeatureManagerSnapshot(featureNames: TestFeatures.All.Value);
+        var provider = new ConfigurationFeatureValueProvider(_configuration);
+        var sut = new LussatiteFeatureManagerSnapshot(
+            readOnlyFeatureValueProviders: new []{ provider },
+            featureNames: TestFeatures.All.Value
+            );
         var result = await sut.IsEnabledAsync(featureName);
         Assert.Equal(expected, result);
     }
