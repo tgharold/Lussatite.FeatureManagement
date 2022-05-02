@@ -1,4 +1,4 @@
-namespace Lussatite.FeatureManagement.AspNetCore.Tests;
+namespace Lussatite.FeatureManagement.TestingCommon;
 
 /// <summary>Feature flag definitions that are *not* registered in the feature manager instance.
 /// All of these feature names/keys should return false?</summary>

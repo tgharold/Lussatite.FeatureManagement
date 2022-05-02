@@ -5,28 +5,28 @@ namespace Lussatite.FeatureManagement.AspNetCore;
 public class ConfigurationFeatureValueProvider : IReadOnlyFeatureValueProvider
 {
     private readonly IConfiguration _configuration;
-    private readonly string _sectionName;
+    private readonly ConfigurationFeatureValueProviderSettings _providerSettings;
 
     public ConfigurationFeatureValueProvider(
         IConfiguration configuration,
-        string sectionName = "FeatureManagement"
+        ConfigurationFeatureValueProviderSettings providerSettings = null
         )
     {
-        if (string.IsNullOrWhiteSpace(sectionName))
-            throw new ArgumentNullException(nameof(sectionName));
-        _sectionName = sectionName;
-
-        if (configuration is null)
-            throw new ArgumentNullException(nameof(configuration));
-        _configuration = configuration;
+        _configuration = configuration
+            ?? throw new ArgumentNullException(nameof(configuration));
+        _providerSettings = providerSettings
+            ?? new ConfigurationFeatureValueProviderSettings();
     }
-    
+
     public async Task<bool?> GetAsync(string featureName)
     {
-        if (string.IsNullOrWhiteSpace(featureName)) 
+        if (string.IsNullOrWhiteSpace(featureName))
             return await Task.FromResult((bool?)null).ConfigureAwait(false);
-        
-        var value = _configuration[$"{_sectionName}:{featureName}"];
+
+        var key = string.IsNullOrWhiteSpace(_providerSettings?.SectionName)
+            ? featureName
+            : $"{_providerSettings.SectionName}:{featureName}";
+        var value = _configuration[key];
         return bool.TryParse(value, out var result) && result;
     }
 }

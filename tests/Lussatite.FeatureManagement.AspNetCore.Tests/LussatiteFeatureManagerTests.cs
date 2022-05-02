@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Lussatite.FeatureManagement.TestingCommon;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class LussatiteFeatureManagerTests
             .AddEnvironmentVariables()
             .Build();
     }
-    
+
     [Fact]
     public void Constructor_can_accept_null_featureNames_collection()
     {
@@ -27,7 +28,7 @@ public class LussatiteFeatureManagerTests
             );
         Assert.NotNull(sut);
     }
-    
+
     [Fact]
     public void Constructor_can_accept_empty_featureNames_list()
     {

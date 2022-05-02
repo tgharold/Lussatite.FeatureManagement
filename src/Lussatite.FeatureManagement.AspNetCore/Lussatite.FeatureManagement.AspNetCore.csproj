@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj"/>
+    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
   </ItemGroup>
 
 </Project>
