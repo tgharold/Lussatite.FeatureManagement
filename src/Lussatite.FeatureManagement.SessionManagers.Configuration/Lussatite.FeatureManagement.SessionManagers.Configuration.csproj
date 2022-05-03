@@ -1,24 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
     <WarningsAsErrors>true</WarningsAsErrors>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <Title>Lussatite.FeatureManagement.LazyCache</Title>
+    <Title>Lussatite.FeatureManagement.SessionManagers.Configuration</Title>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
-    <PackageTags>feature management lazycache</PackageTags>
+    <PackageTags>feature management</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LazyCache" Version="2.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
   </ItemGroup>
 
 </Project>

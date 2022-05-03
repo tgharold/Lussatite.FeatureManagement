@@ -1,6 +1,7 @@
 using LazyCache;
 using Microsoft.FeatureManagement;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.LazyCache
@@ -10,7 +11,7 @@ namespace Lussatite.FeatureManagement.LazyCache
     /// again from the underlying feature value provider.  This protects the application from
     /// values that change in the middle of a session or a request.  For use cases where you
     /// want a strong guarantee that all feature values were fetched at (roughly) the same
-    /// time, you should call <see cref="IsEnabledAsync(string)"/> for every known feature.
+    /// time, you should call <see cref="CacheAllFeatureValuesAsync"/>.
     /// This should probably be registered with a scoped / per-request lifetime.
     /// </summary>
     public class LussatiteLazyCacheFeatureManager : LussatiteFeatureManager, IFeatureManagerSnapshot
@@ -46,6 +47,16 @@ namespace Lussatite.FeatureManagement.LazyCache
         public override Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)
         {
             throw new System.NotImplementedException();
+        }
+
+        /// <summary>Read all registered feature names into the local cache.</summary>
+        public async Task CacheAllFeatureValuesAsync()
+        {
+            var featureNames = await GetFeatureNamesAsync().ToListAsync();
+            foreach (var featureName in featureNames)
+            {
+                _ = await IsEnabledAsync(featureName).ConfigureAwait(false);
+            }
         }
     }
 }
