@@ -1,19 +1,31 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.LazyCache;
+using Lussatite.FeatureManagement.SessionManagers;
 using Lussatite.FeatureManagement.TestingCommon;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Framework.Tests
+namespace Lussatite.FeatureManagement.NetCore31.Tests
 {
     public class LussatiteLazyCacheFeatureManagerTests
     {
+        private readonly IConfiguration _configuration;
+
+        public LussatiteLazyCacheFeatureManagerTests()
+        {
+            _configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+        }
+
         [Fact]
         public void Constructor_can_accept_null_featureNames_collection()
         {
-            var provider = new ConfigurationValueSessionManager();
+            var provider = new ConfigurationValueSessionManager(_configuration);
             var sut = new LussatiteLazyCacheFeatureManager(
-                sessionManagers: new []{ provider },
+                sessionManagers: new[] { provider },
                 featureNames: null
                 );
             Assert.NotNull(sut);
@@ -22,9 +34,9 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         [Fact]
         public void Constructor_can_accept_empty_featureNames_list()
         {
-            var provider = new ConfigurationValueSessionManager();
+            var provider = new ConfigurationValueSessionManager(_configuration);
             var sut = new LussatiteLazyCacheFeatureManager(
-                sessionManagers: new []{ provider },
+                sessionManagers: new[] { provider },
                 featureNames: new List<string>()
                 );
             Assert.NotNull(sut);
@@ -47,9 +59,9 @@ namespace Lussatite.FeatureManagement.Framework.Tests
             string featureName
             )
         {
-            var provider = new ConfigurationValueSessionManager();
+            var provider = new ConfigurationValueSessionManager(_configuration);
             var sut = new LussatiteLazyCacheFeatureManager(
-                sessionManagers: new []{ provider },
+                sessionManagers: new[] { provider },
                 featureNames: TestFeatures.All.Value
                 );
             var result = await sut.IsEnabledAsync(featureName);
@@ -57,4 +69,3 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         }
     }
 }
-

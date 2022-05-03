@@ -121,18 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LussatiteLazyCacheFeatureManagerTests.cs" />
-    <Compile Include="LussatiteFeatureManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.Framework.SessionManagers\Lussatite.FeatureManagement.Framework.SessionManagers.csproj">
       <Project>{548bc7f8-5295-47a8-9f41-29439d51c49d}</Project>
       <Name>Lussatite.FeatureManagement.Framework.SessionManagers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj">
-      <Project>{b2eb8f78-2923-45a1-9025-9e87c99aa8db}</Project>
-      <Name>Lussatite.FeatureManagement.LazyCache</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj">
       <Project>{b7be354e-042e-409e-a748-4969316ef137}</Project>

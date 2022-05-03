@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2CDDB401
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.Tests", "tests\Lussatite.FeatureManagement.Tests\Lussatite.FeatureManagement.Tests.csproj", "{637D7760-8577-47CA-8EC3-4F4CC739D833}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{87F96538-A325-4239-9739-01B3D2059B20}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework.SessionManagers", "src\Lussatite.FeatureManagement.Framework.SessionManagers\Lussatite.FeatureManagement.Framework.SessionManagers.csproj", "{548BC7F8-5295-47A8-9F41-29439D51C49D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Tests\Lussatite.FeatureManagement.SessionManagers.Tests.csproj", "{DD6BDA91-F091-4A53-A807-84BF9EA15747}"
@@ -23,19 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework.SessionManagers.Tests", "tests\Lussatite.FeatureManagement.Framework.SessionManagers.Tests\Lussatite.FeatureManagement.Framework.SessionManagers.Tests.csproj", "{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSample.Framework", "samples\ConsoleSample.Framework\ConsoleSample.Framework.csproj", "{17A6C362-BF5F-4C3C-BD5D-24994BD9D403}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleSample.AspNetCore", "samples\ConsoleSample.AspNetCore\ConsoleSample.AspNetCore.csproj", "{E6963CE0-FD9C-4EE7-885D-26661E330C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.LazyCache.Tests", "tests\Lussatite.FeatureManagement.LazyCache.Tests\Lussatite.FeatureManagement.LazyCache.Tests.csproj", "{B4CA689A-81ED-434B-AECC-EF382C531CFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Common", "samples\Samples.Common\Samples.Common.csproj", "{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.Net6.Tests", "tests\Lussatite.FeatureManagement.Net6.Tests\Lussatite.FeatureManagement.Net6.Tests.csproj", "{2BB1C20C-C7D7-44B5-9DC3-634A389E5B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.LazyCache.Tests", "tests\Lussatite.FeatureManagement.LazyCache.Tests\Lussatite.FeatureManagement.LazyCache.Tests.csproj", "{B4CA689A-81ED-434B-AECC-EF382C531CFD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net6.Tests", "tests\Lussatite.FeatureManagement.Net6.Tests\Lussatite.FeatureManagement.Net6.Tests.csproj", "{2BB1C20C-C7D7-44B5-9DC3-634A389E5B2D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.NetCore31.Tests", "tests\Lussatite.FeatureManagement.NetCore31.Tests\Lussatite.FeatureManagement.NetCore31.Tests.csproj", "{17330923-4C2C-4925-9422-50B98435E832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.NetCore31.Tests", "tests\Lussatite.FeatureManagement.NetCore31.Tests\Lussatite.FeatureManagement.NetCore31.Tests.csproj", "{17330923-4C2C-4925-9422-50B98435E832}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{E493A958-5707-44AC-B0A2-EA5FC5112431}"
 EndProject
@@ -73,18 +65,6 @@ Global
 		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6963CE0-FD9C-4EE7-885D-26661E330C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6963CE0-FD9C-4EE7-885D-26661E330C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6963CE0-FD9C-4EE7-885D-26661E330C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6963CE0-FD9C-4EE7-885D-26661E330C9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,9 +97,6 @@ Global
 		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
-		{17A6C362-BF5F-4C3C-BD5D-24994BD9D403} = {87F96538-A325-4239-9739-01B3D2059B20}
-		{E6963CE0-FD9C-4EE7-885D-26661E330C9F} = {87F96538-A325-4239-9739-01B3D2059B20}
-		{5A5D1C83-53AB-4E6B-A8FA-3F4D40B590B3} = {87F96538-A325-4239-9739-01B3D2059B20}
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 		{B4CA689A-81ED-434B-AECC-EF382C531CFD} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{2BB1C20C-C7D7-44B5-9DC3-634A389E5B2D} = {2CDDB401-3594-4212-9670-369D61BDFFCB}

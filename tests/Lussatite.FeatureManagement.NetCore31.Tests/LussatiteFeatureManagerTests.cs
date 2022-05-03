@@ -5,7 +5,7 @@ using Lussatite.FeatureManagement.TestingCommon;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.AspNetCore.Tests
+namespace Lussatite.FeatureManagement.NetCore31.Tests
 {
     public class LussatiteFeatureManagerTests
     {
