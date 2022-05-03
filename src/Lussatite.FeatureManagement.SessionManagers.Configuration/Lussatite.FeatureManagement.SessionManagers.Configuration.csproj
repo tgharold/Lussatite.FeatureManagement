@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
   </ItemGroup>
 
 </Project>

@@ -129,12 +129,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj">
-      <Project>{b7be354e-042e-409e-a748-4969316ef137}</Project>
-      <Name>Lussatite.FeatureManagement</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
