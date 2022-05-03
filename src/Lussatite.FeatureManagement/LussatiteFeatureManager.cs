@@ -1,25 +1,24 @@
+using Microsoft.FeatureManagement;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.FeatureManagement;
 
 namespace Lussatite.FeatureManagement
 {
     public class LussatiteFeatureManager : IFeatureManager
     {
-        private readonly List<IReadOnlyFeatureValueProvider> _readOnlyFeatureValueProviders;
+        private readonly List<ISessionManager> _sessionManagers;
         private readonly List<string> _featureNames;
 
         public LussatiteFeatureManager(
             IEnumerable<string> featureNames,
-            IEnumerable<IReadOnlyFeatureValueProvider> readOnlyFeatureValueProviders
+            IEnumerable<ISessionManager> sessionManagers
             )
         {
             _featureNames = featureNames?.ToList() ?? new List<string>();
-            _readOnlyFeatureValueProviders = readOnlyFeatureValueProviders?.ToList() 
-                ?? throw new ArgumentNullException(nameof(readOnlyFeatureValueProviders));
+            _sessionManagers = sessionManagers?.ToList() 
+                ?? throw new ArgumentNullException(nameof(sessionManagers));
         }
         
         /// <inheritdoc cref="IFeatureManager.GetFeatureNamesAsync"/>
@@ -37,8 +36,8 @@ namespace Lussatite.FeatureManagement
             return await GetFeatureValueFromProviders(feature);
         }
 
-        /// <summary>WARNING: This is not yet implemented.
-        /// Checks whether a given feature is enabled.</summary>
+        /// <summary>WARNING: This is not yet implemented (out of scope for current needs).
+        /// Checks whether a given feature is enabled within the TContext.</summary>
         /// <param name="feature">The name of the feature to check.  If the name was not
         /// registered in the constructor, it will always return false.</param>
         /// <param name="context">A context providing information that can be used to evaluate whether a feature should be on or off.</param>
@@ -58,9 +57,9 @@ namespace Lussatite.FeatureManagement
         {
             if (!FeatureIsRegistered(feature)) return false;
             
-            foreach (var valueProvider in _readOnlyFeatureValueProviders)
+            foreach (var sessionManager in _sessionManagers)
             {
-                var result = await valueProvider.GetAsync(feature).ConfigureAwait(false);
+                var result = await sessionManager.GetAsync(feature).ConfigureAwait(false);
                 if (result.HasValue) return result.Value;
             }
 
