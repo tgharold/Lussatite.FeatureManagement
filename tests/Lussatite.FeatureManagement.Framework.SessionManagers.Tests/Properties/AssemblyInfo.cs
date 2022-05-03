@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Lussatite.FeatureManagement.Framework.Tests")]
+[assembly: AssemblyTitle("Lussatite.FeatureManagement.Framework.SessionManagers.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lussatite.FeatureManagement.Framework.Tests")]
+[assembly: AssemblyProduct("Lussatite.FeatureManagement.Framework.SessionManagers.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

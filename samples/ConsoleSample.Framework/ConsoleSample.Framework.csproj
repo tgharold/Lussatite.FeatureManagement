@@ -53,9 +53,9 @@
     <Folder Include="FeaturesManagement\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.Framework\Lussatite.FeatureManagement.Framework.csproj">
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.Framework.SessionManagers\Lussatite.FeatureManagement.Framework.SessionManagers.csproj">
       <Project>{548bc7f8-5295-47a8-9f41-29439d51c49d}</Project>
-      <Name>Lussatite.FeatureManagement.Framework</Name>
+      <Name>Lussatite.FeatureManagement.Framework.SessionManagers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj">
       <Project>{b7be354e-042e-409e-a748-4969316ef137}</Project>

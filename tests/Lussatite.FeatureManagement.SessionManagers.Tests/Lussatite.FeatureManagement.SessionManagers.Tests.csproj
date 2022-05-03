@@ -5,10 +5,11 @@
     <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
     <WarningsAsErrors>true</WarningsAsErrors>
+    <RootNamespace>Lussatite.FeatureManagement.AspNetCore.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.20" />
@@ -25,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.AspNetCore\Lussatite.FeatureManagement.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
     <ProjectReference Include="..\Lussatite.FeatureManagement.TestingCommon\Lussatite.FeatureManagement.TestingCommon.csproj" />

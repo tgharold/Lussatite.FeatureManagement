@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Lussatite.FeatureManagement.LazyCache;
+using Lussatite.FeatureManagement.SessionManagers;
 using Lussatite.FeatureManagement.TestingCommon;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.AspNetCore.Tests
 {
-    public class LussatiteFeatureManagerTests
+    public class LussatiteLazyCacheFeatureManagerTests
     {
         private readonly IConfiguration _configuration;
 
-        public LussatiteFeatureManagerTests()
+        public LussatiteLazyCacheFeatureManagerTests()
         {
             _configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -21,8 +23,8 @@ namespace Lussatite.FeatureManagement.AspNetCore.Tests
         [Fact]
         public void Constructor_can_accept_null_featureNames_collection()
         {
-            var provider = new ConfigurationFeatureValueProvider(_configuration);
-            var sut = new LussatiteFeatureManager(
+            var provider = new ConfigurationValueSessionManager(_configuration);
+            var sut = new LussatiteLazyCacheFeatureManager(
                 sessionManagers: new[] { provider },
                 featureNames: null
                 );
@@ -32,13 +34,14 @@ namespace Lussatite.FeatureManagement.AspNetCore.Tests
         [Fact]
         public void Constructor_can_accept_empty_featureNames_list()
         {
-            var provider = new ConfigurationFeatureValueProvider(_configuration);
-            var sut = new LussatiteFeatureManager(
+            var provider = new ConfigurationValueSessionManager(_configuration);
+            var sut = new LussatiteLazyCacheFeatureManager(
                 sessionManagers: new[] { provider },
                 featureNames: new List<string>()
-            );
+                );
             Assert.NotNull(sut);
         }
+
 
         [Theory]
         [InlineData(false, TestFeatures.RegisteredButNotInAppConfig)]
@@ -56,8 +59,8 @@ namespace Lussatite.FeatureManagement.AspNetCore.Tests
             string featureName
             )
         {
-            var provider = new ConfigurationFeatureValueProvider(_configuration);
-            var sut = new LussatiteFeatureManager(
+            var provider = new ConfigurationValueSessionManager(_configuration);
+            var sut = new LussatiteLazyCacheFeatureManager(
                 sessionManagers: new[] { provider },
                 featureNames: TestFeatures.All.Value
                 );

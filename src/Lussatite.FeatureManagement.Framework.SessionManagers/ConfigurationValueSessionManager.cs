@@ -12,18 +12,18 @@ namespace Lussatite.FeatureManagement.Framework
     /// <para>The assumption is that feature flag values are stored in the "appsettings"
     /// section of the app.config / web.config files and prefixed with a string
     /// constant like "FeatureManagement:".  This assumption can be changed through
-    /// <see cref="ConfigurationFeatureValueProviderSettings"/>.</para>
+    /// <see cref="ConfigurationValueSessionManagerSettings"/>.</para>
     /// </summary>
-    public class ConfigurationFeatureValueProvider : ISessionManager
+    public class ConfigurationValueSessionManager : ISessionManager
     {
-        private readonly ConfigurationFeatureValueProviderSettings _providerSettings;
+        private readonly ConfigurationValueSessionManagerSettings _sessionManagerSettings;
 
-        public ConfigurationFeatureValueProvider(
-            ConfigurationFeatureValueProviderSettings providerSettings = null
+        public ConfigurationValueSessionManager(
+            ConfigurationValueSessionManagerSettings sessionManagerSettings = null
             )
         {
-            _providerSettings = providerSettings
-                ?? new ConfigurationFeatureValueProviderSettings();
+            _sessionManagerSettings = sessionManagerSettings
+                ?? new ConfigurationValueSessionManagerSettings();
         }
 
         public async Task<bool?> GetAsync(string featureName)
@@ -31,18 +31,19 @@ namespace Lussatite.FeatureManagement.Framework
             if (string.IsNullOrWhiteSpace(featureName))
                 return await Task.FromResult((bool?)null).ConfigureAwait(false);
 
-            var key = string.IsNullOrWhiteSpace(_providerSettings?.SectionName)
+            var key = string.IsNullOrWhiteSpace(_sessionManagerSettings?.SectionName)
                 ? featureName
-                : $"{_providerSettings.SectionName}:{featureName}";
+                : $"{_sessionManagerSettings.SectionName}:{featureName}";
             var value = ConfigurationManager.AppSettings[key];
             if (string.IsNullOrEmpty(value)) return null;
-            return bool.TryParse(value, out var result) ? result : (bool?)null;
+            var boolResult = bool.TryParse(value, out var result) ? result : (bool?)null;
+            return await Task.FromResult(boolResult).ConfigureAwait(false);
         }
 
-        [Obsolete("Not implemented. This is a read-only session provider.")]
+        /// <summary>This session manager does not write values back. It is a read-only provider.</summary>
         public Task SetAsync(string featureName, bool enabled)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

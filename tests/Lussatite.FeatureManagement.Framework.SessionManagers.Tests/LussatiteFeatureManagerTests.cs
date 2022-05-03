@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Lussatite.FeatureManagement.LazyCache;
 using Lussatite.FeatureManagement.TestingCommon;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Framework.Tests
 {
-    public class LussatiteLazyCacheFeatureManagerTests
+    public class LussatiteFeatureManagerTests
     {
         [Fact]
         public void Constructor_can_accept_null_featureNames_collection()
         {
-            var provider = new ConfigurationFeatureValueProvider();
-            var sut = new LussatiteLazyCacheFeatureManager(
+            var provider = new ConfigurationValueSessionManager();
+            var sut = new LussatiteFeatureManager(
                 sessionManagers: new []{ provider },
                 featureNames: null
                 );
@@ -22,14 +21,13 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         [Fact]
         public void Constructor_can_accept_empty_featureNames_list()
         {
-            var provider = new ConfigurationFeatureValueProvider();
-            var sut = new LussatiteLazyCacheFeatureManager(
+            var provider = new ConfigurationValueSessionManager();
+            var sut = new LussatiteFeatureManager(
                 sessionManagers: new []{ provider },
                 featureNames: new List<string>()
-                );
+            );
             Assert.NotNull(sut);
         }
-
 
         [Theory]
         [InlineData(false, TestFeatures.RegisteredButNotInAppConfig)]
@@ -47,8 +45,8 @@ namespace Lussatite.FeatureManagement.Framework.Tests
             string featureName
             )
         {
-            var provider = new ConfigurationFeatureValueProvider();
-            var sut = new LussatiteLazyCacheFeatureManager(
+            var provider = new ConfigurationValueSessionManager();
+            var sut = new LussatiteFeatureManager(
                 sessionManagers: new []{ provider },
                 featureNames: TestFeatures.All.Value
                 );
@@ -57,4 +55,3 @@ namespace Lussatite.FeatureManagement.Framework.Tests
         }
     }
 }
-
