@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="LazyCache" Version="2.4.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.20" />
