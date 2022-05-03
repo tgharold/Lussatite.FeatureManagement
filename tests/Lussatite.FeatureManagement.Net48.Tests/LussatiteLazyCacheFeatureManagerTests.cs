@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Lussatite.FeatureManagement.Framework.SessionManagers;
 using Lussatite.FeatureManagement.LazyCache;
 using Lussatite.FeatureManagement.TestingCommon;
 using Xunit;

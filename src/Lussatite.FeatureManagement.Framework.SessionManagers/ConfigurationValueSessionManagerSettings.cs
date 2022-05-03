@@ -1,4 +1,4 @@
-namespace Lussatite.FeatureManagement.Framework
+namespace Lussatite.FeatureManagement.Framework.SessionManagers
 {
     public class ConfigurationValueSessionManagerSettings
     {

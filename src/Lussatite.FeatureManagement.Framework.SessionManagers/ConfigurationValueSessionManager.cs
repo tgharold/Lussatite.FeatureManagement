@@ -3,7 +3,7 @@ using System;
 using System.Configuration;
 using System.Threading.Tasks;
 
-namespace Lussatite.FeatureManagement.Framework
+namespace Lussatite.FeatureManagement.Framework.SessionManagers
 {
     /// <summary>
     /// <para>A feature value provider for .NET Framework which uses the
