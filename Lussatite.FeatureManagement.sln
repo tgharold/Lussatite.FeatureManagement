@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2CDDB401
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.Tests", "tests\Lussatite.FeatureManagement.Tests\Lussatite.FeatureManagement.Tests.csproj", "{637D7760-8577-47CA-8EC3-4F4CC739D833}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework.SessionManagers", "src\Lussatite.FeatureManagement.Framework.SessionManagers\Lussatite.FeatureManagement.Framework.SessionManagers.csproj", "{548BC7F8-5295-47A8-9F41-29439D51C49D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework", "src\Lussatite.FeatureManagement.SessionManagers.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.csproj", "{548BC7F8-5295-47A8-9F41-29439D51C49D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Tests\Lussatite.FeatureManagement.SessionManagers.Tests.csproj", "{DD6BDA91-F091-4A53-A807-84BF9EA15747}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Configuration.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Configuration.Tests\Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj", "{DD6BDA91-F091-4A53-A807-84BF9EA15747}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers", "src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj", "{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Configuration", "src\Lussatite.FeatureManagement.SessionManagers.Configuration\Lussatite.FeatureManagement.SessionManagers.Configuration.csproj", "{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.TestingCommon", "tests\Lussatite.FeatureManagement.TestingCommon\Lussatite.FeatureManagement.TestingCommon.csproj", "{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Framework.SessionManagers.Tests", "tests\Lussatite.FeatureManagement.Framework.SessionManagers.Tests\Lussatite.FeatureManagement.Framework.SessionManagers.Tests.csproj", "{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}"
 EndProject

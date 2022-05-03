@@ -3,6 +3,7 @@ using Microsoft.FeatureManagement;
 using System;
 using System.Threading.Tasks;
 
+// ReSharper disable once CheckNamespace
 namespace Lussatite.FeatureManagement.SessionManagers
 {
     /// <summary>A feature value provider for .NET Core 3.1 / .NET 5+ which uses the

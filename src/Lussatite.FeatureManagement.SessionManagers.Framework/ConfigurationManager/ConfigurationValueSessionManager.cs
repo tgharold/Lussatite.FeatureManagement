@@ -2,7 +2,8 @@ using Microsoft.FeatureManagement;
 using System.Configuration;
 using System.Threading.Tasks;
 
-namespace Lussatite.FeatureManagement.Framework.SessionManagers
+// ReSharper disable once CheckNamespace
+namespace Lussatite.FeatureManagement.SessionManagers.Framework
 {
     /// <summary>
     /// <para>A feature value provider for .NET Framework which uses the

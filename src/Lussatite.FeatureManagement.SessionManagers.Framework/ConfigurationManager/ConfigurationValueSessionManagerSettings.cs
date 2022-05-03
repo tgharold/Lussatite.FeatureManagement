@@ -1,4 +1,5 @@
-namespace Lussatite.FeatureManagement.SessionManagers
+// ReSharper disable once CheckNamespace
+namespace Lussatite.FeatureManagement.SessionManagers.Framework
 {
     public class ConfigurationValueSessionManagerSettings
     {

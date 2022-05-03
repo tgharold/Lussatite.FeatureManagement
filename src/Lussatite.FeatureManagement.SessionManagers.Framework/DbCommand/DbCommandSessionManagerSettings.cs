@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lussatite.FeatureManagement.Framework
+// ReSharper disable once CheckNamespace
+namespace Lussatite.FeatureManagement.SessionManagers.Framework
 {
     public class DbCommandSessionManagerSettings
     {
