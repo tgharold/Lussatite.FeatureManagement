@@ -7,10 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  CONFIG: Release
+  RELEASE_CONFIG: Release
   RELEASE_TAG: "v0.0.0"
   RELEASE_VERSION: "0.0.0"
-  SOLUTION: Lussatite.FeatureManagement.sln
+  SOLUTION_FILE: Lussatite.FeatureManagement.sln
 
 jobs:
 
@@ -55,7 +55,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild -t:rebuild -verbosity:minimal -property:Configuration=${{ env.CONFIG }}
+      run: msbuild -t:rebuild -verbosity:minimal -property:Configuration=${{ env.RELEASE_CONFIG }}
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
@@ -66,26 +66,26 @@ jobs:
     # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
 
     - name: .NET Tests (NetCore31.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration ${{ env.CONFIG }}
+      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
 
     - name: .NET Tests (Net6.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration ${{ env.CONFIG }}
+      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
 
     - name: .NET Tests (SessionManagers.Configuration.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.CONFIG }}
+      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
 
-    - name: Environment for Publish/Pack
-      run: env
+    #- name: Environment for Publish/Pack
+    #  run: env
 
     - name: dotnet publish
       run: >
-        dotnet publish ${{ env.SOLUTION }}
-        --configuration ${{ env.CONFIG }} 
+        dotnet publish ${{ env.SOLUTION_FILE }}
+        --configuration ${{ env.RELEASE_CONFIG }} 
         /p:Version="${{ env.RELEASE_VERSION }}"
         /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
 
     - name: dotnet pack
       run: >
-        dotnet pack ${{ env.SOLUTION }}
-        --configuration ${{ env.CONFIG }} 
+        dotnet pack ${{ env.SOLUTION_FILE }}
+        --configuration ${{ env.RELEASE_CONFIG }} 
         /p:Version="${{ env.RELEASE_VERSION }}"
