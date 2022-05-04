@@ -10,6 +10,7 @@ env:
   CONFIG: Release
   RELEASE_TAG: "v0.0.0"
   RELEASE_VERSION: "0.0.0"
+  SOLUTION: Lussatite.FeatureManagement.sln
 
 jobs:
 
@@ -87,7 +88,9 @@ jobs:
       run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.CONFIG }}
 
     - name: dotnet publish
-      working-directory: ./src/${{ env.PROJECT }}
+      #working-directory: ./src/${{ env.PROJECT }}
       run: >
-        dotnet publish --configuration ${{ env.CONFIG }} 
-        /p:Version="${{ env.RELEASE_VERSION }}" /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+        dotnet publish ${{ env.SOLUTION }}
+        --configuration ${{ env.CONFIG }} 
+        /p:Version="${{ env.RELEASE_VERSION }}"
+        /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
