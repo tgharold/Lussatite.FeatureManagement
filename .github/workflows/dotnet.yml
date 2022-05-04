@@ -43,6 +43,8 @@ jobs:
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
-    - name: Test
-      run: dotnet test --configuration Release
-      # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
+    - name: .NET Framework Tests
+      run: vstest.console.exe tests.Framework/**.Tests/**/*.Tests.dll
+
+    - name: .NET Tests
+      run: dotnet test tests/**.Tests/**/*.Tests.dll --configuration Release

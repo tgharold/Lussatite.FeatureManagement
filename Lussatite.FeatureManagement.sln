@@ -9,17 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2CDDB401-3594-4212-9670-369D61BDFFCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.Tests", "tests\Lussatite.FeatureManagement.Tests\Lussatite.FeatureManagement.Tests.csproj", "{637D7760-8577-47CA-8EC3-4F4CC739D833}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework", "src\Lussatite.FeatureManagement.SessionManagers.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.csproj", "{548BC7F8-5295-47A8-9F41-29439D51C49D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Configuration.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Configuration.Tests\Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj", "{DD6BDA91-F091-4A53-A807-84BF9EA15747}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.SessionManagers.Configuration", "src\Lussatite.FeatureManagement.SessionManagers.Configuration\Lussatite.FeatureManagement.SessionManagers.Configuration.csproj", "{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.TestingCommon", "tests\Lussatite.FeatureManagement.TestingCommon\Lussatite.FeatureManagement.TestingCommon.csproj", "{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}"
 EndProject
@@ -29,7 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lussatite.FeatureManagement.NetCore31.Tests", "tests\Lussatite.FeatureManagement.NetCore31.Tests\Lussatite.FeatureManagement.NetCore31.Tests.csproj", "{17330923-4C2C-4925-9422-50B98435E832}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{E493A958-5707-44AC-B0A2-EA5FC5112431}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests.Framework", "tests.Framework", "{CE99DD06-4564-41E3-A210-9E04A19AF104}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests.Framework\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{E493A958-5707-44AC-B0A2-EA5FC5112431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{B7BE354E-042E-409E-A748-4969316EF137}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7BE354E-042E-409E-A748-4969316EF137}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7BE354E-042E-409E-A748-4969316EF137}.Release|Any CPU.Build.0 = Release|Any CPU
-		{637D7760-8577-47CA-8EC3-4F4CC739D833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{637D7760-8577-47CA-8EC3-4F4CC739D833}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{637D7760-8577-47CA-8EC3-4F4CC739D833}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{637D7760-8577-47CA-8EC3-4F4CC739D833}.Release|Any CPU.Build.0 = Release|Any CPU
 		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{548BC7F8-5295-47A8-9F41-29439D51C49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,14 +51,6 @@ Global
 		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,23 +71,25 @@ Global
 		{E493A958-5707-44AC-B0A2-EA5FC5112431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E493A958-5707-44AC-B0A2-EA5FC5112431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E493A958-5707-44AC-B0A2-EA5FC5112431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B7BE354E-042E-409E-A748-4969316EF137} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
-		{637D7760-8577-47CA-8EC3-4F4CC739D833} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{548BC7F8-5295-47A8-9F41-29439D51C49D} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 		{DD6BDA91-F091-4A53-A807-84BF9EA15747} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{EE488C1B-41C9-45B6-9E75-EB38F3B6109E} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
-		{9565A1A3-4FD3-4EE8-A0AB-E82BDCD7A207} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
-		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{B2EB8F78-2923-45A1-9025-9E87C99AA8DB} = {61D0703F-1CD6-48A7-963A-3645802CAB0D}
 		{B4CA689A-81ED-434B-AECC-EF382C531CFD} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{2BB1C20C-C7D7-44B5-9DC3-634A389E5B2D} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
 		{17330923-4C2C-4925-9422-50B98435E832} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
-		{E493A958-5707-44AC-B0A2-EA5FC5112431} = {2CDDB401-3594-4212-9670-369D61BDFFCB}
+		{E493A958-5707-44AC-B0A2-EA5FC5112431} = {CE99DD06-4564-41E3-A210-9E04A19AF104}
+		{AAEADFFD-3A31-40DA-8A23-45C8D49FD5A0} = {CE99DD06-4564-41E3-A210-9E04A19AF104}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EDBECF9-BF6E-40CD-B34C-64146F6000AD}
