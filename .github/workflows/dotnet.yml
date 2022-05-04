@@ -83,9 +83,14 @@ jobs:
       run: env
 
     - name: dotnet publish
-      #working-directory: ./src/${{ env.PROJECT }}
       run: >
         dotnet publish ${{ env.SOLUTION }}
-        --configuration ${{ env.CONFIG }} 
-        /p:Version="${{ env.RELEASE_VERSION }}"
-        /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+          --configuration ${{ env.CONFIG }} 
+          /p:Version="${{ env.RELEASE_VERSION }}"
+          /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+
+    - name: dotnet pack
+      run: >
+        dotnet pack ${{ env.SOLUTION }}
+          --configuration ${{ env.CONFIG }} 
+          /p:Version="${{ env.RELEASE_VERSION }}"
