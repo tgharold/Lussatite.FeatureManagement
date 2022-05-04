@@ -60,7 +60,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild -t:rebuild -verbosity:normal -property:Configuration=${{ env.CONFIG }}
+      run: msbuild -t:rebuild -verbosity:minimal -property:Configuration=${{ env.CONFIG }}
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
