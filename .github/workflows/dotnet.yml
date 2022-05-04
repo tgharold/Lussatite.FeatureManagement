@@ -23,25 +23,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: | 
-         3.1.x
-         6.0.x
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: Setup VSTest
-      uses: darenm/Setup-VSTest@v1
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
-
-    - name: Restore NuGet Packages
-      run: nuget restore
-
     # https://stackoverflow.com/a/58178121
     # https://stackoverflow.com/a/59284102
     - name: Get Release Version / Build Variables
@@ -65,8 +46,27 @@ jobs:
         echo "RELEASE_VERSION=${GITHUB_REF##*/v}" >> $GITHUB_ENV           
         echo "RELEASE_VERSION=$RELEASE_VERSION / env.RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: | 
+         3.1.x
+         6.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Setup VSTest
+      uses: darenm/Setup-VSTest@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore NuGet Packages
+      run: nuget restore
+
     - name: Build
-      run: msbuild -t:rebuild -verbosity:diag -property:Configuration=${{ env.CONFIG }}
+      run: msbuild -t:rebuild -verbosity:normal -property:Configuration=${{ env.CONFIG }}
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
