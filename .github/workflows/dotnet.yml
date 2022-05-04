@@ -46,5 +46,14 @@ jobs:
     - name: .NET Framework Tests
       run: vstest.console.exe tests.Framework/**.Tests/**/*.Tests.dll
 
-    - name: .NET Tests
-      run: dotnet test tests/**.Tests/**/*.Tests.dll --configuration Release
+    # dotnet tests for the .NET Core 3.1 / .NET 6 xUnit Test projects
+    # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
+
+    - name: .NET Tests (NetCore31.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration Release
+
+    - name: .NET Tests (Net6.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration Release
+
+    - name: .NET Tests (SessionManagers.Configuration.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration Release
