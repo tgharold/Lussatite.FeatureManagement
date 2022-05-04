@@ -31,7 +31,6 @@
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.Configuration\Lussatite.FeatureManagement.SessionManagers.Configuration.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
-    <ProjectReference Include="..\Lussatite.FeatureManagement.TestingCommon\Lussatite.FeatureManagement.TestingCommon.csproj" />
   </ItemGroup>
 
   <ItemGroup>

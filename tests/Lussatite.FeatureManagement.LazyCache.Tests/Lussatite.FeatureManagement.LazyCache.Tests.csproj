@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
-    <ProjectReference Include="..\Lussatite.FeatureManagement.TestingCommon\Lussatite.FeatureManagement.TestingCommon.csproj" />
   </ItemGroup>
 
 </Project>

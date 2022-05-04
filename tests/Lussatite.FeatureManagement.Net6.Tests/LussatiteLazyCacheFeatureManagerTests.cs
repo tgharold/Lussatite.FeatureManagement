@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.LazyCache;
 using Lussatite.FeatureManagement.SessionManagers;
-using Lussatite.FeatureManagement.TestingCommon;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 

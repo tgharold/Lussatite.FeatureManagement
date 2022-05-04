@@ -19,6 +19,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: | 
+         3.1.x
+         6.0.x
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
 
@@ -34,6 +41,19 @@ jobs:
     - name: Build
       run: msbuild -t:rebuild -verbosity:diag -property:Configuration=Release
 
-    # https://github.com/microsoft/vstest/issues/1663
-    - name: Test
-      run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
+    # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
+    # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
+    - name: .NET Framework Tests
+      run: vstest.console.exe tests.Framework/**.Tests/**/*.Tests.dll
+
+    # dotnet tests for the .NET Core 3.1 / .NET 6 xUnit Test projects
+    # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
+
+    - name: .NET Tests (NetCore31.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration Release
+
+    - name: .NET Tests (Net6.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration Release
+
+    - name: .NET Tests (SessionManagers.Configuration.Tests)
+      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration Release

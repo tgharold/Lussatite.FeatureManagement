@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.SessionManagers.Framework;
 using Lussatite.FeatureManagement.LazyCache;
-using Lussatite.FeatureManagement.TestingCommon;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Net48.Tests
