@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  RELEASE_TAG: "v0.0.0"
+  RELEASE_VERSION: "0.0.0"
+
 jobs:
 
   build:
@@ -38,8 +42,31 @@ jobs:
     - name: Restore NuGet Packages
       run: nuget restore
 
+    # https://stackoverflow.com/a/58178121
+    # https://stackoverflow.com/a/59284102
+    - name: Get Release Version / Build Variables
+      if: runner.os == 'Windows'
+      run: |
+        echo "CONFIG=${{ env.CONFIG }}"
+        echo "GITHUB_REF=$env:GITHUB_REF"
+        echo "GITHUB_REF_NAME=$env:GITHUB_REF_NAME"
+        echo "RELEASE_TAG=${env:GITHUB_REF##*/}" >> $env:GITHUB_ENV
+        echo "RELEASE_TAG=$env:RELEASE_TAG / env.RELEASE_TAG=${{ env.RELEASE_TAG }}"
+        echo "RELEASE_VERSION=${env:GITHUB_REF##*/v}" >> $env:GITHUB_ENV
+        echo "RELEASE_VERSION=$env:RELEASE_VERSION / env.RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+    - name: Get Release Version
+      if: runner.os != 'Windows'
+      run: |
+        echo "CONFIG=${{ env.CONFIG }}"
+        echo "GITHUB_REF=$GITHUB_REF"
+        echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
+        echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        echo "RELEASE_TAG=$RELEASE_TAG / env.RELEASE_TAG=${{ env.RELEASE_TAG }}"
+        echo "RELEASE_VERSION=${GITHUB_REF##*/v}" >> $GITHUB_ENV           
+        echo "RELEASE_VERSION=$RELEASE_VERSION / env.RELEASE_VERSION=${{ env.RELEASE_VERSION }}"
+
     - name: Build
-      run: msbuild -t:rebuild -verbosity:diag -property:Configuration=Release
+      run: msbuild -t:rebuild -verbosity:diag -property:Configuration=${{ env.CONFIG }}
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
@@ -50,10 +77,16 @@ jobs:
     # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
 
     - name: .NET Tests (NetCore31.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration Release
+      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration ${{ env.CONFIG }}
 
     - name: .NET Tests (Net6.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration Release
+      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration ${{ env.CONFIG }}
 
     - name: .NET Tests (SessionManagers.Configuration.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration Release
+      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.CONFIG }}
+
+    - name: dotnet publish
+      working-directory: ./src/${{ env.PROJECT }}
+      run: >
+        dotnet publish --configuration ${{ env.CONFIG }} 
+        /p:Version="${{ env.RELEASE_VERSION }}" /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
