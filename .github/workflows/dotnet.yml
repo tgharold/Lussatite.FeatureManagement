@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 
 env:
+  CONFIG: Release
   RELEASE_TAG: "v0.0.0"
   RELEASE_VERSION: "0.0.0"
 
