@@ -34,5 +34,6 @@ jobs:
     - name: Build
       run: msbuild -t:rebuild -verbosity:diag -property:Configuration=Release
     
+    # https://github.com/microsoft/vstest/issues/1663
     - name: Test
-      run: vstest.console.exe
+      run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
