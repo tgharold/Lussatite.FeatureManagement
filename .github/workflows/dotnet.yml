@@ -79,6 +79,9 @@ jobs:
     - name: .NET Tests (SessionManagers.Configuration.Tests)
       run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.CONFIG }}
 
+    - name: Environment for Publish/Pack
+      run: env
+
     - name: dotnet publish
       #working-directory: ./src/${{ env.PROJECT }}
       run: >
