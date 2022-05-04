@@ -41,6 +41,8 @@ jobs:
     - name: Build
       run: msbuild -t:rebuild -verbosity:diag -property:Configuration=Release
 
-    # https://github.com/microsoft/vstest/issues/1663
+    # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
+    # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
     - name: Test
-      run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
+      run: dotnet test --configuration Release
+      # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
