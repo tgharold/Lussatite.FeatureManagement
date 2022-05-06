@@ -35,10 +35,13 @@ jobs:
         echo "RELEASE_VERSION=${{ env.RELEASE_VERSION }}-alpha-$env:GITHUB_RUN_NUMBER" |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
+    - name: Create artifacts/ directory
+      run: New-Item -ItemType Directory -Force -Path artifacts
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: | 
+        dotnet-version: |
          3.1.x
          6.0.x
 
@@ -66,13 +69,22 @@ jobs:
     # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
 
     - name: .NET Tests (NetCore31.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
+      run: >
+        dotnet test
+        tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
 
     - name: .NET Tests (Net6.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
+      run: >
+        dotnet test
+        tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
 
     - name: .NET Tests (SessionManagers.Configuration.Tests)
-      run: dotnet test tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj --configuration ${{ env.RELEASE_CONFIG }}
+      run: >
+        dotnet test
+        tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
 
     #- name: Environment for Publish/Pack
     #  run: env
@@ -80,12 +92,14 @@ jobs:
     - name: dotnet publish
       run: >
         dotnet publish ${{ env.SOLUTION_FILE }}
-        --configuration ${{ env.RELEASE_CONFIG }} 
+        --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
         /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
 
     - name: dotnet pack
       run: >
         dotnet pack ${{ env.SOLUTION_FILE }}
-        --configuration ${{ env.RELEASE_CONFIG }} 
+        --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
