@@ -106,6 +106,9 @@ jobs:
         /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
         --output artifacts/
 
+    - name: Inspect artifacts/ directory after Publish
+      run: dir artifacts/
+
     - name: dotnet pack
       run: >
         dotnet pack ${{ env.SOLUTION_FILE }}
