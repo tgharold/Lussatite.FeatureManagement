@@ -28,20 +28,20 @@ jobs:
     # PowerShell String-Join requires Microsoft.PowerShell.Utility
     # Install-Module Microsoft.PowerShell.Utility
 
-    - name: Calculate Release Tag (Windows/PowerShell)
+    - name: Calculate Release Version (Windows/PowerShell)
       run: >
-        echo "RELEASE_TAG=${{ env.RELEASE_TAG }}.$env:GITHUB_RUN_NUMBER-alpha" |
+        "RELEASE_TAG=${{ env.RELEASE_TAG }}.$env:GITHUB_RUN_NUMBER-alpha" |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: Calculate Release Major/Minor from Tag (Windows/PowerShell)
       run: >
-        "echo RELEASE_MAJOR_MINOR={0}" -f ("${{ env.RELEASE_VERSION }}".Split(".").Replace("v", "")[0,1] -Join(".")) |
+        "RELEASE_MAJOR_MINOR={0}" -f ("${{ env.RELEASE_VERSION }}".Split(".").Replace("v", "")[0,1] -Join(".")) |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     # The patch number is always the build run number
     - name: Calculate Release Version (Windows/PowerShell)
       run: >
-        echo "RELEASE_VERSION=${{ env.RELEASE_MAJOR_MINOR }}.$env:GITHUB_RUN_NUMBER-alpha" |
+        "RELEASE_VERSION=${{ env.RELEASE_MAJOR_MINOR }}.$env:GITHUB_RUN_NUMBER-alpha" |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: Create artifacts/ directory
