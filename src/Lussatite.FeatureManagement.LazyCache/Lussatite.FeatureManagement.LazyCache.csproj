@@ -9,8 +9,11 @@
     <Title>Lussatite.FeatureManagement.LazyCache</Title>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
     <PackageTags>feature management lazycache</PackageTags>
+
+    <PackageId>Lussatite.FeatureManagement.LazyCache</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

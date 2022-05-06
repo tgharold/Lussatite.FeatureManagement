@@ -9,8 +9,11 @@
     <Title>Lussatite.FeatureManagement</Title>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
     <PackageTags>feature management</PackageTags>
+
+    <PackageId>Lussatite.FeatureManagement</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
