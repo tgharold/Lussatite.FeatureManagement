@@ -25,9 +25,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # PowerShell String-Join requires Microsoft.PowerShell.Utility
-    # Install-Module Microsoft.PowerShell.Utility
-
     - name: Calculate Release Version (Windows/PowerShell)
       run: >
         "RELEASE_TAG=${{ env.RELEASE_TAG }}.$env:GITHUB_RUN_NUMBER-alpha" |
@@ -105,6 +102,8 @@ jobs:
         /p:Version="${{ env.RELEASE_VERSION }}"
         /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
 
+    # The "dotnet pack" command doesn't seem to have good wildcard support?
+
     - name: dotnet pack (Lussatite.FeatureManagement)
       run: >
         dotnet pack
@@ -113,10 +112,26 @@ jobs:
         /p:Version="${{ env.RELEASE_VERSION }}"
         --output artifacts/
 
+    - name: dotnet pack (Lussatite.FeatureManagement.LazyCache)
+      run: >
+        dotnet pack
+        src/Lussatite.FeatureManagement.LazyCache/Lussatite.FeatureManagement.LazyCache.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
+        /p:Version="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
+
     - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Configuration)
       run: >
         dotnet pack
         src/Lussatite.FeatureManagement.SessionManagers.Configuration/Lussatite.FeatureManagement.SessionManagers.Configuration.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
+        /p:Version="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
+
+    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Framework)
+      run: >
+        dotnet pack
+        src/Lussatite.FeatureManagement.SessionManagers.Framework/Lussatite.FeatureManagement.SessionManagers.Framework.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
         --output artifacts/
