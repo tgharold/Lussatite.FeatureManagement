@@ -104,14 +104,23 @@ jobs:
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
         /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
-        --output artifacts/
 
-    - name: Inspect artifacts/ directory after Publish
-      run: dir artifacts/
-
-    - name: dotnet pack
+    - name: dotnet pack (Lussatite.FeatureManagement)
       run: >
-        dotnet pack ${{ env.SOLUTION_FILE }}
+        dotnet pack
+        src/Lussatite.FeatureManagement/Lussatite.FeatureManagement.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
         --output artifacts/
+
+    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Configuration)
+      run: >
+        dotnet pack
+        src/Lussatite.FeatureManagement.SessionManagers.Configuration/Lussatite.FeatureManagement.SessionManagers.Configuration.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
+        /p:Version="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
+
+    - name: Inspect artifacts/ directory after Pack
+      run: dir artifacts/
+
