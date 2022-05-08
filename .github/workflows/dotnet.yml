@@ -143,14 +143,13 @@ jobs:
         /p:Version="${{ env.RELEASE_VERSION }}"
         --output artifacts/
 
-    #TODO: create the nuspec package for Lussatite.FeatureManagement.SessionManagers.Framework
-#    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Framework)
-#      run: >
-#        dotnet pack
-#        src/Lussatite.FeatureManagement.SessionManagers.Framework/Lussatite.FeatureManagement.SessionManagers.Framework.csproj
-#        --configuration ${{ env.RELEASE_CONFIG }}
-#        /p:Version="${{ env.RELEASE_VERSION }}"
-#        --output artifacts/
+    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Framework)
+      run: >
+        dotnet pack
+        src/Lussatite.FeatureManagement.SessionManagers.Framework/Lussatite.FeatureManagement.SessionManagers.Framework.csproj
+        --configuration ${{ env.RELEASE_CONFIG }}
+        /p:Version="${{ env.RELEASE_VERSION }}"
+        --output artifacts/
 
     - name: Inspect artifacts/ directory after Pack
       run: dir artifacts/
