@@ -6,9 +6,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <Title>Lussatite.FeatureManagement.SessionManagers.Framework</Title>
+    <Description>A read-only implementation of Microsoft.FeatureManagement ISessionManager interface which pulls values from the .NET Framework static ConfigurationManager provider.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>feature management</PackageTags>
+    <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
 
     <PackageId>Lussatite.FeatureManagement.SessionManagers.Framework</PackageId>
     <RepositoryType>git</RepositoryType>
