@@ -154,3 +154,9 @@ jobs:
     - name: Inspect artifacts/ directory after Pack
       run: dir artifacts/
 
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuspec-files
+        path: |
+          artifacts
