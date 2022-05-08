@@ -157,6 +157,6 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: nuspec-files
+        name: Lussatite.FeatureManagement.nuspec-files.${{ env.RELEASE_VERSION }}
         path: |
           artifacts
