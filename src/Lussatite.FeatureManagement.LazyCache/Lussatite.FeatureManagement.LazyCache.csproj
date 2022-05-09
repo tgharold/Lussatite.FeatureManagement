@@ -7,10 +7,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <Title>Lussatite.FeatureManagement.LazyCache</Title>
+    <Description>A light implementation of the Microsoft.FeatureManagement IFeatureManagerSnapshot interface using LazyCache.  Supports read-only ISessionManager instances and boolean null/true/false values.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
+
+    <PackageId>Lussatite.FeatureManagement.LazyCache</PackageId>
+    <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
-    <PackageTags>feature management lazycache</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

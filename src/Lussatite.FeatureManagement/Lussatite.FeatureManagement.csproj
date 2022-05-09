@@ -7,10 +7,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <Title>Lussatite.FeatureManagement</Title>
+    <Description>A light implementation of the Microsoft.FeatureManagement IFeatureManager interface.  Supports read-only ISessionManager instances and boolean null/true/false values.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
+
+    <PackageId>Lussatite.FeatureManagement</PackageId>
+    <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
-    <PackageTags>feature management</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
