@@ -12,6 +12,7 @@ env:
   RELEASE_CONFIG: Release
   RELEASE_TAG: "v0.0"
   SOLUTION_FILE: Lussatite.FeatureManagement.sln
+  SOLUTION_NAME: Lussatite.FeatureManagement
 
 jobs:
 
@@ -191,7 +192,7 @@ jobs:
           artifacts/*.nupkg
           artifacts/*.snupkg
 
-    - name: Create Release
+    - name: Create GitHub Release
       if: ${{ env.RELEASE_CREATE }}
       id: create_release
       uses: actions/create-release@v1
@@ -203,46 +204,26 @@ jobs:
         draft: false
         prerelease: true
 
-    - name: Attach Package to Release (Lussatite.FeatureManagement)
+    - name: Create Release Zip File
+      if: ${{ env.RELEASE_CREATE }}
+      uses: montudor/action-zip@v1
+      with:
+        args: >
+          zip --junk-paths archives/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+          LICENSE
+          README.md
+          artifacts/*.nupkg
+          artifacts/*.snupkg
+
+    - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/Lussatite.FeatureManagement.${{ env.RELEASE_VERSION }}.nupkg
-        asset_name: Lussatite.FeatureManagement.${{ env.RELEASE_VERSION }}.nupkg
+        asset_path: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_content_type: application/zip
 
-    - name: Attach Package to Release (Lussatite.FeatureManagement.LazyCache)
-      if: ${{ env.RELEASE_CREATE }}
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/Lussatite.FeatureManagement.LazyCache.${{ env.RELEASE_VERSION }}.nupkg
-        asset_name: Lussatite.FeatureManagement.LazyCache.${{ env.RELEASE_VERSION }}.nupkg
-        asset_content_type: application/zip
-
-    - name: Attach Package to Release (Lussatite.FeatureManagement.SessionManagers.Configuration)
-      if: ${{ env.RELEASE_CREATE }}
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/Lussatite.FeatureManagement.SessionManagers.Configuration.${{ env.RELEASE_VERSION }}.nupkg
-        asset_name: Lussatite.FeatureManagement.SessionManagers.Configuration.${{ env.RELEASE_VERSION }}.nupkg
-        asset_content_type: application/zip
-
-    - name: Attach Package to Release (Lussatite.FeatureManagement.SessionManagers.Framework)
-      if: ${{ env.RELEASE_CREATE }}
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/Lussatite.FeatureManagement.SessionManagers.Framework.${{ env.RELEASE_VERSION }}.nupkg
-        asset_name: Lussatite.FeatureManagement.SessionManagers.Framework.${{ env.RELEASE_VERSION }}.nupkg
-        asset_content_type: application/zip
+    #TODO: NuGet push on release
