@@ -206,14 +206,11 @@ jobs:
 
     - name: Create Release Zip File
       if: ${{ env.RELEASE_CREATE }}
-      uses: montudor/action-zip@v1
+      uses: vimtor/action-zip@v1
       with:
-        args: >
-          zip --junk-paths archives/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
-          LICENSE
-          README.md
-          artifacts/*.nupkg
-          artifacts/*.snupkg
+        files: LICENSE README.md artifacts/*.nupkg artifacts/*.snupkg
+        recursive: false
+        dest: archives/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
 
     - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
@@ -227,3 +224,8 @@ jobs:
         asset_content_type: application/zip
 
     #TODO: NuGet push on release
+#    - name: Publish to nuget.org (Lussatite.FeatureManagement)
+#      run: >
+#        dotnet nuget push artifacts/Lussatite.FeatureManagement.${{ env.RELEASE_VERSION }}.nupkg
+#        -k ${{ secrets.NugetApiKey }}
+#        -s https://api.nuget.org/v3/index.json
