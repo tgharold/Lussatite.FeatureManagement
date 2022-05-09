@@ -49,7 +49,7 @@ jobs:
     - name: Parse version string in RELEASE_REF_NAME to RELEASE_REF_NAME_TAG
       if: ${{ env.RELEASE_REF_TYPE == 'tag' }}
       run: >
-        "RELEASE_REF_NAME_TAG={0}" -f ("$env:RELEASE_REF_NAME" | Select-String -Pattern 'v\d+\.\d+.\d+').Matches.First.Value |
+        "RELEASE_REF_NAME_TAG={0}" -f ("$env:RELEASE_REF_NAME" | Select-String -Pattern 'v\d+\.\d+.\d+').Matches.Value |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: Set RELEASE_TAG from RELEASE_REF_NAME_TAG
