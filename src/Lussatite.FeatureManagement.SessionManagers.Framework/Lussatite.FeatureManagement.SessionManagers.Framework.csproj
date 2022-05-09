@@ -4,6 +4,7 @@
     <WarningsAsErrors>true</WarningsAsErrors>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Title>Lussatite.FeatureManagement.SessionManagers.Framework</Title>
     <Description>A read-only implementation of Microsoft.FeatureManagement ISessionManager interface which pulls values from the .NET Framework static ConfigurationManager provider.</Description>

@@ -5,6 +5,7 @@
     <WarningsAsErrors>true</WarningsAsErrors>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Title>Lussatite.FeatureManagement</Title>
     <Description>A light implementation of the Microsoft.FeatureManagement IFeatureManager interface.  Supports read-only ISessionManager instances and boolean null/true/false values.</Description>

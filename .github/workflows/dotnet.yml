@@ -3,6 +3,8 @@ name: .NET
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   pull_request:
     branches: [ main ]
 
@@ -10,6 +12,7 @@ env:
   RELEASE_CONFIG: Release
   RELEASE_TAG: "v0.0"
   SOLUTION_FILE: Lussatite.FeatureManagement.sln
+  SOLUTION_NAME: Lussatite.FeatureManagement
 
 jobs:
 
@@ -133,12 +136,12 @@ jobs:
     #- name: Environment for Publish/Pack
     #  run: env
 
-    - name: dotnet publish
-      run: >
-        dotnet publish ${{ env.SOLUTION_FILE }}
-        --configuration ${{ env.RELEASE_CONFIG }}
-        /p:Version="${{ env.RELEASE_VERSION }}"
-        /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+    #- name: dotnet publish
+    #  run: >
+    #    dotnet publish ${{ env.SOLUTION_FILE }}
+    #    --configuration ${{ env.RELEASE_CONFIG }}
+    #    /p:Version="${{ env.RELEASE_VERSION }}"
+    #    /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
 
     # The "dotnet pack" command doesn't seem to have good wildcard support?
 
@@ -148,6 +151,7 @@ jobs:
         src/Lussatite.FeatureManagement/Lussatite.FeatureManagement.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.LazyCache)
@@ -156,6 +160,7 @@ jobs:
         src/Lussatite.FeatureManagement.LazyCache/Lussatite.FeatureManagement.LazyCache.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Configuration)
@@ -164,6 +169,7 @@ jobs:
         src/Lussatite.FeatureManagement.SessionManagers.Configuration/Lussatite.FeatureManagement.SessionManagers.Configuration.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Framework)
@@ -172,14 +178,52 @@ jobs:
         src/Lussatite.FeatureManagement.SessionManagers.Framework/Lussatite.FeatureManagement.SessionManagers.Framework.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: Inspect artifacts/ directory after Pack
       run: dir artifacts/
 
-    - name: Archive nuspec-files
+    - name: Archive nupkg-files
       uses: actions/upload-artifact@v3
       with:
-        name: Lussatite.FeatureManagement.nuspec-files.${{ env.RELEASE_VERSION }}
+        name: Lussatite.FeatureManagement.nupkg-files.${{ env.RELEASE_VERSION }}
         path: |
-          artifacts/*.nuspec
+          artifacts/*.nupkg
+          artifacts/*.snupkg
+
+    - name: Create GitHub Release
+      if: ${{ env.RELEASE_CREATE }}
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.RELEASE_TAG_VERSION }}
+        release_name: Release ${{ env.RELEASE_TAG_VERSION }}
+        draft: false
+        prerelease: true
+
+    - name: Create Release Zip File
+      if: ${{ env.RELEASE_CREATE }}
+      uses: montudor/action-zip@v1
+      with:
+        args: >
+          zip --junk-paths archives/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+          LICENSE
+          README.md
+          artifacts/*.nupkg
+          artifacts/*.snupkg
+
+    - name: Attach Zip to GitHub Release
+      if: ${{ env.RELEASE_CREATE }}
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        asset_content_type: application/zip
+
+    #TODO: NuGet push on release
