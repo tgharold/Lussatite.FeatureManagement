@@ -148,6 +148,7 @@ jobs:
         src/Lussatite.FeatureManagement/Lussatite.FeatureManagement.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.LazyCache)
@@ -156,6 +157,7 @@ jobs:
         src/Lussatite.FeatureManagement.LazyCache/Lussatite.FeatureManagement.LazyCache.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Configuration)
@@ -164,6 +166,7 @@ jobs:
         src/Lussatite.FeatureManagement.SessionManagers.Configuration/Lussatite.FeatureManagement.SessionManagers.Configuration.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Framework)
@@ -172,6 +175,7 @@ jobs:
         src/Lussatite.FeatureManagement.SessionManagers.Framework/Lussatite.FeatureManagement.SessionManagers.Framework.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
+        --include-symbols
         --output artifacts/
 
     - name: Inspect artifacts/ directory after Pack
