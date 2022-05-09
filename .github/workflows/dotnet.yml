@@ -177,9 +177,9 @@ jobs:
     - name: Inspect artifacts/ directory after Pack
       run: dir artifacts/
 
-    - name: Archive artifacts
+    - name: Archive nuspec-files
       uses: actions/upload-artifact@v3
       with:
         name: Lussatite.FeatureManagement.nuspec-files.${{ env.RELEASE_VERSION }}
         path: |
-          artifacts
+          artifacts/*.nuspec
