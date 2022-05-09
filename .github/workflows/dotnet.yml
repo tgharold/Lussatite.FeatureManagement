@@ -76,7 +76,7 @@ jobs:
 
     - name: Calculate RELEASE_VERSION from RELEASE_TAG_VERSION
       run: >
-        "RELEASE_VERSION={0}" -f ("${{ env.RELEASE_VERSION }}".Replace("v", "")) |
+        "RELEASE_VERSION={0}" -f ("${{ env.RELEASE_TAG_VERSION }}".Replace("v", "")) |
         Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: Create artifacts/ directory
