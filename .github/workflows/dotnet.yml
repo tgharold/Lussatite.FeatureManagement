@@ -133,12 +133,12 @@ jobs:
     #- name: Environment for Publish/Pack
     #  run: env
 
-    - name: dotnet publish
-      run: >
-        dotnet publish ${{ env.SOLUTION_FILE }}
-        --configuration ${{ env.RELEASE_CONFIG }}
-        /p:Version="${{ env.RELEASE_VERSION }}"
-        /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
+    #- name: dotnet publish
+    #  run: >
+    #    dotnet publish ${{ env.SOLUTION_FILE }}
+    #    --configuration ${{ env.RELEASE_CONFIG }}
+    #    /p:Version="${{ env.RELEASE_VERSION }}"
+    #    /p:InformationalVersion="${{ env.RELEASE_VERSION }}"
 
     # The "dotnet pack" command doesn't seem to have good wildcard support?
 
