@@ -102,10 +102,10 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
 
     - name: Restore NuGet Packages
-      run: nuget restore
+      run: dotnet restore
 
     - name: Build
-      run: msbuild -t:rebuild -verbosity:minimal -property:Configuration=${{ env.RELEASE_CONFIG }}
+      run: dotnet build --configuration ${{ env.RELEASE_CONFIG }}
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
@@ -227,6 +227,6 @@ jobs:
     - name: Publish to nuget.org
       if: ${{ env.RELEASE_CREATE }}
       run: >
-        dotnet nuget push 'artifacts/*.nupkg'
+        dotnet nuget push '**/*.nupkg'
         -k ${{ secrets.NugetApiKey }}
         -s https://api.nuget.org/v3/index.json
