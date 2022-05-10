@@ -210,7 +210,7 @@ jobs:
       with:
         files: LICENSE README.md artifacts/*.nupkg artifacts/*.snupkg
         recursive: false
-        dest: archives/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        dest: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
 
     - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
