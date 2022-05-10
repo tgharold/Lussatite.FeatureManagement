@@ -223,9 +223,10 @@ jobs:
         asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_content_type: application/zip
 
-    #TODO: NuGet push on release
-#    - name: Publish to nuget.org (Lussatite.FeatureManagement)
-#      run: >
-#        dotnet nuget push artifacts/Lussatite.FeatureManagement.${{ env.RELEASE_VERSION }}.nupkg
-#        -k ${{ secrets.NugetApiKey }}
-#        -s https://api.nuget.org/v3/index.json
+    # note the use of single quotes to prevent globbing expansion
+    - name: Publish to nuget.org
+      if: ${{ env.RELEASE_CREATE }}
+      run: >
+        dotnet nuget push 'artifacts/*.nupkg'
+        -k ${{ secrets.NugetApiKey }}
+        -s https://api.nuget.org/v3/index.json
