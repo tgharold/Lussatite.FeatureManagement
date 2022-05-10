@@ -225,6 +225,7 @@ jobs:
 
     # note the use of single quotes to prevent globbing expansion
     - name: Publish to nuget.org
+      if: ${{ env.RELEASE_CREATE }}
       run: >
         dotnet nuget push 'artifacts/*.nupkg'
         -k ${{ secrets.NugetApiKey }}
