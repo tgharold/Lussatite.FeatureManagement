@@ -223,8 +223,9 @@ jobs:
         asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_content_type: application/zip
 
+    # note the use of single quotes to prevent globbing expansion
     - name: Publish to nuget.org
       run: >
-        dotnet nuget push artifacts/*.nupkg
+        dotnet nuget push 'artifacts/*.nupkg'
         -k ${{ secrets.NugetApiKey }}
         -s https://api.nuget.org/v3/index.json
