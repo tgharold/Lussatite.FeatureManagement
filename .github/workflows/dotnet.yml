@@ -227,6 +227,6 @@ jobs:
     - name: Publish to nuget.org
       if: ${{ env.RELEASE_CREATE }}
       run: >
-        dotnet nuget push 'artifacts/*.nupkg'
+        dotnet nuget push '**/*.nupkg'
         -k ${{ secrets.NugetApiKey }}
         -s https://api.nuget.org/v3/index.json
