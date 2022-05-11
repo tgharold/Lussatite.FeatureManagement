@@ -87,5 +87,37 @@ namespace Lussatite.FeatureManagement.LazyCache.Tests
             var result = await sut.IsEnabledAsync(featureName);
             Assert.Equal(expected, result);
         }
+
+        /// <summary>The first session manager which returns a definitive value (true/false)
+        /// instead of returning a null value will be what IsEnabledAsync() looks at.
+        /// </summary>
+        [Theory]
+        [InlineData(false, "LMT1_null_null_null", null, null, null)]
+        [InlineData(true, "LMT1_null_null_true", null, null, true)]
+        [InlineData(true, "LMT1_null_true_null", null, true, null)]
+        [InlineData(true, "LMT1_true_null_null", true, null, null)]
+        [InlineData(true, "LMT1_true_null_true", true, null, true)]
+        [InlineData(false, "LMT1_null_false_true", null, false, true)]
+        public async void Multiple_sessionManagers_returns_expected(
+            bool expected,
+            string featureName,
+            bool? s1value,
+            bool? s2value,
+            bool? s3value
+            )
+        {
+            var s1 = new FakeSessionManager();
+            s1.SetValue(featureName, s1value);
+            var s2 = new FakeSessionManager();
+            s2.SetValue(featureName, s2value);
+            var s3 = new FakeSessionManager();
+            s3.SetValue(featureName, s3value);
+            var sut = new LussatiteLazyCacheFeatureManager(
+                new[] { featureName },
+                new[] { s1, s2, s3 }
+            );
+            var result = await sut.IsEnabledAsync(featureName);
+            Assert.Equal(expected, result);
+        }
     }
 }
