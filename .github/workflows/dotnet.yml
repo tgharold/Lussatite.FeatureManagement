@@ -85,6 +85,9 @@ jobs:
     - name: Create artifacts/ directory
       run: New-Item -ItemType Directory -Force -Path artifacts
 
+    - name: Create release/ directory
+      run: New-Item -ItemType Directory -Force -Path release
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
@@ -209,7 +212,10 @@ jobs:
       with:
         files: LICENSE README.md artifacts/
         recursive: true
-        dest: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        dest: release/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+
+    - name: Inspect release/ directory
+      run: dir release/
 
     - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
@@ -218,7 +224,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        asset_path: release/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_content_type: application/zip
 
