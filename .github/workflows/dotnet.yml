@@ -85,6 +85,9 @@ jobs:
     - name: Create artifacts/ directory
       run: New-Item -ItemType Directory -Force -Path artifacts
 
+    - name: Create release/ directory
+      run: New-Item -ItemType Directory -Force -Path release
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
@@ -181,16 +184,15 @@ jobs:
         --include-symbols
         --output artifacts/
 
-    - name: Inspect artifacts/ directory after Pack
+    - name: Inspect artifacts directory
       run: dir artifacts/
 
-    - name: Archive nupkg-files
+    - name: Archive artifacts directory
       uses: actions/upload-artifact@v3
       with:
-        name: Lussatite.FeatureManagement.nupkg-files.${{ env.RELEASE_VERSION }}
+        name: Lussatite.FeatureManagement.artifacts.${{ env.RELEASE_VERSION }}
         path: |
-          artifacts/*.nupkg
-          artifacts/*.snupkg
+          artifacts/
 
     - name: Create GitHub Release
       if: ${{ env.RELEASE_CREATE }}
@@ -205,12 +207,21 @@ jobs:
         prerelease: true
 
     - name: Create Release Zip File
-      if: ${{ env.RELEASE_CREATE }}
       uses: vimtor/action-zip@v1
       with:
-        files: LICENSE README.md artifacts/*.nupkg artifacts/*.snupkg
+        files: LICENSE README.md artifacts/
         recursive: true
-        dest: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        dest: release/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+
+    - name: Inspect release directory
+      run: dir release/
+
+    - name: Archive release directory
+      uses: actions/upload-artifact@v3
+      with:
+        name: Lussatite.FeatureManagement.release.${{ env.RELEASE_VERSION }}
+        path: |
+          release/
 
     - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
@@ -219,7 +230,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
+        asset_path: release/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_name: ${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
         asset_content_type: application/zip
 
