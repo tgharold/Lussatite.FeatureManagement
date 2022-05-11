@@ -1,5 +1,6 @@
 using LazyCache;
 using Microsoft.FeatureManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace Lussatite.FeatureManagement.LazyCache
             if (string.IsNullOrWhiteSpace(feature)) return false;
             var cacheKey = $"{nameof(LussatiteLazyCacheFeatureManager)}:{feature}";
 
+            //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
             return await _cache.GetOrAddAsync(
                 cacheKey,
                 async () => await base.IsEnabledAsync(feature).ConfigureAwait(false)
@@ -46,7 +48,7 @@ namespace Lussatite.FeatureManagement.LazyCache
         /// <inheritdoc cref="LussatiteFeatureManager.IsEnabledAsync{TContext}"/>
         public override Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>Read all registered feature names into the local cache.</summary>
@@ -55,6 +57,7 @@ namespace Lussatite.FeatureManagement.LazyCache
             var featureNames = await GetFeatureNamesAsync().ToListAsync();
             foreach (var featureName in featureNames)
             {
+                //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
                 _ = await IsEnabledAsync(featureName).ConfigureAwait(false);
             }
         }

@@ -17,10 +17,10 @@ namespace Lussatite.FeatureManagement
             )
         {
             _featureNames = featureNames?.ToList() ?? new List<string>();
-            _sessionManagers = sessionManagers?.ToList() 
+            _sessionManagers = sessionManagers?.ToList()
                 ?? throw new ArgumentNullException(nameof(sessionManagers));
         }
-        
+
         /// <inheritdoc cref="IFeatureManager.GetFeatureNamesAsync"/>
         public IAsyncEnumerable<string> GetFeatureNamesAsync()
         {
@@ -44,7 +44,7 @@ namespace Lussatite.FeatureManagement
         /// <returns>True if the feature is enabled, otherwise false.</returns>
         public virtual Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private bool FeatureIsRegistered(string feature)
@@ -56,9 +56,10 @@ namespace Lussatite.FeatureManagement
         private async Task<bool> GetFeatureValueFromProviders(string feature)
         {
             if (!FeatureIsRegistered(feature)) return false;
-            
+
             foreach (var sessionManager in _sessionManagers)
             {
+                //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
                 var result = await sessionManager.GetAsync(feature).ConfigureAwait(false);
                 if (result.HasValue) return result.Value;
             }
