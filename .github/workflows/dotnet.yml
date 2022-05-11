@@ -184,16 +184,15 @@ jobs:
         --include-symbols
         --output artifacts/
 
-    - name: Inspect artifacts/ directory after Pack
+    - name: Inspect artifacts directory
       run: dir artifacts/
 
-    - name: Archive nupkg-files
+    - name: Archive artifacts directory
       uses: actions/upload-artifact@v3
       with:
-        name: Lussatite.FeatureManagement.nupkg-files.${{ env.RELEASE_VERSION }}
+        name: Lussatite.FeatureManagement.artifacts.${{ env.RELEASE_VERSION }}
         path: |
-          artifacts/*.nupkg
-          artifacts/*.snupkg
+          artifacts/
 
     - name: Create GitHub Release
       if: ${{ env.RELEASE_CREATE }}
@@ -214,8 +213,15 @@ jobs:
         recursive: true
         dest: release/${{ env.SOLUTION_NAME }}-${{ env.RELEASE_VERSION }}.zip
 
-    - name: Inspect release/ directory
+    - name: Inspect release directory
       run: dir release/
+
+    - name: Archive release directory
+      uses: actions/upload-artifact@v3
+      with:
+        name: Lussatite.FeatureManagement.release.${{ env.RELEASE_VERSION }}
+        path: |
+          release/
 
     - name: Attach Zip to GitHub Release
       if: ${{ env.RELEASE_CREATE }}
