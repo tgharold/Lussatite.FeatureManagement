@@ -11,15 +11,23 @@
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <PackageId>Lussatite.FeatureManagement.SessionManagers.Framework</PackageId>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <Reference Include="System.Configuration" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
 </Project>
