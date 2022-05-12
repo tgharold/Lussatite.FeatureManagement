@@ -16,8 +16,8 @@ A light implementation of Microsoft.FeatureManagement interfaces.
 
 4. Wire-up the following in your IoC/DI container:
 
+    - Session manager classes will need to be injected into the feature manager manually, since order does matter.
     - `LussatiteLazyCacheFeatureManager` as `IFeatureManagerSnapshot` (usually per-request / scoped lifetime).
-    - Session manager classes as `ISessionManager` (also per-request / scoped lifetime).
 
 5. Inject `IFeatureManagerSnapshot` into your controller or service classes.
 
@@ -29,13 +29,17 @@ A light implementation of Microsoft.FeatureManagement interfaces.
 
 Target: .NET Standard 2.0
 
-- `LussatiteFeatureManager`: A basic implementation of `IFeatureManager`. This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
+- `LussatiteFeatureManager`: A basic implementation of `IFeatureManager`.
+- This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
+- This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
 
 ### Lussatite.FeatureManagement.LazyCache:
 
 Target: .NET Standard 2.0
 
-- `LussatiteLazyCacheFeatureManager`: A caching `IFeatureManagerSnapshot` implementation that uses `LazyCache`.  This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
+- `LussatiteLazyCacheFeatureManager`: A caching `IFeatureManagerSnapshot` implementation that uses `LazyCache`.
+- This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
+- This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
 
 ### Lussatite.FeatureManagement.SessionManagers.Configuration:
 
