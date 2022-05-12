@@ -349,5 +349,10 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+### Additional ignores added to base template
+
 # JetBrains/Rider
 .idea/
+
+# Visual Studio
+._Lussatite.FeatureManagement.sln
