@@ -33,7 +33,7 @@ namespace Lussatite.FeatureManagement
         /// <returns>True if the feature is enabled, otherwise false.</returns>
         public virtual async Task<bool> IsEnabledAsync(string feature)
         {
-            return await GetFeatureValueFromProviders(feature);
+            return await GetFeatureValueFromProviders(feature).ConfigureAwait(false);
         }
 
         /// <summary>WARNING: This is not yet implemented (out of scope for current needs).
@@ -59,7 +59,6 @@ namespace Lussatite.FeatureManagement
 
             foreach (var sessionManager in _sessionManagers)
             {
-                //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
                 var result = await sessionManager.GetAsync(feature).ConfigureAwait(false);
                 if (result.HasValue) return result.Value;
             }
