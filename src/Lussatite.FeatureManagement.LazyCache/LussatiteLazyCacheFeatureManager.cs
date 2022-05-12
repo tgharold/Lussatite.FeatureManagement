@@ -38,7 +38,6 @@ namespace Lussatite.FeatureManagement.LazyCache
             if (string.IsNullOrWhiteSpace(feature)) return false;
             var cacheKey = $"{nameof(LussatiteLazyCacheFeatureManager)}:{feature}";
 
-            //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
             return await _cache.GetOrAddAsync(
                 cacheKey,
                 async () => await base.IsEnabledAsync(feature).ConfigureAwait(false)
@@ -54,10 +53,9 @@ namespace Lussatite.FeatureManagement.LazyCache
         /// <summary>Read all registered feature names into the local cache.</summary>
         public async Task CacheAllFeatureValuesAsync()
         {
-            var featureNames = await GetFeatureNamesAsync().ToListAsync();
+            var featureNames = await GetFeatureNamesAsync().ToListAsync().ConfigureAwait(false);
             foreach (var featureName in featureNames)
             {
-                //TODO: Figure out if .ConfigureAwait(false) causes threading problems?
                 _ = await IsEnabledAsync(featureName).ConfigureAwait(false);
             }
         }
