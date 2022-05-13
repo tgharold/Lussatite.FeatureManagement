@@ -74,7 +74,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
                 featureNameColumn.AllowDBNull = true;
                 dataTable.Columns.Add(featureNameColumn);
 
-                var featureValueColumn = new DataColumn(_settings.FeatureValueColumn, typeof(bool?));
+                var featureValueColumn = new DataColumn(_settings.FeatureValueColumn, typeof(bool));
                 featureValueColumn.AllowDBNull = true;
                 dataTable.Columns.Add(featureValueColumn);
 
