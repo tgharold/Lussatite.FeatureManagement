@@ -133,7 +133,7 @@ jobs:
     - name: .NET Tests (SessionManagers.Configuration.Tests)
       run: >
         dotnet test
-        tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests/Lussatite.FeatureManagement.SessionManagers.Configuration.Tests.csproj
+        tests/Lussatite.FeatureManagement.SessionManagers.Core.Tests/Lussatite.FeatureManagement.SessionManagers.Core.Tests.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
 
     #- name: Environment for Publish/Pack
@@ -166,10 +166,10 @@ jobs:
         --include-symbols
         --output artifacts/
 
-    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Configuration)
+    - name: dotnet pack (Lussatite.FeatureManagement.SessionManagers.Core)
       run: >
         dotnet pack
-        src/Lussatite.FeatureManagement.SessionManagers.Configuration/Lussatite.FeatureManagement.SessionManagers.Configuration.csproj
+        src/Lussatite.FeatureManagement.SessionManagers.Core/Lussatite.FeatureManagement.SessionManagers.Core.csproj
         --configuration ${{ env.RELEASE_CONFIG }}
         /p:Version="${{ env.RELEASE_VERSION }}"
         --include-symbols

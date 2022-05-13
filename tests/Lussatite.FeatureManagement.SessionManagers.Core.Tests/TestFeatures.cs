@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Lussatite.FeatureManagement.SessionManagers.Configuration.Tests
+namespace Lussatite.FeatureManagement.AspNetCore.Tests
 {
     public static class TestFeatures
     {

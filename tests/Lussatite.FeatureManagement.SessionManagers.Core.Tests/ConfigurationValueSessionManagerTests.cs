@@ -1,8 +1,9 @@
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Lussatite.FeatureManagement.SessionManagers;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.SessionManagers.Configuration.Tests
+namespace Lussatite.FeatureManagement.AspNetCore.Tests
 {
     public class ConfigurationValueSessionManagerTests
     {
