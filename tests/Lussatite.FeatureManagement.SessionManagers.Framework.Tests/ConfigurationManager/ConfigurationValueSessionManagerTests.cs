@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests
+namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.ConfigurationManager
 {
     public class ConfigurationValueSessionManagerTests
     {
