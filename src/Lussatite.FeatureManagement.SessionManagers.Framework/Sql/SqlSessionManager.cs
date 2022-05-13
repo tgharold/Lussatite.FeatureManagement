@@ -1,6 +1,7 @@
 using Microsoft.FeatureManagement;
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -14,27 +15,27 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
     /// </summary>
     public class SqlSessionManager : ISessionManager
     {
-        private readonly Func<string, SqlCommand> _sqlCommandFactory;
+        private readonly Func<string, DbCommand> _dbCommandFactory;
         private readonly SqlSessionManagerSettings _settings;
 
         /// <summary>Construct the <see cref="SqlSessionManager"/> instance.</summary>
-        /// <param name="sqlCommandFactory">Provides a <see cref="SqlCommand"/> which must
+        /// <param name="commandFactory">Provides a <see cref="DbCommand"/> which must
         /// filter down to the single row matching the feature name string.</param>
         /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         public SqlSessionManager(
-            Func<string, SqlCommand> sqlCommandFactory,
+            Func<string, DbCommand> commandFactory,
             SqlSessionManagerSettings settings = null
             )
         {
-            _sqlCommandFactory = sqlCommandFactory;
+            _dbCommandFactory = commandFactory;
             _settings = settings ?? new SqlSessionManagerSettings();
         }
 
         public async Task<bool?> GetAsync(string featureName)
         {
-            var sqlCommand = _sqlCommandFactory(featureName);
+            var sqlCommand = _dbCommandFactory(featureName);
             if (sqlCommand is null)
-                throw new Exception($"Unable to obtain {nameof(SqlCommand)} from {nameof(_sqlCommandFactory)}.");
+                throw new Exception($"Unable to obtain {nameof(SqlCommand)} from {nameof(_dbCommandFactory)}.");
 
             var dataTable = await FillDataTableAsync(sqlCommand).ConfigureAwait(false);
             if (dataTable is null) return null;
@@ -61,15 +62,21 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
             return Task.CompletedTask;
         }
 
-        private async Task<DataTable> FillDataTableAsync(SqlCommand cmd)
+        private async Task<DataTable> FillDataTableAsync(DbCommand cmd)
         {
             DataTable dataTable = null;
             using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess).ConfigureAwait(false))
             {
 
                 dataTable = new DataTable();
-                dataTable.Columns.Add(_settings.FeatureNameColumn, typeof(string));
-                dataTable.Columns.Add(_settings.FeatureValueColumn, typeof(bool?));
+
+                var featureNameColumn = new DataColumn(_settings.FeatureNameColumn, typeof(string));
+                featureNameColumn.AllowDBNull = true;
+                dataTable.Columns.Add(featureNameColumn);
+
+                var featureValueColumn = new DataColumn(_settings.FeatureValueColumn, typeof(bool?));
+                featureValueColumn.AllowDBNull = true;
+                dataTable.Columns.Add(featureValueColumn);
 
                 while (await reader.ReadAsync().ConfigureAwait(false))
                 {
