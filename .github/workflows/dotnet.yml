@@ -112,29 +112,15 @@ jobs:
 
     # vstest wildcards: https://github.com/microsoft/vstest/issues/1663
     # run: vstest.console.exe tests/**.Tests/**/*.Tests.dll
-    - name: .NET Framework Tests
-      run: vstest.console.exe tests.Framework/**.Tests/**/*.Tests.dll
+    #- name: .NET Framework Tests
+    #  run: vstest.console.exe tests.Framework/**.Tests/**/*.Tests.dll
 
     # dotnet tests for the .NET Core 3.1 / .NET 6 xUnit Test projects
     # dotnet test command does not support wildcards and gets confused by the .NET Framework test projects
 
-    - name: .NET Tests (NetCore31.Tests)
+    - name: dotnet test
       run: >
-        dotnet test
-        tests/Lussatite.FeatureManagement.NetCore31.Tests/Lussatite.FeatureManagement.NetCore31.Tests.csproj
-        --configuration ${{ env.RELEASE_CONFIG }}
-
-    - name: .NET Tests (Net6.Tests)
-      run: >
-        dotnet test
-        tests/Lussatite.FeatureManagement.Net6.Tests/Lussatite.FeatureManagement.Net6.Tests.csproj
-        --configuration ${{ env.RELEASE_CONFIG }}
-
-    - name: .NET Tests (SessionManagers.Configuration.Tests)
-      run: >
-        dotnet test
-        tests/Lussatite.FeatureManagement.SessionManagers.Core.Tests/Lussatite.FeatureManagement.SessionManagers.Core.Tests.csproj
-        --configuration ${{ env.RELEASE_CONFIG }}
+        dotnet test --configuration ${{ env.RELEASE_CONFIG }}
 
     #- name: Environment for Publish/Pack
     #  run: env
