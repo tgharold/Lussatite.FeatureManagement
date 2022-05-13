@@ -23,11 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Core.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Core.Tests\Lussatite.FeatureManagement.SessionManagers.Core.Tests.csproj", "{9FC1B73F-9CD8-4735-A01F-44073DDCF568}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests.Framework", "tests.Framework", "{EFA2550D-99DA-4287-A768-4DA613164C80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests.Framework\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{A55FD134-2E04-41BE-B522-0AAEB0D377DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,14 +68,14 @@ Global
 		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A55FD134-2E04-41BE-B522-0AAEB0D377DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A55FD134-2E04-41BE-B522-0AAEB0D377DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A55FD134-2E04-41BE-B522-0AAEB0D377DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A55FD134-2E04-41BE-B522-0AAEB0D377DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
@@ -88,7 +86,7 @@ Global
 		{D0656DA6-CC20-4A05-9E3B-25B670ABB294} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{9FC1B73F-9CD8-4735-A01F-44073DDCF568} = {CD148B7E-B130-4558-B533-D66722ABA625}
-		{F94B80D2-1F9C-4EB1-B1BF-EC0DF31F1C6C} = {EFA2550D-99DA-4287-A768-4DA613164C80}
-		{A55FD134-2E04-41BE-B522-0AAEB0D377DB} = {EFA2550D-99DA-4287-A768-4DA613164C80}
+		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9} = {CD148B7E-B130-4558-B533-D66722ABA625}
+		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6} = {CD148B7E-B130-4558-B533-D66722ABA625}
 	EndGlobalSection
 EndGlobal
