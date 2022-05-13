@@ -1,4 +1,5 @@
 using Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQLite;
+using System.Data.SQLite;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Sql
         {
             return new SqlSessionManager(
                 settings: _dbFixture.SqlSessionManagerSettings,
-                commandFactory: s => _dbFixture.CreateCommand(s)
+                getValueCommandFactory: s => _dbFixture.CreateGetValueCommand(s)
             );
         }
 
@@ -28,6 +29,39 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Sql
             var sut = CreateSut();
             var result = await sut.GetAsync("someRandomFeatureNonExistentName");
             Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData(null, "A125a_FeatureSetToNull", null)]
+        [InlineData(false, "A125b_FeatureSetToFalse", 0)]
+        [InlineData(true, "A125c_FeatureSetToTrue", 1)]
+        public async Task Return_expected_for_inserted_key_value(
+            bool? expected,
+            string featureName,
+            int? insertValue
+            )
+        {
+            using (var conn = new SQLiteConnection(_dbFixture.GetConnectionString()))
+            {
+                conn.Open();
+
+                var updateCommand = conn.CreateCommand();
+                updateCommand.CommandText =
+                $@"
+                    INSERT INTO {SQLiteDatabaseFixture.TableName}
+                    ({SQLiteDatabaseFixture.NameColumn}, {SQLiteDatabaseFixture.ValueColumn})
+                    VALUES (@featureName, @featureValue)
+                ";
+                updateCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
+                updateCommand.Parameters.Add(new SQLiteParameter("featureValue", insertValue));
+                updateCommand.ExecuteNonQuery();
+
+                conn.Close();
+            }
+
+            var sut = CreateSut();
+            var result = await sut.GetAsync(featureName);
+            Assert.Equal(expected, result);
         }
     }
 }

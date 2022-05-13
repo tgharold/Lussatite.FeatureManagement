@@ -19,15 +19,15 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
         private readonly SqlSessionManagerSettings _settings;
 
         /// <summary>Construct the <see cref="SqlSessionManager"/> instance.</summary>
-        /// <param name="commandFactory">Provides a <see cref="DbCommand"/> which must
+        /// <param name="getValueCommandFactory">A <see cref="DbCommand"/> query which must
         /// filter down to the single row matching the feature name string.</param>
         /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         public SqlSessionManager(
-            Func<string, DbCommand> commandFactory,
+            Func<string, DbCommand> getValueCommandFactory,
             SqlSessionManagerSettings settings = null
             )
         {
-            _dbCommandFactory = commandFactory;
+            _dbCommandFactory = getValueCommandFactory;
             _settings = settings ?? new SqlSessionManagerSettings();
         }
 
@@ -65,9 +65,11 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
         private async Task<DataTable> FillDataTableAsync(DbCommand cmd)
         {
             DataTable dataTable = null;
+
+            //TODO: Look into why ExecuteReaderAsync / ReadAsync is not returning results
+            // Does the row not exist in the SQLite table?
             using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess).ConfigureAwait(false))
             {
-
                 dataTable = new DataTable();
 
                 var featureNameColumn = new DataColumn(_settings.FeatureNameColumn, typeof(string));

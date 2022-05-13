@@ -46,7 +46,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQ
 
         public string GetConnectionString() => connectionString;
 
-        public DbCommand CreateCommand(string featureName)
+        public DbCommand CreateGetValueCommand(string featureName)
         {
             var conn = new SQLiteConnection(connectionString);
             conn.Open();
