@@ -42,6 +42,16 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
             if (table is null) return null;
             if (table.Rows.Count == 0) return null;
 
+            var keyColumnValue = table.Rows[0][_settings.FeatureNameColumn] as string;
+            if (string.IsNullOrWhiteSpace(keyColumnValue)
+                || !keyColumnValue.Equals(featureName, StringComparison.OrdinalIgnoreCase))
+            {
+                var e = new Exception("Did not find feature name in result.");
+                e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
+                e.Data["FeatureNameColumnValue"] = keyColumnValue;
+                throw e;
+            }
+
             var value = table.Rows[0][_settings.FeatureValueColumn] as bool?;
 
             return value;
