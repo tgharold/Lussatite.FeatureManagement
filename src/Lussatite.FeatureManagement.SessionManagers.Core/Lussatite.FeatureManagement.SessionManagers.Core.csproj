@@ -9,16 +9,17 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-    <Title>Lussatite.FeatureManagement.SessionManagers.Configuration</Title>
+    <Title>Lussatite.FeatureManagement.SessionManagers.Core</Title>
     <Description>A read-only implementation of Microsoft.FeatureManagement ISessionManager interface which pulls values from the .NET Core 3.1 / .NET 6 IConfiguration provider.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
-    <PackageId>Lussatite.FeatureManagement.SessionManagers.Configuration</PackageId>
+    <PackageId>Lussatite.FeatureManagement.SessionManagers.Core</PackageId>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
+    <RootNamespace>Lussatite.FeatureManagement.SessionManagers.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="\"/>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

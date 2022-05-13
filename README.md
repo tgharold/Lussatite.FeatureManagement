@@ -41,17 +41,15 @@ Target: .NET Standard 2.0
 - This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
 - This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
 
-### Lussatite.FeatureManagement.SessionManagers.Configuration:
+### Lussatite.FeatureManagement.SessionManagers.Core:
 
-Target: .NET Core 3.1 (compatible with .NET 5+)
+Target: .NET Core 3.1 (also compatible with .NET 5+)
 
 - `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses `IConfiguration` to obtain its values.
 
 ### Lussatite.FeatureManagement.SessionManagers.Framework:
 
 Target: .NET Framework 4.8
-
-All .NET Framework session managers are contained in a single package (for now).
 
 - `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses the static class `ConfigurationManager` to obtain its values.
 

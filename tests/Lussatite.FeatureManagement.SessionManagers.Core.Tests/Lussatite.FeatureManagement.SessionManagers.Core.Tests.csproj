@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.Configuration\Lussatite.FeatureManagement.SessionManagers.Configuration.csproj" />
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.Core\Lussatite.FeatureManagement.SessionManagers.Core.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
   </ItemGroup>
 
