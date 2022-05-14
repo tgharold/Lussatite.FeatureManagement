@@ -51,6 +51,8 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Sql
                     INSERT INTO {SQLiteDatabaseFixture.TableName}
                     ({SQLiteDatabaseFixture.NameColumn}, {SQLiteDatabaseFixture.ValueColumn})
                     VALUES (@featureName, @featureValue)
+                    ON CONFLICT({SQLiteDatabaseFixture.NameColumn})
+                    DO UPDATE SET {SQLiteDatabaseFixture.ValueColumn}=@featureValue
                 ";
                 updateCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
                 updateCommand.Parameters.Add(new SQLiteParameter("featureValue", insertValue));
