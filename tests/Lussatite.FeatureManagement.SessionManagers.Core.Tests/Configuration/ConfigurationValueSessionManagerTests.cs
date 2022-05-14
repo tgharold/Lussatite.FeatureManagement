@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
+using Lussatite.FeatureManagement.SessionManagers;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests
+namespace Lussatite.FeatureManagement.AspNetCore.Tests.Configuration
 {
     public class ConfigurationValueSessionManagerTests
     {
@@ -9,8 +11,13 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests
             ConfigurationValueSessionManagerSettings settings = null
             )
         {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
             return new ConfigurationValueSessionManager(
-                sessionManagerSettings: settings
+                sessionManagerSettings: settings,
+                configuration: configuration
                 );
         }
 
