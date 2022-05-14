@@ -40,7 +40,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQ
             createCommand.CommandText =
             $@"
                 CREATE TABLE IF NOT EXISTS {TableName} (
-                    {NameColumn} TEXT,
+                    {NameColumn} TEXT PRIMARY KEY,
                     {ValueColumn} BOOLEAN CHECK ({ValueColumn} IN (0, 1))
                 );
             ";
