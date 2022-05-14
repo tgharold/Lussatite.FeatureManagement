@@ -3,7 +3,7 @@ using Lussatite.FeatureManagement.SessionManagers;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.AspNetCore.Tests
+namespace Lussatite.FeatureManagement.AspNetCore.Tests.Configuration
 {
     public class ConfigurationValueSessionManagerTests
     {

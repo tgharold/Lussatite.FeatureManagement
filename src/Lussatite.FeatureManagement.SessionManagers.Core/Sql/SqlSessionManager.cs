@@ -6,11 +6,8 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
-namespace Lussatite.FeatureManagement.SessionManagers.Framework
+namespace Lussatite.FeatureManagement.SessionManagers
 {
-    //NOTE: This is a copy of the one from Lussatite.FeatureManagement.SessionManagers.Core
-    //Because DbCommand is not .NET Standard 2.0, we are splitting along Framework/Core lines.
-
     /// <summary>
     /// <para>A read-only implementation of <see cref="ISessionManager"/> which looks
     /// at a <see cref="DbCommand"/> to obtain the value for a feature.  The database table
