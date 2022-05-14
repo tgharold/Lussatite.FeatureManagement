@@ -87,7 +87,12 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
                     foreach (DataColumn dataColumn in dataTable.Columns)
                         dataRow[dataColumn.ColumnName] = reader[dataColumn.ColumnName];
                 }
+
+                reader.Close();
             }
+
+            cmd.Connection.Close();
+
             return dataTable;
         }
     }
