@@ -61,6 +61,8 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Sql
                 conn.Close();
             }
 
+            var featureTableValues = await _dbFixture.GetAllData();
+
             var sut = CreateSut();
             var result = await sut.GetAsync(featureName);
             Assert.Equal(expected, result);
