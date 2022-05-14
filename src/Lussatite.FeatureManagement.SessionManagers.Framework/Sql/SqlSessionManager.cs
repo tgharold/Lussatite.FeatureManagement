@@ -66,9 +66,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
         {
             DataTable dataTable = null;
 
-            //TODO: Look into why ExecuteReaderAsync / ReadAsync is not returning results
-            // Does the row not exist in the SQLite table?
-            using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess).ConfigureAwait(false))
+            using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SingleRow).ConfigureAwait(false))
             {
                 dataTable = new DataTable();
 
