@@ -62,6 +62,36 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQ
             return queryCommand;
         }
 
+        /// <summary>Meant to be used as a debug step, this returns all of the data in the table.</summary>
+        public async Task<List<object[]>> GetAllData()
+        {
+            var result = new List<object[]>();
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = $@"SELECT * FROM {TableName};";
+                    using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                    {
+                        while (reader.Read())
+                        {
+                            var fieldCount = reader.FieldCount;
+                            var rowResult = new List<object>();
+                            for (int i = 0; i < fieldCount; i++)
+                            {
+                                rowResult.Add(reader.GetValue(i));
+                            }
+                            result.Add(rowResult.ToArray()); 
+                        }
+                        reader.Close();
+                    }
+                }
+                conn.Close();
+            }
+            return result;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
