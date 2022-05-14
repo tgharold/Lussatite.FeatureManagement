@@ -56,7 +56,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQ
 
             var queryCommand = conn.CreateCommand();
             queryCommand.CommandText =
-                $@"SELECT {NameColumn}, {ValueColumn} FROM {TableName} WHERE {ValueColumn} = @featureName;";
+                $@"SELECT {NameColumn}, {ValueColumn} FROM {TableName} WHERE {NameColumn} = @featureName;";
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
 
             return queryCommand;
