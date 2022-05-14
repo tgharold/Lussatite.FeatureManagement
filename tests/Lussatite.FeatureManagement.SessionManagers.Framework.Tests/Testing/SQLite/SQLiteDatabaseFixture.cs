@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQLite
 {
@@ -12,7 +15,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework.Tests.Testing.SQ
 
         // Using a name and a shared cache allows multiple connections to access the same
         // in-memory database
-        private const string connectionString = "Data Source=InMemorySQLiteDatabaseFixture;Mode=Memory;Cache=Shared";
+        private readonly string connectionString = $"Data Source=test-{Guid.NewGuid()};Mode=Memory;Cache=Shared";
 
         // The in-memory database only persists while a connection is open to it.To manage
         // its lifetime, keep one open connection around for as long as you need it.
