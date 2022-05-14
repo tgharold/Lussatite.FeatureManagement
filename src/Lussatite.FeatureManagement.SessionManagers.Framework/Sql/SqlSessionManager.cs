@@ -10,7 +10,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
 {
     /// <summary>
     /// <para>A read-only implementation of <see cref="ISessionManager"/> which looks
-    /// at a <see cref="SqlCommand"/> to obtain the value for a feature.  The database table
+    /// at a <see cref="DbCommand"/> to obtain the value for a feature.  The database table
     /// column names can be configured via <see cref="SqlSessionManagerSettings"/>.</para>
     /// </summary>
     public class SqlSessionManager : ISessionManager
@@ -33,11 +33,11 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
 
         public async Task<bool?> GetAsync(string featureName)
         {
-            var sqlCommand = _dbCommandFactory(featureName);
-            if (sqlCommand is null)
-                throw new Exception($"Unable to obtain {nameof(SqlCommand)} from {nameof(_dbCommandFactory)}.");
+            var dbCommand = _dbCommandFactory(featureName);
+            if (dbCommand is null)
+                throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
 
-            var dataTable = await FillDataTableAsync(sqlCommand).ConfigureAwait(false);
+            var dataTable = await FillDataTableAsync(dbCommand).ConfigureAwait(false);
             if (dataTable is null) return null;
             if (dataTable.Rows.Count == 0) return null;
 
