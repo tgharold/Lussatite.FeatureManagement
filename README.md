@@ -12,12 +12,12 @@ A light implementation of Microsoft.FeatureManagement interfaces.
 
 2. Define a set of string constants for the names of your features.  Look at the various static TestFeatures.cs files for ideas.
 
-3. Create a value provider by implementing [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.isessionmanager) or use one or more of the `Lussatite.FeatureManagement.SessionManagers.*` packages.  Note that Lussaite.FeatureManagement does **not** write back to the session manager (unlike the Microsoft.FeatureManagement implementation).
+3. Create a value provider by implementing [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.isessionmanager) or use one or more of the `Lussatite.FeatureManagement.SessionManagers.*` packages.  Note that Lussatite.FeatureManagement implementation does **not** write back to the session manager (unlike the Microsoft.FeatureManagement implementation).
 
 4. Wire-up the following in your IoC/DI container:
 
-    - Session manager classes will need to be injected into the feature manager manually, since order does matter.
-    - `LussatiteLazyCacheFeatureManager` as `IFeatureManagerSnapshot` (usually per-request / scoped lifetime).
+    - Session manager classes will need to be constructed and injected into the feature manager manually, since order does matter.
+    - `LussatiteLazyCacheFeatureManager` as `IFeatureManagerSnapshot` (usually with per-request / scoped lifetime).
 
 5. Inject `IFeatureManagerSnapshot` into your controller or service classes.
 
@@ -46,14 +46,14 @@ Target: .NET Standard 2.0
 Target: .NET Core 3.1 (also compatible with .NET 5+)
 
 - `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses `IConfiguration` to obtain its values.
-- `SqlSessionManager`: A read-only ISessionManager implementation that uses the user-provided `DbCommand` to obtain its values.
+- `SqlSessionManager`: A read-only ISessionManager implementation that uses a user-provided `DbCommand` to obtain its values.
 
 ### Lussatite.FeatureManagement.SessionManagers.Framework:
 
 Target: .NET Framework 4.8
 
-- `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses the static class `ConfigurationManager` to obtain its values.
-- `SqlSessionManager`: A read-only ISessionManager implementation that uses the user-provided `DbCommand` to obtain its values.
+- `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses the .NET Framework static class `ConfigurationManager` to obtain its values.
+- `SqlSessionManager`: A read-only ISessionManager implementation that uses a user-provided `DbCommand` to obtain its values.
 
 ## Build Status
 
