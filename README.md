@@ -45,15 +45,17 @@ Target: .NET Standard 2.0
 
 Target: .NET Core 3.1 (also compatible with .NET 5+)
 
-- `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses `IConfiguration` to obtain its values.
-- `SqlSessionManager`: A read-only ISessionManager implementation that uses a user-provided `DbCommand` to obtain its values.
+- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
+- `ConfigurationValueSessionManager`: A read-only `ISessionManager` implementation that uses `IConfiguration`.
+- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
 
 ### Lussatite.FeatureManagement.SessionManagers.Framework:
 
 Target: .NET Framework 4.8
 
-- `ConfigurationValueSessionManager`: A read-only ISessionManager implementation that uses the .NET Framework static class `ConfigurationManager` to obtain its values.
-- `SqlSessionManager`: A read-only ISessionManager implementation that uses a user-provided `DbCommand` to obtain its values.
+- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
+- `ConfigurationValueSessionManager`: A read-only `ISessionManager` implementation that uses the .NET Framework static class `ConfigurationManager`.
+- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
 
 ## Build Status
 
