@@ -18,6 +18,10 @@ A read-only `ISessionManager` implementation that uses the .NET Framework static
 
 A read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.
 
+### CachedSqlSessionManager
+
+A cached read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for a period.  The default cache duration is 30 seconds.
+
 ## Target
 
 - .NET Framework 4.8
