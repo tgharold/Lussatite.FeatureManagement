@@ -2,7 +2,6 @@ using Microsoft.FeatureManagement;
 using System;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
@@ -34,7 +33,7 @@ namespace Lussatite.FeatureManagement.SessionManagers.Framework
             _settings = settings ?? new SqlSessionManagerSettings();
         }
 
-        public async Task<bool?> GetAsync(string featureName)
+        public virtual async Task<bool?> GetAsync(string featureName)
         {
             var dbCommand = _dbCommandFactory(featureName);
             if (dbCommand is null)

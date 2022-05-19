@@ -30,4 +30,8 @@
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="LazyCache" Version="2.4.0" />
+  </ItemGroup>
+
 </Project>
