@@ -52,6 +52,8 @@ namespace Lussatite.FeatureManagement.SessionManagers
 
             var value = dataTable.Rows[0][_settings.FeatureValueColumn] as bool?;
 
+            dbCommand.Connection.Close();
+
             return value;
         }
 
@@ -86,8 +88,6 @@ namespace Lussatite.FeatureManagement.SessionManagers
 
                 reader.Close();
             }
-
-            cmd.Connection.Close();
 
             return dataTable;
         }
