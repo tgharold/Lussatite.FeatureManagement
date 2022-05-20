@@ -37,23 +37,21 @@ Target: .NET Standard 2.0
 
 Target: .NET Standard 2.0
 
+- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
+- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
+- `CachedSqlSessionManager`: A read-only `ISessionManager` implementation which adds caching to database calls.
+
 ### Lussatite.FeatureManagement.SessionManagers.Core:
 
 Target: .NET Core 3.1 (also compatible with .NET 5+)
 
-- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
 - `ConfigurationValueSessionManager`: A read-only `ISessionManager` implementation that uses `IConfiguration`.
-- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
-- `CachedSqlSessionManager`: A read-only `ISessionManager` implementation which adds caching to database calls.
 
 ### Lussatite.FeatureManagement.SessionManagers.Framework:
 
 Target: .NET Framework 4.8
 
-- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
 - `ConfigurationValueSessionManager`: A read-only `ISessionManager` implementation that uses the .NET Framework static class `ConfigurationManager`.
-- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
-- `CachedSqlSessionManager`: A read-only `ISessionManager` implementation which adds caching to database calls.
 
 ## Build Status
 
