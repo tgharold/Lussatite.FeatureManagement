@@ -9,13 +9,13 @@ namespace Lussatite.FeatureManagement.Net6.Tests
     {
         // avoid feature flag names with spaces, Pascal-case is good, sticking to just letters/numbers is good.
 
-        public const string RegisteredButNotInAppConfig = nameof(RegisteredButNotInAppConfig);
-        public const string RegisteredAndNullInAppConfig = nameof(RegisteredAndNullInAppConfig);
-        public const string RegisteredAndTrueInAppConfig = nameof(RegisteredAndTrueInAppConfig);
-        public const string RegisteredAndStringTrueInAppConfig = nameof(RegisteredAndStringTrueInAppConfig);
-        public const string RegisteredAndFalseInAppConfig = nameof(RegisteredAndFalseInAppConfig);
-        public const string RegisteredAndStringFalseInAppConfig = nameof(RegisteredAndStringFalseInAppConfig);
-        public const string RegisteredAndGarbageValueInAppConfig = nameof(RegisteredAndGarbageValueInAppConfig);
+        public const string NotInAppConfig = nameof(NotInAppConfig);
+        public const string NullInAppConfig = nameof(NullInAppConfig);
+        public const string TrueInAppConfig = nameof(TrueInAppConfig);
+        public const string StringTrueInAppConfig = nameof(StringTrueInAppConfig);
+        public const string FalseInAppConfig = nameof(FalseInAppConfig);
+        public const string StringFalseInAppConfig = nameof(StringFalseInAppConfig);
+        public const string GarbageValueInAppConfig = nameof(GarbageValueInAppConfig);
 
         public static readonly Lazy<IEnumerable<string>> All = new(() =>
         {

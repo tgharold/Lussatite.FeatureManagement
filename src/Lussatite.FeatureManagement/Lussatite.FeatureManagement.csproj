@@ -20,12 +20,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
     <PackageReference Include="System.Linq.Async" Version="4.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

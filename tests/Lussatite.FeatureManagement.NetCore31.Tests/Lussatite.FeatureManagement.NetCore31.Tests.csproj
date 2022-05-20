@@ -8,16 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.20" />
-    <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -28,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.Core\Lussatite.FeatureManagement.SessionManagers.Core.csproj" />
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
   </ItemGroup>
 

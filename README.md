@@ -1,6 +1,6 @@
 # Lussatite.FeatureManagement
 
-A light implementation of Microsoft.FeatureManagement interfaces.
+A light implementation for most of the Microsoft.FeatureManagement interfaces.
 
 - Compatibility with [IFeatureManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.ifeaturemanager) and [IFeatureManagerSnapshot](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.ifeaturemanagersnapshot).  You should be able to upgrade to the full [Microsoft.FeatureManagement NuGet package](https://www.nuget.org/packages/Microsoft.FeatureManagement/) later.
 - A basic implementation that is simpler to wire up then the full [Microsoft.FeatureManagement](https://github.com/microsoft/FeatureManagement-Dotnet) package.  This can be useful in situations where there's no support for the [AddFeatureManagement()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.servicecollectionextensions.addfeaturemanagement) method in your application.
@@ -8,7 +8,7 @@ A light implementation of Microsoft.FeatureManagement interfaces.
 
 ## Quickstart
 
-1. Take a dependency on `Lussatite.FeatureManagement` and `Lussatite.FeatureManagement.LazyCache`.
+1. Take a dependency on `Lussatite.FeatureManagement`.
 
 2. Define a set of string constants for the names of your features.  Look at the various static TestFeatures.cs files for ideas.
 
@@ -29,17 +29,13 @@ A light implementation of Microsoft.FeatureManagement interfaces.
 
 Target: .NET Standard 2.0
 
-- `LussatiteFeatureManager`: A basic implementation of `IFeatureManager`.
-- This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
-- This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
+- `LussatiteFeatureManager`: A basic implementation of `IFeatureManager`. This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method. This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
 
-### Lussatite.FeatureManagement.LazyCache:
+- `LussatiteLazyCacheFeatureManager`: A caching `IFeatureManagerSnapshot` implementation that uses `LazyCache`. This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method. This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
+
+### Lussatite.FeatureManagement.SessionManagers:
 
 Target: .NET Standard 2.0
-
-- `LussatiteLazyCacheFeatureManager`: A caching `IFeatureManagerSnapshot` implementation that uses `LazyCache`.
-- This does **not** implement the `Task<bool> IsEnabledAsync<TContext>(string feature, TContext context)` method.
-- This does **not** make any calls back to the ISessionManager `Task SetAsync(string featureName, bool enabled)` method.
 
 ### Lussatite.FeatureManagement.SessionManagers.Core:
 

@@ -10,7 +10,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Title>Lussatite.FeatureManagement.SessionManagers.Core</Title>
-    <Description>A read-only implementation of Microsoft.FeatureManagement ISessionManager interface which pulls values from the .NET Core 3.1 / .NET 6 IConfiguration provider.</Description>
+    <Description>A set of ISessionManager implementations for .NET Core 3.1 and .NET 5+ which return boolean null/true/false values.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
@@ -23,7 +23,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
   </ItemGroup>
 

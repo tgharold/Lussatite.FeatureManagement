@@ -6,21 +6,9 @@ Various read-only [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/
 
 While these `ISessionManager` implementations are written for `Lussatite.FeatureManagement`, they are compatible with the Microsoft `ISessionManager` interface and could be used with the Microsoft `FeatureManager` implementation.
 
-### ClaimsPrincipalSessionManager
-
-A read-only `ISessionManager` implementation that examines `ClaimsPrincipal` claims of type "feature_flag" to obtain the feature value.  The value of the claim is either the feature name to indicate true, or the feature name prefixed with an exclamation point ("!") to indicate false.
-
 ### ConfigurationValueSessionManager
 
 A read-only `ISessionManager` implementation that uses `IConfiguration` to obtain its values.
-
-### SqlSessionManager
-
-A read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.
-
-### CachedSqlSessionManager
-
-A cached read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for a period.  The default cache duration is 30 seconds.
 
 ## Target
 
