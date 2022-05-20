@@ -7,7 +7,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Title>Lussatite.FeatureManagement.SessionManagers.Framework</Title>
-    <Description>A read-only implementation of Microsoft.FeatureManagement ISessionManager interface which pulls values from the .NET Framework static ConfigurationManager provider.</Description>
+    <Description>A set of ISessionManager implementations for .NET Framework 4.8 which return boolean null/true/false values.</Description>
     <Authors>Thomas Harold</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LazyCache" Version="2.4.0" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
   </ItemGroup>
 
 </Project>

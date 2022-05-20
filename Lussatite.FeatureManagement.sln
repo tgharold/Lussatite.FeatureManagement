@@ -7,25 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD6A38FD-C87
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement", "src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj", "{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.LazyCache", "src\Lussatite.FeatureManagement.LazyCache\Lussatite.FeatureManagement.LazyCache.csproj", "{196E3260-F529-4496-B86F-D02DF898AE76}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Core", "src\Lussatite.FeatureManagement.SessionManagers.Core\Lussatite.FeatureManagement.SessionManagers.Core.csproj", "{F0F1A401-2E98-4B5F-9585-0CC84BC8747E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework", "src\Lussatite.FeatureManagement.SessionManagers.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.csproj", "{5D9580C4-E74B-42FC-B561-3FED4C124C05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CD148B7E-B130-4558-B533-D66722ABA625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.LazyCache.Tests", "tests\Lussatite.FeatureManagement.LazyCache.Tests\Lussatite.FeatureManagement.LazyCache.Tests.csproj", "{10BA5EBA-9B97-4FCD-A23B-41E93318A305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Tests", "tests\Lussatite.FeatureManagement.Tests\Lussatite.FeatureManagement.Tests.csproj", "{10BA5EBA-9B97-4FCD-A23B-41E93318A305}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net6.Tests", "tests\Lussatite.FeatureManagement.Net6.Tests\Lussatite.FeatureManagement.Net6.Tests.csproj", "{D0656DA6-CC20-4A05-9E3B-25B670ABB294}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.NetCore31.Tests", "tests\Lussatite.FeatureManagement.NetCore31.Tests\Lussatite.FeatureManagement.NetCore31.Tests.csproj", "{8E40F6F0-E265-44BF-9735-63D17866BB2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Core.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Core.Tests\Lussatite.FeatureManagement.SessionManagers.Core.Tests.csproj", "{9FC1B73F-9CD8-4735-A01F-44073DDCF568}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.Net48.Tests", "tests\Lussatite.FeatureManagement.Net48.Tests\Lussatite.FeatureManagement.Net48.Tests.csproj", "{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers.Framework.Tests", "tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests\Lussatite.FeatureManagement.SessionManagers.Framework.Tests.csproj", "{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers", "src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj", "{8A2B57EC-654E-4CB3-BC0C-49F433670A06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +36,6 @@ Global
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{196E3260-F529-4496-B86F-D02DF898AE76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{196E3260-F529-4496-B86F-D02DF898AE76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{196E3260-F529-4496-B86F-D02DF898AE76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{196E3260-F529-4496-B86F-D02DF898AE76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F0F1A401-2E98-4B5F-9585-0CC84BC8747E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0F1A401-2E98-4B5F-9585-0CC84BC8747E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0F1A401-2E98-4B5F-9585-0CC84BC8747E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,29 +56,23 @@ Global
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FC1B73F-9CD8-4735-A01F-44073DDCF568}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
-		{196E3260-F529-4496-B86F-D02DF898AE76} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
 		{F0F1A401-2E98-4B5F-9585-0CC84BC8747E} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
 		{5D9580C4-E74B-42FC-B561-3FED4C124C05} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
 		{10BA5EBA-9B97-4FCD-A23B-41E93318A305} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{D0656DA6-CC20-4A05-9E3B-25B670ABB294} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C} = {CD148B7E-B130-4558-B533-D66722ABA625}
-		{9FC1B73F-9CD8-4735-A01F-44073DDCF568} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9} = {CD148B7E-B130-4558-B533-D66722ABA625}
-		{2ADEC944-D247-41DB-9259-2B3FB2F5F9F6} = {CD148B7E-B130-4558-B533-D66722ABA625}
+		{8A2B57EC-654E-4CB3-BC0C-49F433670A06} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
 	EndGlobalSection
 EndGlobal
