@@ -8,31 +8,42 @@ using System.Threading.Tasks;
 namespace Lussatite.FeatureManagement.SessionManagers
 {
     /// <summary>
-    /// <para>A read-only implementation of <see cref="ISessionManager"/> which looks
-    /// at a <see cref="DbCommand"/> to obtain the value for a feature.  The database table
-    /// column names can be configured via <see cref="SqlSessionManagerSettings"/>.</para>
+    /// <para>A read-only or read-write implementation of <see cref="ISessionManager"/>.</para>
     /// </summary>
-    public class SqlSessionManager : ISessionManager
+    public class SqlSessionManager : ILussatiteSessionManager
     {
-        private readonly Func<string, DbCommand> _dbCommandFactory;
+        private readonly Func<string, DbCommand> _dbCommandGetValueFactory;
+        private readonly Func<string, bool, DbCommand> _dbCommandSetValueFactory;
+        private readonly Func<string, bool?, DbCommand> _dbCommandSetNullableValueFactory;
         private readonly SqlSessionManagerSettings _settings;
 
         /// <summary>Construct the <see cref="SqlSessionManager"/> instance.</summary>
         /// <param name="getValueCommandFactory">A <see cref="DbCommand"/> query which must
         /// filter down to the single row matching the feature name string.</param>
+        /// <param name="setValueCommandFactory">An optional <see cref="DbCommand"/> query which
+        /// must support being an INSERT/UPDATE (UPSERT) of the bool value into the database table.
+        /// Note that you rarely want to use this in practice, unless your SQL table is already
+        /// per-user or per-session.</param>
+        /// <param name="setNullableValueCommandFactory">An optional <see cref="DbCommand"/> query which
+        /// must support being an INSERT/UPDATE (UPSERT) of the nullable bool value into the database table.
+        /// </param>
         /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         public SqlSessionManager(
             Func<string, DbCommand> getValueCommandFactory,
+            Func<string, bool, DbCommand> setValueCommandFactory = null,
+            Func<string, bool?, DbCommand> setNullableValueCommandFactory = null,
             SqlSessionManagerSettings settings = null
             )
         {
-            _dbCommandFactory = getValueCommandFactory;
+            _dbCommandGetValueFactory = getValueCommandFactory;
+            _dbCommandSetValueFactory = setValueCommandFactory;
+            _dbCommandSetNullableValueFactory = setNullableValueCommandFactory;
             _settings = settings ?? new SqlSessionManagerSettings();
         }
 
         public virtual async Task<bool?> GetAsync(string featureName)
         {
-            var dbCommand = _dbCommandFactory(featureName);
+            var dbCommand = _dbCommandGetValueFactory(featureName);
             if (dbCommand is null)
                 throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
 
@@ -44,9 +55,10 @@ namespace Lussatite.FeatureManagement.SessionManagers
             if (string.IsNullOrWhiteSpace(keyColumnValue)
                 || !keyColumnValue.Equals(featureName, StringComparison.OrdinalIgnoreCase))
             {
-                var e = new Exception("Did not find feature name in result row.");
+                var e = new Exception($"Did not find feature name in result row during {nameof(GetAsync)}.");
                 e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
                 e.Data["FeatureNameColumnValue"] = keyColumnValue;
+                e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
                 throw e;
             }
 
@@ -57,10 +69,46 @@ namespace Lussatite.FeatureManagement.SessionManagers
             return value;
         }
 
-        /// <summary>This session manager does not write values back. It is a read-only provider.</summary>
-        public Task SetAsync(string featureName, bool enabled)
+        /// <summary>This session manager does not write values back unless the "setValueCommandFactory"
+        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        public virtual async Task SetAsync(string featureName, bool enabled)
         {
-            return Task.CompletedTask;
+            var dbCommand = _dbCommandSetValueFactory(featureName, enabled);
+            if (dbCommand is null) return;
+
+            var resultCount = await dbCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+            if (resultCount <= 0)
+            {
+                var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
+                e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
+                e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
+                e.Data["FeatureName"] = featureName;
+                e.Data["Enabled"] = enabled;
+                throw e;
+            }
+
+            dbCommand.Connection.Close();
+        }
+
+        /// <summary>This method does nothing unless the "setNullableValueCommandFactory"
+        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        public virtual async Task SetNullableAsync(string featureName, bool? enabled)
+        {
+            var dbCommand = _dbCommandSetNullableValueFactory(featureName, enabled);
+            if (dbCommand is null) return;
+
+            var resultCount = await dbCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+            if (resultCount <= 0)
+            {
+                var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
+                e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
+                e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
+                e.Data["FeatureName"] = featureName;
+                e.Data["Enabled"] = enabled;
+                throw e;
+            }
+
+            dbCommand.Connection.Close();
         }
 
         private async Task<DataTable> FillDataTableAsync(DbCommand cmd)

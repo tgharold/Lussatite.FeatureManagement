@@ -31,4 +31,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
+  </ItemGroup>
+
 </Project>
