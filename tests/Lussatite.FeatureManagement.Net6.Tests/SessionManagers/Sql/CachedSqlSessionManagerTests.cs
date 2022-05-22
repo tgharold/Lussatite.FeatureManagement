@@ -27,7 +27,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
 
             return new CachedSqlSessionManager(
                 settings: settings,
-                getValueCommandFactory: s => _dbFixture.CreateGetValueCommand(s)
+                getValueCommandFactory: s => _dbFixture.CreateGetValueCommand(s),
+                setValueCommandFactory: (s, e) => _dbFixture.CreateSetValueCommand(s, e),
+                setNullableValueCommandFactory: (s, e) => _dbFixture.CreateSetNullableValueCommand(s, e)
                 );
         }
 
@@ -39,10 +41,11 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
             Assert.Null(result);
         }
 
+
         [Theory]
-        [InlineData(null, "A125a_FeatureSetToNull", null)]
-        [InlineData(false, "A125b_FeatureSetToFalse", 0)]
-        [InlineData(true, "A125c_FeatureSetToTrue", 1)]
+        [InlineData(null, "Net6_A125a_FeatureSetToNull", null)]
+        [InlineData(false, "Net6_A125b_FeatureSetToFalse", 0)]
+        [InlineData(true, "Net6_A125c_FeatureSetToTrue", 1)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
@@ -73,6 +76,47 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
             Assert.NotEmpty(featureTableValues);
 
             var sut = CreateSut();
+            var result = await sut.GetAsync(featureName);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(null, "Net6_A349x_FeatureSetToNull", null)]
+        [InlineData(false, "Net6_A349y_FeatureSetToFalse", false)]
+        [InlineData(true, "Net6_A349z_FeatureSetToTrue", true)]
+        public async Task Return_expected_for_SetNullableValue(
+            bool? expected,
+            string featureName,
+            bool? enabled
+            )
+        {
+            var sut = CreateSut();
+            await sut.SetNullableAsync(featureName, enabled);
+
+            var featureTableValues = await _dbFixture.GetAllData();
+            Assert.NotEmpty(featureTableValues);
+
+            var result = await sut.GetAsync(featureName);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(null, "Net6_A359jx_FeatureSetToNull", null)]
+        [InlineData(false, "Net6_A359ky_FeatureSetToFalse", false)]
+        [InlineData(true, "Net6_A359lz_FeatureSetToTrue", true)]
+        public async Task Return_expected_for_SetValue(
+            bool? expected,
+            string featureName,
+            bool? enabled
+            )
+        {
+            var sut = CreateSut();
+            if (enabled.HasValue) await sut.SetAsync(featureName, enabled.Value);
+            else await sut.SetNullableAsync(featureName, null);
+
+            var featureTableValues = await _dbFixture.GetAllData();
+            Assert.NotEmpty(featureTableValues);
+
             var result = await sut.GetAsync(featureName);
             Assert.Equal(expected, result);
         }

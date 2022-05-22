@@ -62,6 +62,49 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
             return queryCommand;
         }
 
+        public DbCommand CreateSetNullableValueCommand(string featureName, bool? enabled)
+        {
+            var conn = new SQLiteConnection(connectionString);
+            conn.Open();
+
+            int? featureValue = null;
+            if (enabled.HasValue) featureValue = enabled.Value ? 1 : 0;
+            var queryCommand = conn.CreateCommand();
+            queryCommand.CommandText =
+                $@"
+                    INSERT INTO {TableName}
+                    ({NameColumn}, {ValueColumn})
+                    VALUES (@featureName, @featureValue)
+                    ON CONFLICT({NameColumn})
+                    DO UPDATE SET {ValueColumn}=@featureValue
+                ";
+            queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
+            queryCommand.Parameters.Add(new SQLiteParameter("@featureValue", featureValue));
+
+            return queryCommand;
+        }
+
+        public DbCommand CreateSetValueCommand(string featureName, bool enabled)
+        {
+            var conn = new SQLiteConnection(connectionString);
+            conn.Open();
+
+            var featureValue = enabled ? 1 : 0;
+            var queryCommand = conn.CreateCommand();
+            queryCommand.CommandText =
+                $@"
+                    INSERT INTO {TableName}
+                    ({NameColumn}, {ValueColumn})
+                    VALUES (@featureName, @featureValue)
+                    ON CONFLICT({NameColumn})
+                    DO UPDATE SET {ValueColumn}=@featureValue
+                ";
+            queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
+            queryCommand.Parameters.Add(new SQLiteParameter("@featureValue", featureValue));
+
+            return queryCommand;
+        }
+
         /// <summary>Meant to be used as a debug step, this returns all of the data in the table.</summary>
         public async Task<List<object[]>> GetAllData()
         {
