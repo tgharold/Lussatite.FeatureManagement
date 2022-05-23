@@ -52,6 +52,10 @@ namespace Lussatite.FeatureManagement.SessionManagers
             if (dataTable.Rows.Count == 0) return null;
 
             var keyColumnValue = dataTable.Rows[0][_settings.FeatureNameColumn] as string;
+            var value = dataTable.Rows[0][_settings.FeatureValueColumn] as bool?;
+
+            dbCommand.Connection.Close();
+
             if (string.IsNullOrWhiteSpace(keyColumnValue)
                 || !keyColumnValue.Equals(featureName, StringComparison.OrdinalIgnoreCase))
             {
@@ -62,10 +66,6 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 throw e;
             }
 
-            var value = dataTable.Rows[0][_settings.FeatureValueColumn] as bool?;
-
-            dbCommand.Connection.Close();
-
             return value;
         }
 
@@ -73,10 +73,14 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
         public virtual async Task SetAsync(string featureName, bool enabled)
         {
+            if (_dbCommandSetValueFactory is null) return;
             var dbCommand = _dbCommandSetValueFactory(featureName, enabled);
-            if (dbCommand is null) return;
+            if (dbCommand is null)
+                throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
 
             var resultCount = await dbCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+            dbCommand.Connection.Close();
+
             if (resultCount <= 0)
             {
                 var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
@@ -86,18 +90,20 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 e.Data["Enabled"] = enabled;
                 throw e;
             }
-
-            dbCommand.Connection.Close();
         }
 
         /// <summary>This method does nothing unless the "setNullableValueCommandFactory"
         /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
         public virtual async Task SetNullableAsync(string featureName, bool? enabled)
         {
+            if (_dbCommandSetNullableValueFactory is null) return;
             var dbCommand = _dbCommandSetNullableValueFactory(featureName, enabled);
-            if (dbCommand is null) return;
+            if (dbCommand is null)
+                throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
 
             var resultCount = await dbCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+            dbCommand.Connection.Close();
+
             if (resultCount <= 0)
             {
                 var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
@@ -107,8 +113,6 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 e.Data["Enabled"] = enabled;
                 throw e;
             }
-
-            dbCommand.Connection.Close();
         }
 
         private async Task<DataTable> FillDataTableAsync(DbCommand cmd)
