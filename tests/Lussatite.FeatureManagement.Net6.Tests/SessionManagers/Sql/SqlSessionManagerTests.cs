@@ -117,5 +117,37 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
             var result = await sut.GetAsync(featureName);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public async Task Exercise_SetNullableValue()
+        {
+            var sut = CreateSut();
+            const string baseName = "Net6_A997_ExerciseRepeatedly";
+            const int maxIterations = 250;
+            for (var i = 0; i < maxIterations; i++)
+            {
+                var value = Rng.GetNullableBoolean();
+                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
+                await sut.SetNullableAsync(featureName, value);
+                var result = await sut.GetAsync(featureName);
+                Assert.Equal(value, result);
+            }
+        }
+
+        [Fact]
+        public async Task Exercise_SetValue()
+        {
+            var sut = CreateSut();
+            const string baseName = "Net6_A877_ExerciseRepeatedly";
+            const int maxIterations = 250;
+            for (var i = 0; i < maxIterations; i++)
+            {
+                var value = Rng.GetBoolean();
+                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
+                await sut.SetAsync(featureName, value);
+                var result = await sut.GetAsync(featureName);
+                Assert.Equal(value, result);
+            }
+        }
     }
 }
