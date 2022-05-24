@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lussatite.FeatureManagement.SessionManagers", "src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj", "{8A2B57EC-654E-4CB3-BC0C-49F433670A06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCommon.Standard", "tests\TestCommon.Standard\TestCommon.Standard.csproj", "{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A2B57EC-654E-4CB3-BC0C-49F433670A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{149D4A10-D403-49F8-AE6C-16FD6EC2D4EA} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
@@ -74,5 +80,6 @@ Global
 		{8E40F6F0-E265-44BF-9735-63D17866BB2C} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{D5889130-EF89-4A19-AEA2-5BFA53FB2FA9} = {CD148B7E-B130-4558-B533-D66722ABA625}
 		{8A2B57EC-654E-4CB3-BC0C-49F433670A06} = {BD6A38FD-C87A-408D-9F1E-9C1E897AC3DC}
+		{2AA2DB15-9D45-4F85-8927-E639CDDCC9BF} = {CD148B7E-B130-4558-B533-D66722ABA625}
 	EndGlobalSection
 EndGlobal

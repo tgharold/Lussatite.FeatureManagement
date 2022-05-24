@@ -2,6 +2,8 @@ using System.Data.SQLite;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite;
 using Lussatite.FeatureManagement.SessionManagers;
+using TestCommon.Standard;
+using TestCommon.Standard.SQLite;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
@@ -18,11 +20,14 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
 
         private SqlSessionManager CreateSut()
         {
+            var settings = _dbFixture.GetSqlSessionManagerSettings();
+            settings.GetConnectionFactory = _dbFixture.CreateConnectionCommand;
+            settings.GetValueCommandFactory = _dbFixture.CreateGetValueCommand;
+            settings.SetValueCommandFactory = _dbFixture.CreateSetValueCommand;
+            settings.SetNullableValueCommandFactory = _dbFixture.CreateSetNullableValueCommand;
+
             return new SqlSessionManager(
-                settings: _dbFixture.SqlSessionManagerSettings,
-                getValueCommandFactory: s => _dbFixture.CreateGetValueCommand(s),
-                setValueCommandFactory: (s, e) => _dbFixture.CreateSetValueCommand(s, e),
-                setNullableValueCommandFactory: (s, e) => _dbFixture.CreateSetNullableValueCommand(s, e)
+                settings: settings
                 );
         }
 
