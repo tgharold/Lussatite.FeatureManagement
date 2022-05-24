@@ -12,11 +12,11 @@ A read-only `ISessionManager` implementation that examines `ClaimsPrincipal` cla
 
 ### SqlSessionManager
 
-A read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.
+An `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values. It also supports write-back if configured to do so.
 
 ### CachedSqlSessionManager
 
-A cached read-only `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for a period.  The default cache duration is 30 seconds.
+A cached`ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for a period.  The default cache duration is 30 seconds. It also supports write-back if configured to do so.
 
 ## Target
 
