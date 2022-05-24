@@ -1,3 +1,4 @@
+using TestCommon.Standard.SQLite;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite

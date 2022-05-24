@@ -23,5 +23,6 @@
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.Framework\Lussatite.FeatureManagement.SessionManagers.Framework.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
+    <ProjectReference Include="..\TestCommon.Standard\TestCommon.Standard.csproj" />
   </ItemGroup>
 </Project>

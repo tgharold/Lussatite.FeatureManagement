@@ -38,8 +38,8 @@ Target: .NET Standard 2.0
 Target: .NET Standard 2.0
 
 - `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
-- `SqlSessionManager`: A read-only `ISessionManager` implementation that uses a user-provided `DbCommand`.
-- `CachedSqlSessionManager`: A read-only `ISessionManager` implementation which adds caching to database calls.
+- `SqlSessionManager`: An `ISessionManager` implementation that uses a user-provided `DbCommand`.
+- `CachedSqlSessionManager`: An `ISessionManager` implementation which adds caching to database calls.
 
 ### Lussatite.FeatureManagement.SessionManagers.Core:
 

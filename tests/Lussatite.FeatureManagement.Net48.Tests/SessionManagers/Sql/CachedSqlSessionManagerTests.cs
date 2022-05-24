@@ -1,7 +1,11 @@
 using System.Data.SQLite;
+using System.Threading;
 using System.Threading.Tasks;
+using LazyCache;
 using Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite;
 using Lussatite.FeatureManagement.SessionManagers;
+using TestCommon.Standard;
+using TestCommon.Standard.SQLite;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
@@ -10,6 +14,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
     public class CachedSqlSessionManagerTests
     {
         private readonly SQLiteDatabaseFixture _dbFixture;
+        private readonly IAppCache _cache = new CachingService();
 
         public CachedSqlSessionManagerTests(SQLiteDatabaseFixture dbFixture)
         {
@@ -18,18 +23,15 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
 
         private CachedSqlSessionManager CreateSut()
         {
-            var baseSettings = _dbFixture.SqlSessionManagerSettings;
-            var settings = new CachedSqlSessionManagerSettings
-            {
-                FeatureNameColumn = baseSettings.FeatureNameColumn,
-                FeatureValueColumn = baseSettings.FeatureValueColumn,
-            };
+            var settings = new CachedSqlSessionManagerSettings(_dbFixture.GetSqlSessionManagerSettings());
+            settings.GetConnectionFactory = _dbFixture.CreateConnectionCommand;
+            settings.GetValueCommandFactory = _dbFixture.CreateGetValueCommand;
+            settings.SetValueCommandFactory = _dbFixture.CreateSetValueCommand;
+            settings.SetNullableValueCommandFactory = _dbFixture.CreateSetNullableValueCommand;
 
             return new CachedSqlSessionManager(
-                settings: settings,
-                getValueCommandFactory: s => _dbFixture.CreateGetValueCommand(s),
-                setValueCommandFactory: (s, e) => _dbFixture.CreateSetValueCommand(s, e),
-                setNullableValueCommandFactory: (s, e) => _dbFixture.CreateSetNullableValueCommand(s, e)
+                cache: _cache,
+                settings: settings
                 );
         }
 
@@ -118,6 +120,38 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
 
             var result = await sut.GetAsync(featureName);
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public async Task Exercise_SetNullableValue()
+        {
+            var sut = CreateSut();
+            const string baseName = "Net48_C997_ExerciseRepeatedly";
+            const int maxIterations = 250;
+            for (var i = 0; i < maxIterations; i++)
+            {
+                var value = Rng.GetNullableBoolean();
+                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
+                await sut.SetNullableAsync(featureName, value);
+                var result = await sut.GetAsync(featureName);
+                Assert.Equal(value, result);
+            }
+        }
+
+        [Fact]
+        public async Task Exercise_SetValue()
+        {
+            var sut = CreateSut();
+            const string baseName = "Net48_C877_ExerciseRepeatedly";
+            const int maxIterations = 250;
+            for (var i = 0; i < maxIterations; i++)
+            {
+                var value = Rng.GetBoolean();
+                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
+                await sut.SetAsync(featureName, value);
+                var result = await sut.GetAsync(featureName);
+                Assert.Equal(value, result);
+            }
         }
     }
 }
