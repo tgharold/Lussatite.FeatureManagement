@@ -12,32 +12,12 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// </summary>
     public class SqlSessionManager : ILussatiteSessionManager
     {
-        private readonly Func<string, DbCommand> _dbCommandGetValueFactory;
-        private readonly Func<string, bool, DbCommand> _dbCommandSetValueFactory;
-        private readonly Func<string, bool?, DbCommand> _dbCommandSetNullableValueFactory;
         private readonly SqlSessionManagerSettings _settings;
 
-        /// <summary>Construct the <see cref="SqlSessionManager"/> instance.</summary>
-        /// <param name="getValueCommandFactory">A <see cref="DbCommand"/> query which must
-        /// filter down to the single row matching the feature name string.</param>
-        /// <param name="setValueCommandFactory">An optional <see cref="DbCommand"/> query which
-        /// must support being an INSERT/UPDATE (UPSERT) of the bool value into the database table.
-        /// Note that you rarely want to use this in practice, unless your SQL table is already
-        /// per-user or per-session.</param>
-        /// <param name="setNullableValueCommandFactory">An optional <see cref="DbCommand"/> query which
-        /// must support being an INSERT/UPDATE (UPSERT) of the nullable bool value into the database table.
-        /// </param>
-        /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         public SqlSessionManager(
-            Func<string, DbCommand> getValueCommandFactory,
-            Func<string, bool, DbCommand> setValueCommandFactory = null,
-            Func<string, bool?, DbCommand> setNullableValueCommandFactory = null,
             SqlSessionManagerSettings settings = null
             )
         {
-            _dbCommandGetValueFactory = getValueCommandFactory;
-            _dbCommandSetValueFactory = setValueCommandFactory;
-            _dbCommandSetNullableValueFactory = setNullableValueCommandFactory;
             _settings = settings ?? new SqlSessionManagerSettings();
         }
 

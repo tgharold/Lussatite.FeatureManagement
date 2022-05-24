@@ -14,28 +14,13 @@ namespace Lussatite.FeatureManagement.SessionManagers
         private readonly CachedSqlSessionManagerSettings _cachedSettings;
 
         /// <summary>Construct the <see cref="CachedSqlSessionManager"/> instance.</summary>
-        /// <param name="getValueCommandFactory">A <see cref="DbCommand"/> query which must
-        /// filter down to the single row matching the feature name string.</param>
-        /// <param name="setValueCommandFactory">An optional <see cref="DbCommand"/> query which
-        /// must support being an INSERT/UPDATE (UPSERT) of the bool value into the database table.
-        /// Note that you rarely want to use this in practice, unless your SQL table is already
-        /// per-user or per-session.</param>
-        /// <param name="setNullableValueCommandFactory">An optional <see cref="DbCommand"/> query which
-        /// must support being an INSERT/UPDATE (UPSERT) of the nullable bool value into the database table.
-        /// </param>
         /// <param name="settings"><see cref="CachedSqlSessionManagerSettings"/></param>
         /// <param name="cache">Optional application-wide <see cref="IAppCache"/> instance.</param>
         public CachedSqlSessionManager(
-            Func<string, DbCommand> getValueCommandFactory,
-            Func<string, bool, DbCommand> setValueCommandFactory = null,
-            Func<string, bool?, DbCommand> setNullableValueCommandFactory = null,
             CachedSqlSessionManagerSettings settings = null,
             IAppCache cache = null
             ) : base(
-            settings: settings,
-            getValueCommandFactory: getValueCommandFactory,
-            setValueCommandFactory: setValueCommandFactory,
-            setNullableValueCommandFactory: setNullableValueCommandFactory
+            settings: settings
             )
         {
             _cachedSettings = settings ?? new CachedSqlSessionManagerSettings();
