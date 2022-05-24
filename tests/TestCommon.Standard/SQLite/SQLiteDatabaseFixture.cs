@@ -5,7 +5,7 @@ using System.Data.SQLite;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.SessionManagers;
 
-namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
+namespace TestCommon.Standard.SQLite
 {
     public class SQLiteDatabaseFixture : IDisposable
     {
@@ -21,7 +21,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
         // its lifetime, keep one open connection around for as long as you need it.
         private readonly SQLiteConnection _masterConnection;
 
-        public SqlSessionManagerSettings SqlSessionManagerSettings { get; } = new SqlSessionManagerSettings
+        public SqlSessionManagerSettings GetSqlSessionManagerSettings() => new SqlSessionManagerSettings
         {
             FeatureNameColumn = NameColumn,
             FeatureValueColumn = ValueColumn
@@ -49,12 +49,11 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
 
         public string GetConnectionString() => connectionString;
 
+        public DbConnection CreateConnectionCommand() => new SQLiteConnection(connectionString);
+
         public DbCommand CreateGetValueCommand(string featureName)
         {
-            var conn = new SQLiteConnection(connectionString);
-            conn.Open();
-
-            var queryCommand = conn.CreateCommand();
+            var queryCommand = new SQLiteCommand();
             queryCommand.CommandText =
                 $@"SELECT {NameColumn}, {ValueColumn} FROM {TableName} WHERE {NameColumn} = @featureName;";
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
@@ -64,12 +63,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
 
         public DbCommand CreateSetNullableValueCommand(string featureName, bool? enabled)
         {
-            var conn = new SQLiteConnection(connectionString);
-            conn.Open();
-
             int? featureValue = null;
             if (enabled.HasValue) featureValue = enabled.Value ? 1 : 0;
-            var queryCommand = conn.CreateCommand();
+            var queryCommand = new SQLiteCommand();
             queryCommand.CommandText =
                 $@"
                     INSERT INTO {TableName}
@@ -79,18 +75,15 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
                     DO UPDATE SET {ValueColumn}=@featureValue
                 ";
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SQLiteParameter("@featureValue", featureValue));
+            queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
 
             return queryCommand;
         }
 
         public DbCommand CreateSetValueCommand(string featureName, bool enabled)
         {
-            var conn = new SQLiteConnection(connectionString);
-            conn.Open();
-
             var featureValue = enabled ? 1 : 0;
-            var queryCommand = conn.CreateCommand();
+            var queryCommand = new SQLiteCommand();
             queryCommand.CommandText =
                 $@"
                     INSERT INTO {TableName}
@@ -100,7 +93,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
                     DO UPDATE SET {ValueColumn}=@featureValue
                 ";
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SQLiteParameter("@featureValue", featureValue));
+            queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
 
             return queryCommand;
         }
@@ -114,6 +107,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
+                    cmd.Connection = conn;
                     cmd.CommandText = $@"SELECT * FROM {TableName};";
                     using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
                     {
