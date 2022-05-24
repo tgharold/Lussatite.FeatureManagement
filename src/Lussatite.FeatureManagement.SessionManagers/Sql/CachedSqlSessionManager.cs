@@ -23,7 +23,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
             )
         {
             _cachedSettings = settings ?? new CachedSqlSessionManagerSettings();
-            if (_cachedSettings.CacheTime.Seconds <= 0)
+            if (_cachedSettings.CacheTime.TotalSeconds <= 0)
                 throw new ArgumentOutOfRangeException(nameof(_cachedSettings.CacheTime));
             _cache = cache ?? new CachingService();
         }
