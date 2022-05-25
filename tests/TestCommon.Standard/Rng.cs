@@ -8,7 +8,7 @@ namespace TestCommon.Standard
 
         public static bool? GetNullableBoolean()
         {
-            var result = Random.Next(-1, 1);
+            var result = Random.Next(-1, 2);
             switch (result)
             {
                 case 0: return false;
@@ -19,7 +19,7 @@ namespace TestCommon.Standard
 
         public static bool GetBoolean()
         {
-            var result = Random.Next(0, 1);
+            var result = Random.Next(0, 2);
             return result == 1;
         }
 
