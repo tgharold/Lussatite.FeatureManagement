@@ -127,14 +127,15 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         {
             var sut = CreateSut();
             const string baseName = "Net48_C997_ExerciseRepeatedly";
-            const int maxIterations = 250;
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
+                var callSet = Rng.GetInteger(0, 20) == 0;
                 var value = Rng.GetNullableBoolean();
-                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
-                await sut.SetNullableAsync(featureName, value);
+                var featureName = $"{baseName}{Rng.GetInteger(0, 10)}";
+                if (callSet) await sut.SetNullableAsync(featureName, value);
                 var result = await sut.GetAsync(featureName);
-                Assert.Equal(value, result);
+                if (callSet) Assert.Equal(value, result);
             }
         }
 
@@ -143,14 +144,15 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         {
             var sut = CreateSut();
             const string baseName = "Net48_C877_ExerciseRepeatedly";
-            const int maxIterations = 250;
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
+                var callSet = Rng.GetInteger(0, 20) == 0;
                 var value = Rng.GetBoolean();
-                var featureName = $"{baseName}{Rng.GetInteger(0, 9)}";
-                await sut.SetAsync(featureName, value);
+                var featureName = $"{baseName}{Rng.GetInteger(0, 10)}";
+                if (callSet) await sut.SetAsync(featureName, value);
                 var result = await sut.GetAsync(featureName);
-                Assert.Equal(value, result);
+                if (callSet) Assert.Equal(value, result);
             }
         }
     }
