@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.SQLite\Lussatite.FeatureManagement.SessionManagers.SQLite.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
   </ItemGroup>
 

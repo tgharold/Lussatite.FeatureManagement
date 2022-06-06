@@ -1,4 +1,5 @@
 using System.Data.SQLite;
+using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard.SQLite;
 using Xunit;
 
@@ -24,7 +25,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite.Tests
                 conn.Open();
                 var queryCommand = conn.CreateCommand();
                 queryCommand.CommandText =
-                $@"SELECT * FROM {SQLiteDatabaseFixture.TableName};";
+                $@"SELECT * FROM {SqlSessionManagerSettings.DefaultTableName};";
                 var value = (string)queryCommand.ExecuteScalar();
                 conn.Close();
             }

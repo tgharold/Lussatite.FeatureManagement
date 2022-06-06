@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.SessionManagers;
+using Lussatite.FeatureManagement.SessionManagers.SQLite;
 
 namespace TestCommon.Standard.SQLite
 {
@@ -11,104 +11,52 @@ namespace TestCommon.Standard.SQLite
     {
         // ref: https://docs.microsoft.com/en-us/dotnet/standard/data/sqlite/in-memory-databases
 
-        private bool disposedValue;
+        private bool _disposedValue;
 
-        // Using a name and a shared cache allows multiple connections to access the same
-        // in-memory database
-        private readonly string connectionString = $"Data Source=test-{Guid.NewGuid()};Mode=Memory;Cache=Shared";
-
-        // The in-memory database only persists while a connection is open to it.To manage
+        // The in-memory database only persists while a connection is open to it. To manage
         // its lifetime, keep one open connection around for as long as you need it.
         private readonly SQLiteConnection _masterConnection;
 
-        public SqlSessionManagerSettings GetSqlSessionManagerSettings() => new SqlSessionManagerSettings
-        {
-            FeatureNameColumn = NameColumn,
-            FeatureValueColumn = ValueColumn
-        };
-
-        public const string TableName = "featureData";
-        public const string NameColumn = "featureName";
-        public const string ValueColumn = "featureValue";
+        public SqlSessionManagerSettings SqlSessionManagerSettings { get; }
 
         public SQLiteDatabaseFixture()
         {
-            _masterConnection = new SQLiteConnection(connectionString);
+            SqlSessionManagerSettings = new SQLiteSessionManagerSettings
+            {
+                // Using a name and a shared cache allows multiple connections to access the same in-memory database
+                ConnectionString = $"Data Source=test-{Guid.NewGuid()};Mode=Memory;Cache=Shared",
+
+                EnableSetValueCommand = true,
+            };
+
+            _masterConnection = new SQLiteConnection(SqlSessionManagerSettings.ConnectionString);
             _masterConnection.Open();
 
-            var createCommand = _masterConnection.CreateCommand();
-            createCommand.CommandText =
-            $@"
-                CREATE TABLE IF NOT EXISTS {TableName} (
-                    {NameColumn} TEXT PRIMARY KEY,
-                    {ValueColumn} BOOLEAN CHECK ({ValueColumn} IN (0, 1))
-                );
-            ";
-            createCommand.ExecuteNonQuery();
+            using (var createCommand = SqlSessionManagerSettings.CreateDatabaseTableFactory())
+            {
+                using (var conn = SqlSessionManagerSettings.GetConnectionFactory())
+                {
+                    conn.Open();
+                    createCommand.Connection = conn;
+                    createCommand.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
         }
 
-        public string GetConnectionString() => connectionString;
-
-        public DbConnection CreateConnectionCommand() => new SQLiteConnection(connectionString);
-
-        public DbCommand CreateGetValueCommand(string featureName)
-        {
-            var queryCommand = new SQLiteCommand();
-            queryCommand.CommandText =
-                $@"SELECT {NameColumn}, {ValueColumn} FROM {TableName} WHERE {NameColumn} = @featureName;";
-            queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-
-            return queryCommand;
-        }
-
-        public DbCommand CreateSetNullableValueCommand(string featureName, bool? enabled)
-        {
-            int? featureValue = null;
-            if (enabled.HasValue) featureValue = enabled.Value ? 1 : 0;
-            var queryCommand = new SQLiteCommand();
-            queryCommand.CommandText =
-                $@"
-                    INSERT INTO {TableName}
-                    ({NameColumn}, {ValueColumn})
-                    VALUES (@featureName, @featureValue)
-                    ON CONFLICT({NameColumn})
-                    DO UPDATE SET {ValueColumn}=@featureValue
-                ";
-            queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
-
-            return queryCommand;
-        }
-
-        public DbCommand CreateSetValueCommand(string featureName, bool enabled)
-        {
-            var featureValue = enabled ? 1 : 0;
-            var queryCommand = new SQLiteCommand();
-            queryCommand.CommandText =
-                $@"
-                    INSERT INTO {TableName}
-                    ({NameColumn}, {ValueColumn})
-                    VALUES (@featureName, @featureValue)
-                    ON CONFLICT({NameColumn})
-                    DO UPDATE SET {ValueColumn}=@featureValue
-                ";
-            queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
-
-            return queryCommand;
-        }
+        public string GetConnectionString() => SqlSessionManagerSettings.ConnectionString;
 
         /// <summary>Meant to be used as a debug step, this returns all of the data in the table.</summary>
         public async Task<List<object[]>> GetAllData()
         {
             var result = new List<object[]>();
-            using (var conn = new SQLiteConnection(connectionString))
+            using (var conn = new SQLiteConnection(SqlSessionManagerSettings.ConnectionString))
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.Connection = conn;
-                    cmd.CommandText = $@"SELECT * FROM {TableName};";
+                    cmd.CommandText = $@"SELECT * FROM {SqlSessionManagerSettings.FeatureTableName};";
                     using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
                     {
                         while (reader.Read())
@@ -131,7 +79,7 @@ namespace TestCommon.Standard.SQLite
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -141,7 +89,7 @@ namespace TestCommon.Standard.SQLite
 
                 // free unmanaged resources (unmanaged objects) and override finalizer
                 // set large fields to null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
