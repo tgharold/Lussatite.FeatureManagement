@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <WarningsAsErrors>true</WarningsAsErrors>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <Title>Lussatite.FeatureManagement.SessionManagers.SQLite</Title>
+    <Description>A set of SqlSessionManagerSettings implementations for .NET Standard 2.0 which interface with SQLite.</Description>
+    <Authors>Thomas Harold</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>FeatureFlags FeatureManagement feature features</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageId>Lussatite.FeatureManagement.SessionManagers.SQLite</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/tgharold/Lussatite.FeatureManagement</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
+  </ItemGroup>
+
+</Project>
