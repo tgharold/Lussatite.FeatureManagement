@@ -10,21 +10,23 @@ namespace Lussatite.FeatureManagement.SessionManagers
     public class CachedSqlSessionManager : SqlSessionManager
     {
         private readonly IAppCache _cache;
-        private readonly CachedSqlSessionManagerSettings _cachedSettings;
+        private readonly CachedSqlSessionManagerSettings _cacheSettings;
 
         /// <summary>Construct the <see cref="CachedSqlSessionManager"/> instance.</summary>
-        /// <param name="settings"><see cref="CachedSqlSessionManagerSettings"/></param>
+        /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
+        /// <param name="cacheSettings"><see cref="CachedSqlSessionManagerSettings"/></param>
         /// <param name="cache">Optional application-wide <see cref="IAppCache"/> instance.</param>
         public CachedSqlSessionManager(
-            CachedSqlSessionManagerSettings settings = null,
+            SqlSessionManagerSettings settings,
+            CachedSqlSessionManagerSettings cacheSettings = null,
             IAppCache cache = null
             ) : base(
             settings: settings
             )
         {
-            _cachedSettings = settings ?? new CachedSqlSessionManagerSettings();
-            if (_cachedSettings.CacheTime.TotalSeconds <= 0)
-                throw new ArgumentOutOfRangeException(nameof(_cachedSettings.CacheTime));
+            _cacheSettings = cacheSettings ?? new CachedSqlSessionManagerSettings();
+            if (_cacheSettings.CacheTime.TotalSeconds <= 0)
+                throw new ArgumentOutOfRangeException(nameof(_cacheSettings.CacheTime));
             _cache = cache ?? new CachingService();
         }
 
@@ -75,7 +77,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
 
         private DateTimeOffset CalculateAbsoluteExpiration()
         {
-            return DateTimeOffset.UtcNow.Add(_cachedSettings.CacheTime);
+            return DateTimeOffset.UtcNow.Add(_cacheSettings.CacheTime);
         }
 
         private CacheValue ToCacheValue(bool? value)

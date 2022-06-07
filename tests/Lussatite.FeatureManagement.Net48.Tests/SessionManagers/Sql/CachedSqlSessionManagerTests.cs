@@ -12,7 +12,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
     public class CachedSqlSessionManagerTests
     {
         private readonly SQLiteDatabaseFixture _dbFixture;
-        private readonly IAppCache _cache = new CachingService();
+        private readonly IAppCache _appCache = new CachingService();
 
         public CachedSqlSessionManagerTests(SQLiteDatabaseFixture dbFixture)
         {
@@ -21,10 +21,10 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
 
         private CachedSqlSessionManager CreateSut()
         {
-            var settings = new CachedSqlSessionManagerSettings(_dbFixture.SqlSessionManagerSettings);
+            var settings = _dbFixture.SqlSessionManagerSettings;
 
             return new CachedSqlSessionManager(
-                cache: _cache,
+                cache: _appCache,
                 settings: settings
                 );
         }
