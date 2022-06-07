@@ -1,30 +1,27 @@
 using System.Threading.Tasks;
-using LazyCache;
-using Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite;
+using Lussatite.FeatureManagement.NetCore31.Tests.Testing.SQLite;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
 using TestCommon.Standard.SQLite;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
+namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
 {
     [Collection(nameof(SQLiteDatabaseCollection))]
-    public class CachedSqlSessionManagerTests
+    public class SqlSessionManagerSQLiteTests
     {
         private readonly SQLiteDatabaseFixture _dbFixture;
-        private readonly IAppCache _appCache = new CachingService();
 
-        public CachedSqlSessionManagerTests(SQLiteDatabaseFixture dbFixture)
+        public SqlSessionManagerSQLiteTests(SQLiteDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
         }
 
-        private CachedSqlSessionManager CreateSut()
+        private SqlSessionManager CreateSut()
         {
             var settings = _dbFixture.SqlSessionManagerSettings;
 
-            return new CachedSqlSessionManager(
-                cache: _appCache,
+            return new SqlSessionManager(
                 settings: settings
                 );
         }
@@ -37,11 +34,10 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
             Assert.Null(result);
         }
 
-
         [Theory]
-        [InlineData(null, "Net6_A125a_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A125b_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A125c_FeatureSetToTrue", true)]
+        [InlineData(null, "NetCore31_A125a_FeatureSetToNull", null)]
+        [InlineData(false, "NetCore31_A125b_FeatureSetToFalse", false)]
+        [InlineData(true, "NetCore31_A125c_FeatureSetToTrue", true)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
@@ -59,9 +55,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A349x_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A349y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A349z_FeatureSetToTrue", true)]
+        [InlineData(null, "NetCore31_A129x_FeatureSetToNull", null)]
+        [InlineData(false, "NetCore31_A129y_FeatureSetToFalse", false)]
+        [InlineData(true, "NetCore31_A129z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
@@ -79,9 +75,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A359jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A359ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A359lz_FeatureSetToTrue", true)]
+        [InlineData(null, "NetCore31_A139jx_FeatureSetToNull", null)]
+        [InlineData(false, "NetCore31_A139ky_FeatureSetToFalse", false)]
+        [InlineData(true, "NetCore31_A139lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
@@ -103,8 +99,8 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetNullableValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_C997_ExerciseRepeatedly";
-            const int maxIterations = 1500;
+            const string baseName = "NetCore31_A997_ExerciseRepeatedly";
+            const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;
@@ -120,8 +116,8 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_C877_ExerciseRepeatedly";
-            const int maxIterations = 1500;
+            const string baseName = "NetCore31_A877_ExerciseRepeatedly";
+            const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;

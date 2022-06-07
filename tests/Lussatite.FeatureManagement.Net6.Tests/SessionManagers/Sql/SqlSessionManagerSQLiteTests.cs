@@ -8,11 +8,11 @@ using Xunit;
 namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
 {
     [Collection(nameof(SQLiteDatabaseCollection))]
-    public class SqlSessionManagerTests
+    public class SqlSessionManagerSQLiteTests
     {
         private readonly SQLiteDatabaseFixture _dbFixture;
 
-        public SqlSessionManagerTests(SQLiteDatabaseFixture dbFixture)
+        public SqlSessionManagerSQLiteTests(SQLiteDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
         }
