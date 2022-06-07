@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace Lussatite.FeatureManagement.SessionManagers
 {
     /// <summary>Settings class for the <see cref="SqlSessionManager"/> instance.</summary>
-    public class SqlSessionManagerSettings
+    public abstract class SqlSessionManagerSettings
     {
         private string _featureSchemaName = DefaultSchemaName;
         private string _featureTableName = DefaultTableName;
@@ -105,21 +105,9 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// recommended that this account has minimal permissions.</summary>
         public string ConnectionString { get; set; }
 
-        /// <summary>A method or lambda which returns a new <see cref="DbConnection"/> object
-        /// which can be used to SELECT/INSERT/UPDATE from the database table.</summary>
-        public virtual Func<DbConnection> GetConnectionFactory { get; set; }
-
         /// <summary>The SQL connection string used to create the database table if it does not exist.
         /// This connection string requires CREATE SCHEMA/TABLE permissions if used.</summary>
         public string TableCreateConnectionString { get; set; }
-
-        /// <summary>A <see cref="DbCommand"/> query which can create the feature values database table
-        /// if it does not exist.</summary>
-        public virtual Func<DbCommand> CreateDatabaseTableFactory { get; set; }
-
-        /// <summary>A <see cref="DbCommand"/> query which must filter down to the single row
-        /// matching the feature name string. </summary>
-        public virtual Func<string, DbCommand> GetValueCommandFactory { get; set; }
 
         /// <summary>Whether the SetValueCommandFactory will return a DbCommand.  Under the Microsoft
         /// FeatureManager implementation, it writes back via SetValue() at the end of the method.
@@ -129,13 +117,25 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// </summary>
         public bool EnableSetValueCommand { get; set; } = false;
 
+        /// <summary>A method or lambda which returns a new <see cref="DbConnection"/> object
+        /// which can be used to SELECT/INSERT/UPDATE from the database table.</summary>
+        public abstract DbConnection GetConnectionFactory();
+
+        /// <summary>A <see cref="DbCommand"/> query which can create the feature values database table
+        /// if it does not exist.</summary>
+        public abstract DbCommand CreateDatabaseTableFactory();
+
+        /// <summary>A <see cref="DbCommand"/> query which must filter down to the single row
+        /// matching the feature name string. </summary>
+        public abstract DbCommand GetValueCommandFactory(string featureName);
+
         /// <summary>An optional <see cref="DbCommand"/> query which must support being an INSERT/UPDATE (UPSERT)
         /// of the bool value into the database table. Note that you rarely want to use this in practice, unless
         /// your SQL table is already per-user or per-session. </summary>
-        public virtual Func<string, bool, DbCommand> SetValueCommandFactory { get; set; }
+        public abstract DbCommand SetValueCommandFactory(string featureName, bool enabled);
 
-        /// <summary>An optional <see cref="DbCommand"/> query which must support being an INSERT/UPDATE (UPSERT)
+        /// <summary>A  <see cref="DbCommand"/> query which must support being an INSERT/UPDATE (UPSERT)
         /// of the nullable bool value into the database table. </summary>
-        public virtual Func<string, bool?, DbCommand> SetNullableValueCommandFactory { get; set; }
+        public abstract DbCommand SetNullableValueCommandFactory(string featureName, bool? enabled);
     }
 }

@@ -9,17 +9,17 @@ namespace Lussatite.FeatureManagement.SessionManagers.SQLite
     public class SQLiteSessionManagerSettings : SqlSessionManagerSettings
     {
         /// <inheritdoc cref="GetConnectionFactory"/>
-        public override Func<DbConnection> GetConnectionFactory => () =>
+        public override DbConnection GetConnectionFactory()
         {
             if (string.IsNullOrWhiteSpace(ConnectionString))
                 throw new Exception(
                     $"Missing {nameof(ConnectionString)} value in {nameof(GetConnectionFactory)}()."
                     );
             return new SQLiteConnection(ConnectionString);
-        };
+        }
 
         /// <inheritdoc cref="CreateDatabaseTableFactory"/>
-        public override Func<DbCommand> CreateDatabaseTableFactory => () =>
+        public override DbCommand CreateDatabaseTableFactory()
         {
             var queryCommand = new SQLiteCommand();
             queryCommand.CommandText =
@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS [{FeatureTableName}] (
 );
             ";
             return queryCommand;
-        };
+        }
 
         /// <inheritdoc cref="GetValueCommandFactory"/>
-        public override Func<string, DbCommand> GetValueCommandFactory => featureName =>
+        public override DbCommand GetValueCommandFactory(string featureName)
         {
             var queryCommand = new SQLiteCommand();
             queryCommand.CommandText =
@@ -45,10 +45,10 @@ WHERE [{FeatureNameColumn}] = @featureName;
                 ";
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
             return queryCommand;
-        };
+        }
 
         /// <inheritdoc cref="SetValueCommandFactory"/>
-        public override Func<string, bool, DbCommand> SetValueCommandFactory => (featureName, enabled) =>
+        public override DbCommand SetValueCommandFactory(string featureName, bool enabled)
         {
             var featureValue = enabled ? 1 : 0;
             var queryCommand = new SQLiteCommand();
@@ -66,10 +66,10 @@ DO UPDATE SET [{FeatureValueColumn}]=@featureValue
             queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
 
             return queryCommand;
-        };
+        }
 
         /// <inheritdoc cref="SetNullableValueCommandFactory"/>
-        public override Func<string, bool?, DbCommand> SetNullableValueCommandFactory => (featureName, enabled) =>
+        public override DbCommand SetNullableValueCommandFactory(string featureName, bool? enabled)
         {
             int? featureValue = null;
             if (enabled.HasValue) featureValue = enabled.Value ? 1 : 0;
@@ -88,6 +88,6 @@ DO UPDATE SET [{FeatureValueColumn}]=@featureValue
             queryCommand.Parameters.Add(new SQLiteParameter("featureValue", featureValue));
 
             return queryCommand;
-        };
+        }
     }
 }
