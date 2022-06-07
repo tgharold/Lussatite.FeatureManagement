@@ -100,7 +100,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         {
             var sut = CreateSut();
             const string baseName = "Net6_A997_ExerciseRepeatedly";
-            const int maxIterations = 400;
+            const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;
@@ -117,7 +117,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         {
             var sut = CreateSut();
             const string baseName = "Net6_A877_ExerciseRepeatedly";
-            const int maxIterations = 400;
+            const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;
