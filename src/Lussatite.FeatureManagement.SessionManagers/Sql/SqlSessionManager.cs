@@ -28,7 +28,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = Settings.GetValueCommandFactory(featureName))
+                using (var dbCommand = Settings.GetValueDbCommand(featureName))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
@@ -73,7 +73,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = Settings.SetValueCommandFactory(featureName, enabled))
+                using (var dbCommand = Settings.SetValueDbCommand(featureName, enabled))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
@@ -107,7 +107,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = Settings.SetNullableValueCommandFactory(featureName, enabled))
+                using (var dbCommand = Settings.SetNullableValueDbCommand(featureName, enabled))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");

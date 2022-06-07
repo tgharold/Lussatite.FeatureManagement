@@ -31,17 +31,7 @@ namespace TestCommon.Standard.SQLite
 
             _masterConnection = new SQLiteConnection(SqlSessionManagerSettings.ConnectionString);
             _masterConnection.Open();
-
-            using (var createCommand = SqlSessionManagerSettings.CreateDatabaseTableFactory())
-            {
-                using (var conn = SqlSessionManagerSettings.GetConnectionFactory())
-                {
-                    conn.Open();
-                    createCommand.Connection = conn;
-                    createCommand.ExecuteNonQuery();
-                    conn.Close();
-                }
-            }
+            SqlSessionManagerSettings.CreateDatabaseTable(GetConnectionString());
         }
 
         public string GetConnectionString() => SqlSessionManagerSettings.ConnectionString;

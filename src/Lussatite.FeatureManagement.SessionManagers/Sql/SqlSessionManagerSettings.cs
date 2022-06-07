@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
 namespace Lussatite.FeatureManagement.SessionManagers
@@ -105,15 +106,9 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// recommended that this account has minimal permissions.</summary>
         public string ConnectionString { get; set; }
 
-        /// <summary>The SQL connection string used to create the database table if it does not exist.
-        /// This connection string requires CREATE SCHEMA/TABLE permissions if used.</summary>
-        public string TableCreateConnectionString { get; set; }
-
-        /// <summary>Whether the SetValueCommandFactory will return a DbCommand.  Under the Microsoft
+        /// <summary>Whether the SetValueDbCommand will return a DbCommand.  Under the Microsoft
         /// FeatureManager implementation, it writes back via SetValue() at the end of the method.
         /// Which may or may not be the desired behavior for your SqlSessionManager object.
-        /// This provides an easy way to disable the SetValue() write-back method, without
-        /// having to null out the <see cref="SetValueCommandFactory"/> property.
         /// </summary>
         public bool EnableSetValueCommand { get; set; } = false;
 
@@ -121,21 +116,25 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// which can be used to SELECT/INSERT/UPDATE from the database table.</summary>
         public abstract DbConnection GetConnectionFactory();
 
-        /// <summary>A <see cref="DbCommand"/> query which can create the feature values database table
-        /// if it does not exist.</summary>
-        public abstract DbCommand CreateDatabaseTableFactory();
+        /// <summary>A method which can create the feature values database table
+        /// if it does not exist. The connection string requires CREATE SCHEMA/TABLE permissions.
+        /// </summary>
+        public abstract void CreateDatabaseTable(string tableCreateConnectionString);
+
+        /// <summary>Async implementation of <see cref="CreateDatabaseTable"/>.</summary>
+        public abstract Task CreateDatabaseTableAsync(string tableCreateConnectionString);
 
         /// <summary>A <see cref="DbCommand"/> query which must filter down to the single row
         /// matching the feature name string. </summary>
-        public abstract DbCommand GetValueCommandFactory(string featureName);
+        public abstract DbCommand GetValueDbCommand(string featureName);
 
         /// <summary>An optional <see cref="DbCommand"/> query which must support being an INSERT/UPDATE (UPSERT)
         /// of the bool value into the database table. Note that you rarely want to use this in practice, unless
         /// your SQL table is already per-user or per-session. </summary>
-        public abstract DbCommand SetValueCommandFactory(string featureName, bool enabled);
+        public abstract DbCommand SetValueDbCommand(string featureName, bool enabled);
 
         /// <summary>A  <see cref="DbCommand"/> query which must support being an INSERT/UPDATE (UPSERT)
         /// of the nullable bool value into the database table. </summary>
-        public abstract DbCommand SetNullableValueCommandFactory(string featureName, bool? enabled);
+        public abstract DbCommand SetNullableValueDbCommand(string featureName, bool? enabled);
     }
 }
