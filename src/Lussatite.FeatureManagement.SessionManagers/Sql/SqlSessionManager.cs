@@ -58,11 +58,16 @@ namespace Lussatite.FeatureManagement.SessionManagers
             }
         }
 
-        /// <summary>This session manager does not write values back unless the "setValueCommandFactory"
-        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        /// <summary><para>This session manager does not write values back unless the
+        /// <see cref="SqlSessionManagerSettings"/> <see cref="SqlSessionManagerSettings.SetValueCommandFactory"/>
+        /// <see cref="DbCommand"/> was specified.  The <see cref="SqlSessionManagerSettings.EnableSetValueCommand"/>
+        /// property on <see cref="SqlSessionManagerSettings"/> must also be set to true.</para>
+        /// <para>This is because the Microsoft implementation always writes values back to the
+        /// session manager at the end of the method.  Which is not always what you want to happen.</para>
+        /// </summary>
         public virtual async Task SetAsync(string featureName, bool enabled)
         {
-            if (Settings.SetValueCommandFactory is null) return;
+            if (Settings.EnableSetValueCommand != true || Settings.SetValueCommandFactory is null) return;
 
             using (var conn = Settings.GetConnectionFactory())
             {
@@ -92,12 +97,11 @@ namespace Lussatite.FeatureManagement.SessionManagers
             }
         }
 
-        /// <summary>This method does nothing unless the "setNullableValueCommandFactory"
-        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        /// <summary>Write values back to the SQL session manager.  It uses the <see cref="DbCommand"/>
+        /// specified on the <see cref="SqlSessionManagerSettings"/>
+        /// <see cref="SqlSessionManagerSettings.SetNullableValueCommandFactory"/> property.</summary>
         public virtual async Task SetNullableAsync(string featureName, bool? enabled)
         {
-            if (Settings.SetNullableValueCommandFactory is null) return;
-
             using (var conn = Settings.GetConnectionFactory())
             {
                 if (conn is null)
