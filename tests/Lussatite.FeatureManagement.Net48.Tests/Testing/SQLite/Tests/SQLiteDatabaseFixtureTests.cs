@@ -1,5 +1,4 @@
 using System.Data.SQLite;
-using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard.SQLite;
 using Xunit;
 
@@ -19,13 +18,14 @@ namespace Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite.Tests
         public void Can_execute_select_star_query_against_TableName()
         {
             var connectionString = _dbFixture.SqlSessionManagerSettings.ConnectionString;
+            var settings = _dbFixture.SqlSessionManagerSettings;
 
             using (var conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 var queryCommand = conn.CreateCommand();
                 queryCommand.CommandText =
-                $@"SELECT * FROM {SqlSessionManagerSettings.DefaultTableName};";
+                    $@"SELECT * FROM {settings.FeatureTableName};";
                 var value = (string)queryCommand.ExecuteScalar();
                 conn.Close();
             }
