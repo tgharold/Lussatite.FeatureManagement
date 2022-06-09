@@ -12,11 +12,25 @@ A read-only `ISessionManager` implementation that examines `ClaimsPrincipal` cla
 
 ### SqlSessionManager
 
-An `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values. It also supports write-back if configured to do so.
+An `ISessionManager` implementation that uses user-provided `DbCommand` objects to obtain/update its values. Write-back is optional for the `SetValue()` call.
+
+In order to construct the `SqlSessionManager`, you need to provide it with a `SqlSessionManagerSettings` object.  See the SessionManagers.SqlClient or SessionManagers.SQLite for default setting objects which already have the necessary SQL statements.
+
+```C#
+var settings = new SQLServerSessionManagerSettings
+{
+    ConnectionString = "some connection string",
+    EnableSetValueCommand = true,
+};
+var sqlSessionManager = new SqlSessionManager(settings);
+// inject the sqlSessionManager into the LussatiteLazyCacheFeatureManager constructor
+```
 
 ### CachedSqlSessionManager
 
-A cached`ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for a period.  The default cache duration is 30 seconds. It also supports write-back if configured to do so.
+A cached`ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for 60 seconds.  This object is configured using a `CachedSqlSessionManagerSettings` object.
+
+It uses LazyCache and you can pass in an `IAppCache` object to the constructor if you want it to share an application-wide cache. Be warned that if you use a shared-cache, that per-user / per-session feature values are not supported out of the box.  For per-user / per-session needs, make sure `CachedSqlSessionManager` is using a separate `IAppCache` for each user/session.
 
 ## Target
 

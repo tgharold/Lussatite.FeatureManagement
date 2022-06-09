@@ -11,7 +11,7 @@ A lightweight implementation of the Microsoft.FeatureManagement [IFeatureManager
 
 ## Lussatite.FeatureManagement.LazyCache
 
-A lightweight implementation of the Microsoft.FeatureManagement [IFeatureManagerSnapshot](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.ifeaturemanagersnapshot) interface.  It uses [LazyCache](https://github.com/alastairtree/LazyCache) to track the first read value.  When a feature flag value is requested, the `ISessionManager` instances will be polled in order until one returns a definitive answer (true/false).
+A lightweight implementation of the Microsoft.FeatureManagement [IFeatureManagerSnapshot](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.ifeaturemanagersnapshot) interface.  When a feature flag value is requested, the `ISessionManager` instances will be polled in order until one returns a definitive answer (true/false).
 
 Because this is a caching implementation, the first value read by the `LussatiteLazyCacheFeatureManager` instance will continue to be the value returned for the life of the instance.  Even if a new value is registered in one of the `ISessionManager` instances.
 
@@ -19,6 +19,8 @@ Because this is a caching implementation, the first value read by the `Lussatite
 - The order of `ISessionManagers` matters, each takes priority over later ones.
 - The `ISessionManager` should return null if it does not have a definitive answer.  This allows layering.
 - This `LussatiteLazyCacheFeatureManager` implementation will not write back to the `ISessionManager` instances via `SetAsync(string featureName, bool enabled)`.
+
+It uses [LazyCache](https://github.com/alastairtree/LazyCache) and you can pass in an `IAppCache` object to the constructor if you want it to share an application-wide cache. Be warned that if you use a shared-cache, that per-user / per-session feature values are not supported out of the box.  For per-user / per-session needs, make sure `LussatiteLazyCacheFeatureManager` is using a separate `IAppCache` for each user/session.
 
 ### CacheAllFeatureValuesAsync()
 
