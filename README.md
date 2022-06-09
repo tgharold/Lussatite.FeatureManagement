@@ -14,6 +14,8 @@ A light implementation for most of the Microsoft.FeatureManagement interfaces.
 
 3. Create a value provider by implementing [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.isessionmanager) or use one or more of the `Lussatite.FeatureManagement.SessionManagers.*` packages.  Note that the Lussatite.FeatureManagement implementation does **not** write back to the session manager (unlike the Microsoft.FeatureManagement implementation).
 
+Any `ISessionManager` instances which are "global" for all sessions/requests/users can be registered as singletons.  But any `ISessionManager` instances which are per-session / per-request / per-user should be registered as scoped.
+
 4. Wire-up the following in your IoC/DI container:
 
     - Session manager classes will need to be constructed and injected into the feature manager manually, since order does matter.
