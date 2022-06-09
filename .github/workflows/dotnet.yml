@@ -113,7 +113,7 @@ jobs:
 
     - name: dotnet test
       run: >
-        dotnet test --configuration ${{ env.RELEASE_CONFIG }}
+        dotnet test --configuration ${{ env.RELEASE_CONFIG }} --environment DOTNET_ENVIRONMENT="GitHubActions"
 
     #- name: Environment for Publish/Pack
     #  run: env
