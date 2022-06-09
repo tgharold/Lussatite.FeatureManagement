@@ -111,7 +111,7 @@ COMMIT TRANSACTION;
                 ";
 
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SqlParameter("featureValue", enabled));
+            queryCommand.Parameters.Add(new SqlParameter("featureEnabled", enabled));
 
             return queryCommand;
         }
