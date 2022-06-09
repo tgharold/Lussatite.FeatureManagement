@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.SessionManagers.SQLite
 {
-    /// <summary>A default set of settings for a SQLite backend.</summary>
+    /// <summary>Default settings for a SQLite backend.</summary>
     // ReSharper disable once InconsistentNaming
     public class SQLiteSessionManagerSettings : SqlSessionManagerSettings
     {
