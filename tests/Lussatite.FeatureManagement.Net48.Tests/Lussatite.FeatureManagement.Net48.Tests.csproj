@@ -24,4 +24,12 @@
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement\Lussatite.FeatureManagement.csproj" />
     <ProjectReference Include="..\TestCommon.Standard\TestCommon.Standard.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.GitHubActions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
