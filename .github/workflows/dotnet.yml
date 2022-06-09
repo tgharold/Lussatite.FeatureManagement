@@ -107,9 +107,16 @@ jobs:
     - name: Build
       run: dotnet build --configuration ${{ env.RELEASE_CONFIG }}
 
+    # Start up sqlserver
+    - name: Install SQL Local DB
+      run: ./.github/SetupSqlLocalDb.ps1
+      shell: pwsh
+    #- name: Startup MSSQL for Docker
+    #  run: docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=W8E4XjnWiM0G9oF" -p 11433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
     - name: dotnet test
       run: >
-        dotnet test --configuration ${{ env.RELEASE_CONFIG }}
+        dotnet test --configuration ${{ env.RELEASE_CONFIG }} --environment DOTNET_ENVIRONMENT="GitHubActions"
 
     #- name: Environment for Publish/Pack
     #  run: env

@@ -17,14 +17,15 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite.Tests
         [Fact]
         public void Can_execute_select_star_query_against_TableName()
         {
-            var connectionString = _dbFixture.GetConnectionString();
+            var connectionString = _dbFixture.SqlSessionManagerSettings.ConnectionString;
+            var settings = _dbFixture.SqlSessionManagerSettings;
 
             using (var conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 var queryCommand = conn.CreateCommand();
                 queryCommand.CommandText =
-                $@"SELECT * FROM {SQLiteDatabaseFixture.TableName};";
+                    $@"SELECT * FROM {settings.FeatureTableName};";
                 var value = (string)queryCommand.ExecuteScalar();
                 conn.Close();
             }

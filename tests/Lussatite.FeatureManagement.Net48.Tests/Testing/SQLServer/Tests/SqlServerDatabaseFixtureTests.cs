@@ -1,15 +1,15 @@
-using System.Data.SQLite;
-using TestCommon.Standard.SQLite;
+using System.Data.SqlClient;
+using TestCommon.Standard.MicrosoftSQLServer;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.NetCore31.Tests.Testing.SQLite.Tests
+namespace Lussatite.FeatureManagement.Net48.Tests.Testing.SQLServer.Tests
 {
-    [Collection(nameof(SQLiteDatabaseCollection))]
-    public class SQLiteDatabaseFixtureTests
+    [Collection(nameof(SQLServerDatabaseCollection))]
+    public class SqlServerDatabaseFixtureTests
     {
-        private readonly SQLiteDatabaseFixture _dbFixture;
+        private readonly SqlServerDatabaseFixture _dbFixture;
 
-        public SQLiteDatabaseFixtureTests(SQLiteDatabaseFixture dbFixture)
+        public SqlServerDatabaseFixtureTests(SqlServerDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
         }
@@ -20,12 +20,12 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.Testing.SQLite.Tests
             var connectionString = _dbFixture.SqlSessionManagerSettings.ConnectionString;
             var settings = _dbFixture.SqlSessionManagerSettings;
 
-            using (var conn = new SQLiteConnection(connectionString))
+            using (var conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 var queryCommand = conn.CreateCommand();
                 queryCommand.CommandText =
-                    $@"SELECT * FROM {settings.FeatureTableName};";
+                    $@"SELECT * FROM [{settings.FeatureSchemaName}].[{settings.FeatureTableName}];";
                 var value = (string)queryCommand.ExecuteScalar();
                 conn.Close();
             }

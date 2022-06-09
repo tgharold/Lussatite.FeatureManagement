@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Stub.System.Data.SQLite.Core.NetStandard" Version="1.0.115.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.20" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.20" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.20" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.SqlClient\Lussatite.FeatureManagement.SessionManagers.SqlClient.csproj" />
+    <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers.SQLite\Lussatite.FeatureManagement.SessionManagers.SQLite.csproj" />
     <ProjectReference Include="..\..\src\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
   </ItemGroup>
 

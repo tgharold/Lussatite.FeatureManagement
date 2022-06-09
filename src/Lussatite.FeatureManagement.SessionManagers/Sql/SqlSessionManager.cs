@@ -12,23 +12,23 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// </summary>
     public class SqlSessionManager : ILussatiteSessionManager
     {
-        private readonly SqlSessionManagerSettings _settings;
+        public SqlSessionManagerSettings Settings { get; }
 
         public SqlSessionManager(
-            SqlSessionManagerSettings settings = null
+            SqlSessionManagerSettings settings
             )
         {
-            _settings = settings ?? new SqlSessionManagerSettings();
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
         public virtual async Task<bool?> GetAsync(string featureName)
         {
-            using (var conn = _settings.GetConnectionFactory())
+            using (var conn = Settings.GetConnectionFactory())
             {
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = _settings.GetValueCommandFactory(featureName))
+                using (var dbCommand = Settings.GetValueDbCommand(featureName))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
@@ -39,17 +39,17 @@ namespace Lussatite.FeatureManagement.SessionManagers
                     if (dataTable is null) return null;
                     if (dataTable.Rows.Count == 0) return null;
 
-                    var keyColumnValue = dataTable.Rows[0][_settings.FeatureNameColumn] as string;
-                    var value = dataTable.Rows[0][_settings.FeatureValueColumn] as bool?;
+                    var keyColumnValue = dataTable.Rows[0][Settings.FeatureNameColumn] as string;
+                    var value = dataTable.Rows[0][Settings.FeatureValueColumn] as bool?;
                     conn.Close();
 
                     if (string.IsNullOrWhiteSpace(keyColumnValue)
                         || !keyColumnValue.Equals(featureName, StringComparison.OrdinalIgnoreCase))
                     {
                         var e = new Exception($"Did not find feature name in result row during {nameof(GetAsync)}.");
-                        e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
+                        e.Data["FeatureNameColumn"] = Settings.FeatureNameColumn;
                         e.Data["FeatureNameColumnValue"] = keyColumnValue;
-                        e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
+                        e.Data["FeatureValueColumn"] = Settings.FeatureValueColumn;
                         throw e;
                     }
 
@@ -58,18 +58,22 @@ namespace Lussatite.FeatureManagement.SessionManagers
             }
         }
 
-        /// <summary>This session manager does not write values back unless the "setValueCommandFactory"
-        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        /// <summary><para>This session manager does not write values back unless the
+        /// <see cref="SqlSessionManagerSettings.EnableSetValueCommand"/> property on
+        /// <see cref="SqlSessionManagerSettings"/> is set to true.</para>
+        /// <para>This is because the Microsoft implementation always writes values back to the
+        /// session manager at the end of the method.  Which is not always what you want to happen.</para>
+        /// </summary>
         public virtual async Task SetAsync(string featureName, bool enabled)
         {
-            if (_settings.SetValueCommandFactory is null) return;
+            if (Settings.EnableSetValueCommand != true) return;
 
-            using (var conn = _settings.GetConnectionFactory())
+            using (var conn = Settings.GetConnectionFactory())
             {
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = _settings.SetValueCommandFactory(featureName, enabled))
+                using (var dbCommand = Settings.SetValueDbCommand(featureName, enabled))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
@@ -82,8 +86,8 @@ namespace Lussatite.FeatureManagement.SessionManagers
                     if (resultCount <= 0)
                     {
                         var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
-                        e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
-                        e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
+                        e.Data["FeatureNameColumn"] = Settings.FeatureNameColumn;
+                        e.Data["FeatureValueColumn"] = Settings.FeatureValueColumn;
                         e.Data["FeatureName"] = featureName;
                         e.Data["Enabled"] = enabled;
                         throw e;
@@ -92,18 +96,18 @@ namespace Lussatite.FeatureManagement.SessionManagers
             }
         }
 
-        /// <summary>This method does nothing unless the "setNullableValueCommandFactory"
-        /// <see cref="DbCommand"/> was specified in the constructor arguments.</summary>
+        /// <summary>Write values back to the SQL data storage.  This method mirrors the
+        /// <see cref="GetAsync"/> with the use of a nullable boolean, because a
+        /// <see cref="ISessionManager"/> should be able to store "don't care" / "undefined" as an answer.
+        /// </summary>
         public virtual async Task SetNullableAsync(string featureName, bool? enabled)
         {
-            if (_settings.SetNullableValueCommandFactory is null) return;
-
-            using (var conn = _settings.GetConnectionFactory())
+            using (var conn = Settings.GetConnectionFactory())
             {
                 if (conn is null)
                     throw new Exception($"Unable to obtain {nameof(DbConnection)} from connection factory.");
 
-                using (var dbCommand = _settings.SetNullableValueCommandFactory(featureName, enabled))
+                using (var dbCommand = Settings.SetNullableValueDbCommand(featureName, enabled))
                 {
                     if (dbCommand is null)
                         throw new Exception($"Unable to obtain {nameof(DbCommand)} from command factory.");
@@ -116,8 +120,8 @@ namespace Lussatite.FeatureManagement.SessionManagers
                     if (resultCount <= 0)
                     {
                         var e = new Exception($"Zero rows were affected by {nameof(SetAsync)}.");
-                        e.Data["FeatureNameColumn"] = _settings.FeatureNameColumn;
-                        e.Data["FeatureValueColumn"] = _settings.FeatureValueColumn;
+                        e.Data["FeatureNameColumn"] = Settings.FeatureNameColumn;
+                        e.Data["FeatureValueColumn"] = Settings.FeatureValueColumn;
                         e.Data["FeatureName"] = featureName;
                         e.Data["Enabled"] = enabled;
                         throw e;
@@ -134,11 +138,11 @@ namespace Lussatite.FeatureManagement.SessionManagers
             {
                 dataTable = new DataTable();
 
-                var featureNameColumn = new DataColumn(_settings.FeatureNameColumn, typeof(string));
+                var featureNameColumn = new DataColumn(Settings.FeatureNameColumn, typeof(string));
                 featureNameColumn.AllowDBNull = true;
                 dataTable.Columns.Add(featureNameColumn);
 
-                var featureValueColumn = new DataColumn(_settings.FeatureValueColumn, typeof(bool));
+                var featureValueColumn = new DataColumn(Settings.FeatureValueColumn, typeof(bool));
                 featureValueColumn.AllowDBNull = true;
                 dataTable.Columns.Add(featureValueColumn);
 

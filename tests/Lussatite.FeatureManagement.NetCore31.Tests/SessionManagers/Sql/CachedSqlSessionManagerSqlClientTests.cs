@@ -1,32 +1,28 @@
-using System.Data.SQLite;
 using System.Threading.Tasks;
-using Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite;
+using LazyCache;
+using Lussatite.FeatureManagement.NetCore31.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
-using TestCommon.Standard.SQLite;
+using TestCommon.Standard.MicrosoftSQLServer;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
+namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
 {
-    [Collection(nameof(SQLiteDatabaseCollection))]
-    public class SqlSessionManagerTests
+    [Collection(nameof(SQLServerDatabaseCollection))]
+    public class CachedSqlSessionManagerSqlClient
     {
-        private readonly SQLiteDatabaseFixture _dbFixture;
+        private readonly SqlServerDatabaseFixture _dbFixture;
 
-        public SqlSessionManagerTests(SQLiteDatabaseFixture dbFixture)
+        public CachedSqlSessionManagerSqlClient(SqlServerDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
         }
 
-        private SqlSessionManager CreateSut()
+        private CachedSqlSessionManager CreateSut()
         {
-            var settings = _dbFixture.GetSqlSessionManagerSettings();
-            settings.GetConnectionFactory = _dbFixture.CreateConnectionCommand;
-            settings.GetValueCommandFactory = _dbFixture.CreateGetValueCommand;
-            settings.SetValueCommandFactory = _dbFixture.CreateSetValueCommand;
-            settings.SetNullableValueCommandFactory = _dbFixture.CreateSetNullableValueCommand;
+            var settings = _dbFixture.SqlSessionManagerSettings;
 
-            return new SqlSessionManager(
+            return new CachedSqlSessionManager(
                 settings: settings
                 );
         }
@@ -40,47 +36,29 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A125a_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A125b_FeatureSetToFalse", 0)]
-        [InlineData(true, "Net6_A125c_FeatureSetToTrue", 1)]
+        [InlineData(null, "Net48_A125a_FeatureSetToNull", null)]
+        [InlineData(false, "Net48_A125b_FeatureSetToFalse", false)]
+        [InlineData(true, "Net48_A125c_FeatureSetToTrue", true)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
-            int? insertValue
+            bool? insertValue
             )
         {
-            using (var conn = new SQLiteConnection(_dbFixture.GetConnectionString()))
-            {
-                conn.Open();
-
-                var updateCommand = conn.CreateCommand();
-                updateCommand.CommandText =
-                $@"
-                    INSERT INTO {SQLiteDatabaseFixture.TableName}
-                    ({SQLiteDatabaseFixture.NameColumn}, {SQLiteDatabaseFixture.ValueColumn})
-                    VALUES (@featureName, @featureValue)
-                    ON CONFLICT({SQLiteDatabaseFixture.NameColumn})
-                    DO UPDATE SET {SQLiteDatabaseFixture.ValueColumn}=@featureValue
-                ";
-                updateCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
-                updateCommand.Parameters.Add(new SQLiteParameter("featureValue", insertValue));
-                updateCommand.ExecuteNonQuery();
-
-                conn.Close();
-            }
+            var sut = CreateSut();
+            await sut.SetNullableAsync(featureName, insertValue);
 
             var featureTableValues = await _dbFixture.GetAllData();
             Assert.NotEmpty(featureTableValues);
 
-            var sut = CreateSut();
             var result = await sut.GetAsync(featureName);
             Assert.Equal(expected, result);
         }
 
         [Theory]
-        [InlineData(null, "Net6_A129x_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A129y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A129z_FeatureSetToTrue", true)]
+        [InlineData(null, "Net48_A349x_FeatureSetToNull", null)]
+        [InlineData(false, "Net48_A349y_FeatureSetToFalse", false)]
+        [InlineData(true, "Net48_A349z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
@@ -98,9 +76,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A139jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A139ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A139lz_FeatureSetToTrue", true)]
+        [InlineData(null, "Net48_A359jx_FeatureSetToNull", null)]
+        [InlineData(false, "Net48_A359ky_FeatureSetToFalse", false)]
+        [InlineData(true, "Net48_A359lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
@@ -122,8 +100,8 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetNullableValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_A997_ExerciseRepeatedly";
-            const int maxIterations = 400;
+            const string baseName = "Net48_C997_ExerciseRepeatedly";
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;
@@ -139,8 +117,8 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_A877_ExerciseRepeatedly";
-            const int maxIterations = 400;
+            const string baseName = "Net48_C877_ExerciseRepeatedly";
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var callSet = Rng.GetInteger(0, 20) == 0;

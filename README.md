@@ -12,7 +12,9 @@ A light implementation for most of the Microsoft.FeatureManagement interfaces.
 
 2. Define a set of string constants for the names of your features.  Look at the various static TestFeatures.cs files for ideas.
 
-3. Create a value provider by implementing [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.isessionmanager) or use one or more of the `Lussatite.FeatureManagement.SessionManagers.*` packages.  Note that Lussatite.FeatureManagement implementation does **not** write back to the session manager (unlike the Microsoft.FeatureManagement implementation).
+3. Create a value provider by implementing [ISessionManager](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.isessionmanager) or use one or more of the `Lussatite.FeatureManagement.SessionManagers.*` packages.  Note that the Lussatite.FeatureManagement implementation does **not** write back to the session manager (unlike the Microsoft.FeatureManagement implementation).
+
+Any `ISessionManager` instances which are "global" for all sessions/requests/users can be registered as singletons.  But any `ISessionManager` instances which are per-session / per-request / per-user should be registered as scoped.
 
 4. Wire-up the following in your IoC/DI container:
 
@@ -40,6 +42,20 @@ Target: .NET Standard 2.0
 - `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
 - `SqlSessionManager`: An `ISessionManager` implementation that uses a user-provided `DbCommand`.
 - `CachedSqlSessionManager`: An `ISessionManager` implementation which adds caching to database calls.
+
+### Lussatite.FeatureManagement.SessionManagers.SqlClient:
+
+Target: .NET Standard 2.0
+
+- A set of `DbCommand` methods suitable for use with Microsoft SQL Server.
+- The feature value table name is `dbo.FeatureManagement`.
+
+### Lussatite.FeatureManagement.SessionManagers.SQLite:
+
+Target: .NET Standard 2.0
+
+- A set of `DbCommand` methods suitable for use with SQLite.
+- The feature value table name is `FeatureManagement`.
 
 ### Lussatite.FeatureManagement.SessionManagers.Core:
 
