@@ -1,4 +1,4 @@
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using TestCommon.Standard.MicrosoftSQLServer;
 using Xunit;
 
@@ -20,7 +20,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLServer.Tests
             var connectionString = _dbFixture.SqlSessionManagerSettings.ConnectionString;
             var settings = _dbFixture.SqlSessionManagerSettings;
 
-            using (var conn = new SQLiteConnection(connectionString))
+            using (var conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 var queryCommand = conn.CreateCommand();

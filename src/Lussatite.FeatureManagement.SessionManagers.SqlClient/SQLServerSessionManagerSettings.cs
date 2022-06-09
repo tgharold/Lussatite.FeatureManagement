@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -21,11 +22,18 @@ namespace Lussatite.FeatureManagement.SessionManagers.SqlClient
 
         private string GetCreateDatabaseTableSql() =>
             $@"
-CREATE TABLE IF NOT EXISTS [{FeatureTableName}] (
-    [{FeatureNameColumn}] TEXT PRIMARY KEY,
-    [{FeatureValueColumn}] BOOLEAN
-        CHECK ([{FeatureValueColumn}] IN (0, 1))
-);
+if not exists
+    (select * from INFORMATION_SCHEMA.TABLES
+    where TABLE_SCHEMA = '{FeatureSchemaName}'
+    and TABLE_NAME = '{FeatureTableName}')
+begin
+  create table [{FeatureSchemaName}].[{FeatureTableName}]
+  (
+    [{FeatureNameColumn}] nvarchar(255) not null,
+    [{FeatureValueColumn}] bit,
+    CONSTRAINT PK_{FeatureTableName}_{FeatureNameColumn} PRIMARY KEY CLUSTERED ({FeatureNameColumn})
+  )
+end
             ";
 
         /// <inheritdoc cref="CreateDatabaseTable"/>
@@ -71,8 +79,8 @@ CREATE TABLE IF NOT EXISTS [{FeatureTableName}] (
             queryCommand.CommandText =
                 $@"
 SELECT [{FeatureNameColumn}], [{FeatureValueColumn}]
-FROM [{FeatureTableName}]
-WHERE [{FeatureNameColumn}] = @featureName;
+FROM [{FeatureSchemaName}].[{FeatureTableName}]
+WHERE {FeatureNameColumn} = @featureName;
                 ";
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
             return queryCommand;
@@ -81,20 +89,29 @@ WHERE [{FeatureNameColumn}] = @featureName;
         /// <inheritdoc cref="SetValueDbCommand"/>
         public override DbCommand SetValueDbCommand(string featureName, bool enabled)
         {
-            var featureValue = enabled ? 1 : 0;
             var queryCommand = new SqlCommand();
 
+            // https://sqlperformance.com/2020/09/locking/upsert-anti-pattern
             queryCommand.CommandText =
                 $@"
-INSERT INTO [{FeatureTableName}]
-([{FeatureNameColumn}], [{FeatureValueColumn}])
-VALUES (@featureName, @featureValue)
-ON CONFLICT([{FeatureNameColumn}])
-DO UPDATE SET [{FeatureValueColumn}]=@featureValue
+BEGIN TRANSACTION;
+
+UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
+SET [{FeatureValueColumn}] = @featureEnabled
+WHERE [{FeatureNameColumn}] = @featureName;
+
+IF @@ROWCOUNT = 0
+BEGIN
+  INSERT [{FeatureSchemaName}].[{FeatureTableName}]
+  ([{FeatureNameColumn}], [{FeatureValueColumn}])
+  VALUES (@featureName, @featureEnabled);
+END
+
+COMMIT TRANSACTION;
                 ";
 
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SqlParameter("featureValue", featureValue));
+            queryCommand.Parameters.Add(new SqlParameter("featureValue", enabled));
 
             return queryCommand;
         }
@@ -102,21 +119,33 @@ DO UPDATE SET [{FeatureValueColumn}]=@featureValue
         /// <inheritdoc cref="SetNullableValueDbCommand"/>
         public override DbCommand SetNullableValueDbCommand(string featureName, bool? enabled)
         {
-            int? featureValue = null;
-            if (enabled.HasValue) featureValue = enabled.Value ? 1 : 0;
             var queryCommand = new SqlCommand();
 
+            // https://sqlperformance.com/2020/09/locking/upsert-anti-pattern
             queryCommand.CommandText =
                 $@"
-INSERT INTO [{FeatureTableName}]
-([{FeatureNameColumn}], [{FeatureValueColumn}])
-VALUES (@featureName, @featureValue)
-ON CONFLICT([{FeatureNameColumn}])
-DO UPDATE SET [{FeatureValueColumn}]=@featureValue
+BEGIN TRANSACTION;
+
+UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
+SET [{FeatureValueColumn}] = @featureEnabled
+WHERE [{FeatureNameColumn}] = @featureName;
+
+IF @@ROWCOUNT = 0
+BEGIN
+  INSERT [{FeatureSchemaName}].[{FeatureTableName}]
+  ([{FeatureNameColumn}], [{FeatureValueColumn}])
+  VALUES (@featureName, @featureEnabled);
+END
+
+COMMIT TRANSACTION;
                 ";
 
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
-            queryCommand.Parameters.Add(new SqlParameter("featureValue", featureValue));
+            queryCommand.Parameters.Add(new SqlParameter("featureEnabled", SqlDbType.Bit)
+            {
+                Value = (object) enabled ?? DBNull.Value,
+                IsNullable=true
+            });
 
             return queryCommand;
         }
