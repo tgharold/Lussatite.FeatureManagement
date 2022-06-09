@@ -12,7 +12,6 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
     public class CachedSqlSessionManagerSqlClient
     {
         private readonly SqlServerDatabaseFixture _dbFixture;
-        private readonly IAppCache _appCache = new CachingService();
 
         public CachedSqlSessionManagerSqlClient(SqlServerDatabaseFixture dbFixture)
         {
@@ -24,7 +23,6 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             var settings = _dbFixture.SqlSessionManagerSettings;
 
             return new CachedSqlSessionManager(
-                cache: _appCache,
                 settings: settings
                 );
         }

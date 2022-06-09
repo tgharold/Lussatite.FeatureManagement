@@ -15,11 +15,9 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// <summary>Construct the <see cref="CachedSqlSessionManager"/> instance.</summary>
         /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         /// <param name="cacheSettings"><see cref="CachedSqlSessionManagerSettings"/></param>
-        /// <param name="cache">Optional application-wide <see cref="IAppCache"/> instance.</param>
         public CachedSqlSessionManager(
             SqlSessionManagerSettings settings,
-            CachedSqlSessionManagerSettings cacheSettings = null,
-            IAppCache cache = null
+            CachedSqlSessionManagerSettings cacheSettings = null
             ) : base(
             settings: settings
             )
@@ -27,7 +25,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
             _cacheSettings = cacheSettings ?? new CachedSqlSessionManagerSettings();
             if (_cacheSettings.CacheTime.TotalSeconds <= 0)
                 throw new ArgumentOutOfRangeException(nameof(_cacheSettings.CacheTime));
-            _cache = cache ?? new CachingService();
+            _cache = new CachingService();
         }
 
         /// <inheritdoc cref="SqlSessionManager.GetAsync"/>

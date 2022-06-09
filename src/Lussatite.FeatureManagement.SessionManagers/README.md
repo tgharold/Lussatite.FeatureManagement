@@ -30,7 +30,7 @@ var sqlSessionManager = new SqlSessionManager(settings);
 
 A cached`ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for 60 seconds.  This object is configured using a `CachedSqlSessionManagerSettings` object.
 
-It uses LazyCache and you can pass in an `IAppCache` object to the constructor if you want it to share an application-wide cache. Be warned that if you use a shared-cache, that per-user / per-session feature values are not supported out of the box.  For per-user / per-session needs, make sure `CachedSqlSessionManager` is using a separate `IAppCache` for each user/session.
+It uses [LazyCache](https://github.com/alastairtree/LazyCache) under the hood.
 
 ## Target
 

@@ -21,14 +21,13 @@ namespace Lussatite.FeatureManagement
 
         public LussatiteLazyCacheFeatureManager(
             IEnumerable<string> featureNames,
-            IEnumerable<ISessionManager> sessionManagers,
-            IAppCache cache = null
+            IEnumerable<ISessionManager> sessionManagers
             ) : base(
                 featureNames: featureNames,
                 sessionManagers: sessionManagers
                 )
         {
-            _cache = cache ?? new CachingService();
+            _cache = new CachingService();
         }
 
         /// <summary>Returns the feature's value which will remain the same for the
