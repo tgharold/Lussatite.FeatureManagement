@@ -27,4 +27,11 @@
     <ProjectReference Include="..\Lussatite.FeatureManagement.SessionManagers\Lussatite.FeatureManagement.SessionManagers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
 </Project>
