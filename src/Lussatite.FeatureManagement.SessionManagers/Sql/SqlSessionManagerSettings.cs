@@ -14,10 +14,10 @@ namespace Lussatite.FeatureManagement.SessionManagers
         private string _featureNameColumn = DefaultNameColumn;
         private string _featureValueColumn = DefaultValueColumn;
 
-        public const string DefaultSchemaName = "dbo"; // not all SQL providers have the concept of schema
-        public const string DefaultTableName = "FeatureManagement";
-        public const string DefaultNameColumn = "FeatureName";
-        public const string DefaultValueColumn = "Enabled";
+        private const string DefaultSchemaName = "dbo"; // not all SQL providers have the concept of schema
+        private const string DefaultTableName = "FeatureManagement";
+        private const string DefaultNameColumn = "FeatureName";
+        private const string DefaultValueColumn = "Enabled";
 
         /// <summary>A restrictive regex for identifiers like schema/table/column names.
         /// Even with this regex, you should be passing in string constants and not
