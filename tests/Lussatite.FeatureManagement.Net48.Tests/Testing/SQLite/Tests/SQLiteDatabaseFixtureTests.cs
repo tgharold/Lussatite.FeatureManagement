@@ -18,7 +18,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite.Tests
         [Fact]
         public void Can_execute_select_star_query_against_TableName()
         {
-            var connectionString = _dbFixture.GetConnectionString();
+            var connectionString = _dbFixture.SqlSessionManagerSettings.ConnectionString;
 
             using (var conn = new SQLiteConnection(connectionString))
             {

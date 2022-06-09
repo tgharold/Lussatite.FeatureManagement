@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Lussatite.FeatureManagement.SessionManagers;
-using Lussatite.FeatureManagement.SessionManagers.SQLite;
+using Lussatite.FeatureManagement.SessionManagers.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace TestCommon.Standard.MicrosoftSQLServer
 {
@@ -23,12 +24,12 @@ namespace TestCommon.Standard.MicrosoftSQLServer
             var now = DateTimeOffset.UtcNow;
             DbName = $"test-{now:yyyyMMdd}-{now:HHmm}-{UpperCaseAlphanumeric(8)}";
 
-            //TODO: Pull from configuration connection strings "TestSqlServerDatabaseMaster"
-            _masterConnectionString = "server=localhost,11433;database=master;user=sa;password=Pass123!";
+            var configuration = GetConfiguration();
+            _masterConnectionString = configuration.GetConnectionString("TestSqlServerDatabaseMaster");
 
             var connectionString = CreateConnectionStringFromOriginal(_masterConnectionString, DbName);
 
-            SqlSessionManagerSettings = new SQLiteSessionManagerSettings
+            SqlSessionManagerSettings = new SQLServerSessionManagerSettings
             {
                 ConnectionString = connectionString,
 
@@ -49,6 +50,18 @@ namespace TestCommon.Standard.MicrosoftSQLServer
             return new string(chars.ToArray());
         }
 
+        private IConfiguration GetConfiguration()
+        {
+            var baseDirectory = AppContext.BaseDirectory;
+            var testEnvironmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            var configurationRoot = new ConfigurationBuilder()
+                .SetBasePath(baseDirectory)
+                .AddJsonFile($"appsettings.json", optional: true)
+                .AddJsonFile($"appsettings.{testEnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+            return configurationRoot;
+        }
 
         private bool _databaseInitialized;
         private readonly object _lock = new object();
@@ -105,12 +118,12 @@ namespace TestCommon.Standard.MicrosoftSQLServer
             {
                 // https://docs.microsoft.com/en-us/sql/t-sql/functions/db-id-transact-sql
                 // https://stackoverflow.com/a/2028955
-                using (var command = new SqlCommand($@"select DB_ID('{DbName}');", connection))
+                using (var command = new SqlCommand($@"select DB_ID('{DbName}') NOT NULL;", connection))
                 {
                     try
                     {
                         connection.Open();
-                        var result = (int)command.ExecuteScalar();
+                        var result = (int?)command.ExecuteScalar();
                         connection.Close();
                         return (result > 0);
                     }

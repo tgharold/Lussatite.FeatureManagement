@@ -1,16 +1,16 @@
 using System.Data.SQLite;
 using Lussatite.FeatureManagement.SessionManagers;
-using TestCommon.Standard.SQLite;
+using TestCommon.Standard.MicrosoftSQLServer;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLite.Tests
+namespace Lussatite.FeatureManagement.Net6.Tests.Testing.SQLServer.Tests
 {
-    [Collection(nameof(SQLiteDatabaseCollection))]
-    public class SQLiteDatabaseFixtureTests
+    [Collection(nameof(SQLServerDatabaseCollection))]
+    public class SqlServerDatabaseFixtureTests
     {
-        private readonly SQLiteDatabaseFixture _dbFixture;
+        private readonly SqlServerDatabaseFixture _dbFixture;
 
-        public SQLiteDatabaseFixtureTests(SQLiteDatabaseFixture dbFixture)
+        public SqlServerDatabaseFixtureTests(SqlServerDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
         }

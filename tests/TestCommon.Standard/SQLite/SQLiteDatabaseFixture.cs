@@ -31,10 +31,9 @@ namespace TestCommon.Standard.SQLite
 
             _masterConnection = new SQLiteConnection(SqlSessionManagerSettings.ConnectionString);
             _masterConnection.Open();
-            SqlSessionManagerSettings.CreateDatabaseTable(GetConnectionString());
-        }
 
-        public string GetConnectionString() => SqlSessionManagerSettings.ConnectionString;
+            SqlSessionManagerSettings.CreateDatabaseTable(SqlSessionManagerSettings.ConnectionString);
+        }
 
         /// <summary>Meant to be used as a debug step, this returns all of the data in the table.</summary>
         public async Task<List<object[]>> GetAllData()
