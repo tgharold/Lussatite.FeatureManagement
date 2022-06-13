@@ -31,6 +31,8 @@ begin
   (
     [{FeatureNameColumn}] nvarchar(255) not null,
     [{FeatureValueColumn}] bit,
+    [{FeatureCreatedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
+    [{FeatureModifiedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
     CONSTRAINT PK_{FeatureTableName}_{FeatureNameColumn} PRIMARY KEY CLUSTERED ({FeatureNameColumn})
   )
 end
@@ -97,7 +99,7 @@ WHERE {FeatureNameColumn} = @featureName;
 BEGIN TRANSACTION;
 
 UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
-SET [{FeatureValueColumn}] = @featureEnabled
+SET [{FeatureValueColumn}] = @featureEnabled, [{FeatureModifiedColumn}] = GETUTCDATE()
 WHERE [{FeatureNameColumn}] = @featureName;
 
 IF @@ROWCOUNT = 0
@@ -127,7 +129,7 @@ COMMIT TRANSACTION;
 BEGIN TRANSACTION;
 
 UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
-SET [{FeatureValueColumn}] = @featureEnabled
+SET [{FeatureValueColumn}] = @featureEnabled, [{FeatureModifiedColumn}] = GETUTCDATE()
 WHERE [{FeatureNameColumn}] = @featureName;
 
 IF @@ROWCOUNT = 0

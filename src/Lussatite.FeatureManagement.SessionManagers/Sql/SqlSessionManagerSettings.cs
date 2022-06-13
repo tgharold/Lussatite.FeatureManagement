@@ -13,11 +13,15 @@ namespace Lussatite.FeatureManagement.SessionManagers
         private string _featureTableName = DefaultTableName;
         private string _featureNameColumn = DefaultNameColumn;
         private string _featureValueColumn = DefaultValueColumn;
+        private string _featureCreatedColumn = DefaultCreatedColumn;
+        private string _featureModifiedColumn = DefaultModifiedColumn;
 
         private const string DefaultSchemaName = "dbo"; // not all SQL providers have the concept of schema
         private const string DefaultTableName = "FeatureManagement";
         private const string DefaultNameColumn = "FeatureName";
         private const string DefaultValueColumn = "Enabled";
+        private const string DefaultCreatedColumn = "Created";
+        private const string DefaultModifiedColumn = "Modified";
 
         /// <summary>A restrictive regex for identifiers like schema/table/column names.
         /// Even with this regex, you should be passing in string constants and not
@@ -97,6 +101,38 @@ namespace Lussatite.FeatureManagement.SessionManagers
                     };
 
                 _featureValueColumn = value;
+            }
+        }
+
+        /// <summary>The database column which contains the created date/time (UTC).</summary>
+        public string FeatureCreatedColumn
+        {
+            get => string.IsNullOrEmpty(_featureCreatedColumn) ? DefaultCreatedColumn : _featureCreatedColumn;
+            set
+            {
+                if (!IsValidColumnName(value))
+                    throw new Exception($"{nameof(FeatureCreatedColumn)} set to invalid value.")
+                    {
+                        Data = { ["value"] = value }
+                    };
+
+                _featureCreatedColumn = value;
+            }
+        }
+
+        /// <summary>The database column which contains the modified date/time (UTC).</summary>
+        public string FeatureModifiedColumn
+        {
+            get => string.IsNullOrEmpty(_featureModifiedColumn) ? DefaultModifiedColumn : _featureModifiedColumn;
+            set
+            {
+                if (!IsValidColumnName(value))
+                    throw new Exception($"{nameof(FeatureModifiedColumn)} set to invalid value.")
+                    {
+                        Data = { ["value"] = value }
+                    };
+
+                _featureModifiedColumn = value;
             }
         }
 
