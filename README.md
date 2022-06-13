@@ -39,23 +39,26 @@ Target: .NET Standard 2.0
 
 Target: .NET Standard 2.0
 
-- `ClaimsPrincipalSessionManager`: A read-only `ISessionManager` implementation using "feature_flag" claims on a `ClaimsPrincipal`.
-- `SqlSessionManager`: An `ISessionManager` implementation that uses a user-provided `DbCommand`.
-- `CachedSqlSessionManager`: An `ISessionManager` implementation which adds caching to database calls.
+`ISessionManager` implementations:
+
+- `ClaimsPrincipalSessionManager`: A read-only implementation using "feature_flag" claims on a `ClaimsPrincipal`.
+- `SqlSessionManager`: An implementation that uses a user-provided `DbCommand`.
+- `CachedSqlSessionManager`: An `implementation which adds caching to database calls.
+- `StaticAnswerSessionManager`: A static implementation which always returns the same answer.  Useful for testing.
 
 ### Lussatite.FeatureManagement.SessionManagers.SqlClient:
 
 Target: .NET Standard 2.0
 
 - A set of `DbCommand` methods suitable for use with Microsoft SQL Server.
-- The feature value table name is `dbo.FeatureManagement`.
+- The default feature value table name is `dbo.FeatureManagement`.
 
 ### Lussatite.FeatureManagement.SessionManagers.SQLite:
 
 Target: .NET Standard 2.0
 
 - A set of `DbCommand` methods suitable for use with SQLite.
-- The feature value table name is `FeatureManagement`.
+- The default feature value table name is `FeatureManagement`.
 
 ### Lussatite.FeatureManagement.SessionManagers.Core:
 

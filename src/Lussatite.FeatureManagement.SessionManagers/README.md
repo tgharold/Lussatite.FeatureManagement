@@ -28,9 +28,13 @@ var sqlSessionManager = new SqlSessionManager(settings);
 
 ### CachedSqlSessionManager
 
-A cached`ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for 60 seconds.  This object is configured using a `CachedSqlSessionManagerSettings` object.
+A cached `ISessionManager` implementation that uses a user-provided `DbCommand` to obtain its values.  The results for a particular feature flag name will be cached for 60 seconds.  This object is configured using a `CachedSqlSessionManagerSettings` object.
 
 It uses [LazyCache](https://github.com/alastairtree/LazyCache) under the hood.
+
+### StaticAnswerSessionManager
+
+An `ISessionManager` implementation which always returns the same answer for the feature name.  It's really only useful in testing scenarios where you need to validate both control pathways in the code.
 
 ## Target
 
