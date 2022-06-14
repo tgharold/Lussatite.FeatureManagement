@@ -9,15 +9,15 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// <summary>Settings class for the <see cref="SqlSessionManager"/> instance.</summary>
     public abstract class SqlSessionManagerSettings
     {
-        private string _featureSchemaName = DefaultSchemaName;
-        private string _featureTableName = DefaultTableName;
-        private string _featureNameColumn = DefaultNameColumn;
-        private string _featureValueColumn = DefaultValueColumn;
-        private string _featureCreatedColumn = DefaultCreatedColumn;
-        private string _featureModifiedColumn = DefaultModifiedColumn;
+        private string _featureSchemaName;
+        private string _featureTableName;
+        private string _featureNameColumn;
+        private string _featureValueColumn;
+        private string _featureCreatedColumn;
+        private string _featureModifiedColumn;
 
         private const string DefaultSchemaName = "dbo"; // not all SQL providers have the concept of schema
-        private const string DefaultTableName = "FeatureManagement";
+        protected virtual string DefaultTableName => "FeatureManagement";
         private const string DefaultNameColumn = "FeatureName";
         private const string DefaultValueColumn = "Enabled";
         private const string DefaultCreatedColumn = "Created";
