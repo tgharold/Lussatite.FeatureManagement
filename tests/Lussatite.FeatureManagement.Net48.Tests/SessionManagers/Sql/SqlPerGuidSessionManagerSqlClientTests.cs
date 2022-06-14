@@ -70,7 +70,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             var sut = GetSutForUser(PrimaryUser);
             await sut.SetNullableAsync(featureName, insertValue);
 
-            var featureTableValues = await _dbFixture.GetAllData();
+            var featureTableValues = await _dbFixture.GetAllData(sut.Settings);
             Assert.NotEmpty(featureTableValues);
 
             var result = await sut.GetAsync(featureName);
@@ -90,7 +90,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             var sut = GetSutForUser(PrimaryUser);
             await sut.SetNullableAsync(featureName, enabled);
 
-            var featureTableValues = await _dbFixture.GetAllData();
+            var featureTableValues = await _dbFixture.GetAllData(sut.Settings);
             Assert.NotEmpty(featureTableValues);
 
             var result = await sut.GetAsync(featureName);
@@ -111,7 +111,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             if (enabled.HasValue) await sut.SetAsync(featureName, enabled.Value);
             else await sut.SetNullableAsync(featureName, null);
 
-            var featureTableValues = await _dbFixture.GetAllData();
+            var featureTableValues = await _dbFixture.GetAllData(sut.Settings);
             Assert.NotEmpty(featureTableValues);
 
             var result = await sut.GetAsync(featureName);
