@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using LazyCache;
 using Lussatite.FeatureManagement.Net6.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;

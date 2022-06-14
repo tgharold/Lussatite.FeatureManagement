@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
-using Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite;
 using Lussatite.FeatureManagement.Net48.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
 using TestCommon.Standard.MicrosoftSQLServer;
-using TestCommon.Standard.SQLite;
 using Xunit;
 
 namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
