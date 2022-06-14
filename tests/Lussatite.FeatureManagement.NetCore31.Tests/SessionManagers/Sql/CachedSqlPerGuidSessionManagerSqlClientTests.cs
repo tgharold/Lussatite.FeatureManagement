@@ -1,35 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Lussatite.FeatureManagement.Net48.Tests.Testing.SQLite;
+using Lussatite.FeatureManagement.NetCore31.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
-using TestCommon.Standard.SQLite;
+using TestCommon.Standard.MicrosoftSQLServer;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
+namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
 {
-    [Collection(nameof(SQLiteDatabaseCollection))]
-    public class SqlSessionManagerSQLiteTests
+    [Collection(nameof(SQLServerDatabaseCollection))]
+    public class CachedSqlPerGuidSessionManagerSqlClientTests
     {
-        private readonly SQLiteDatabaseFixture _dbFixture;
+        private readonly SqlServerDatabaseFixture _dbFixture;
+        private Guid PrimaryUser => _userGuids.First();
+        private readonly List<Guid> _userGuids = new List<Guid>();
+        private readonly Random _random = new Random();
 
-        public SqlSessionManagerSQLiteTests(SQLiteDatabaseFixture dbFixture)
+        public CachedSqlPerGuidSessionManagerSqlClientTests(SqlServerDatabaseFixture dbFixture)
         {
             _dbFixture = dbFixture;
+            for (var i = 0; i < 20; i++) _userGuids.Add(Guid.NewGuid());
+            _userSessionManagers = CreateSuts();
         }
 
-        private SqlSessionManager CreateSut()
+        private Guid GetRandomUserGuid()
         {
-            var settings = _dbFixture.SqlSessionManagerSettings;
-
-            return new SqlSessionManager(
-                settings: settings
-                );
+            var index = _random.Next(0, _userGuids.Count);
+            return _userGuids[index];
         }
+
+        private readonly IDictionary<Guid, SqlSessionManager> _userSessionManagers;
+
+        private IDictionary<Guid,SqlSessionManager> CreateSuts()
+        {
+            var baseSetting = _dbFixture.SQLServerPerGuidSessionManagerSettings;
+            var suts = new Dictionary<Guid, SqlSessionManager>();
+            foreach (var userGuid in _userGuids)
+            {
+                var setting = baseSetting.JsonClone();
+                setting.UserGuid = userGuid;
+                suts[userGuid] = new CachedSqlSessionManager(setting);
+            }
+
+            return suts;
+        }
+
+        private SqlSessionManager GetSutForUser(Guid userGuid) => _userSessionManagers[userGuid];
 
         [Fact]
         public async Task Return_null_for_nonexistent_key()
         {
-            var sut = CreateSut();
+            var sut = GetSutForUser(PrimaryUser);
             var result = await sut.GetAsync("someRandomFeatureNonExistentName");
             Assert.Null(result);
         }
@@ -44,7 +67,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             bool? insertValue
             )
         {
-            var sut = CreateSut();
+            var sut = GetSutForUser(PrimaryUser);
             await sut.SetNullableAsync(featureName, insertValue);
 
             var featureTableValues = await _dbFixture.GetAllData(sut.Settings);
@@ -55,16 +78,16 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_A129x_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_A129y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_A129z_FeatureSetToTrue", true)]
+        [InlineData(null, "Net48_A349x_FeatureSetToNull", null)]
+        [InlineData(false, "Net48_A349y_FeatureSetToFalse", false)]
+        [InlineData(true, "Net48_A349z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
             bool? enabled
             )
         {
-            var sut = CreateSut();
+            var sut = GetSutForUser(PrimaryUser);
             await sut.SetNullableAsync(featureName, enabled);
 
             var featureTableValues = await _dbFixture.GetAllData(sut.Settings);
@@ -75,16 +98,16 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_A139jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_A139ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_A139lz_FeatureSetToTrue", true)]
+        [InlineData(null, "Net48_A359jx_FeatureSetToNull", null)]
+        [InlineData(false, "Net48_A359ky_FeatureSetToFalse", false)]
+        [InlineData(true, "Net48_A359lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
             bool? enabled
             )
         {
-            var sut = CreateSut();
+            var sut = GetSutForUser(PrimaryUser);
             if (enabled.HasValue) await sut.SetAsync(featureName, enabled.Value);
             else await sut.SetNullableAsync(featureName, null);
 
@@ -98,11 +121,12 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         [Fact]
         public async Task Exercise_SetNullableValue()
         {
-            var sut = CreateSut();
-            const string baseName = "Net48_A997_ExerciseRepeatedly";
-            const int maxIterations = 500;
+            const string baseName = "Net48_C997_ExerciseRepeatedly";
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
+                var userGuid = GetRandomUserGuid();
+                var sut = GetSutForUser(userGuid);
                 var callSet = Rng.GetInteger(0, 20) == 0;
                 var value = Rng.GetNullableBoolean();
                 var featureName = $"{baseName}{Rng.GetInteger(0, 10)}";
@@ -115,11 +139,12 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         [Fact]
         public async Task Exercise_SetValue()
         {
-            var sut = CreateSut();
-            const string baseName = "Net48_A877_ExerciseRepeatedly";
-            const int maxIterations = 500;
+            const string baseName = "Net48_C877_ExerciseRepeatedly";
+            const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
+                var userGuid = GetRandomUserGuid();
+                var sut = GetSutForUser(userGuid);
                 var callSet = Rng.GetInteger(0, 20) == 0;
                 var value = Rng.GetBoolean();
                 var featureName = $"{baseName}{Rng.GetInteger(0, 10)}";

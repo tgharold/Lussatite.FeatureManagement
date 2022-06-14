@@ -36,16 +36,16 @@ namespace TestCommon.Standard.SQLite
         }
 
         /// <summary>Meant to be used as a debug step, this returns all of the data in the table.</summary>
-        public async Task<List<object[]>> GetAllData()
+        public async Task<List<object[]>> GetAllData(SqlSessionManagerSettings settings)
         {
             var result = new List<object[]>();
-            using (var conn = new SQLiteConnection(SqlSessionManagerSettings.ConnectionString))
+            using (var conn = new SQLiteConnection(settings.ConnectionString))
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.Connection = conn;
-                    cmd.CommandText = $@"SELECT * FROM {SqlSessionManagerSettings.FeatureTableName};";
+                    cmd.CommandText = $@"SELECT * FROM {settings.FeatureTableName};";
                     using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
                     {
                         while (reader.Read())

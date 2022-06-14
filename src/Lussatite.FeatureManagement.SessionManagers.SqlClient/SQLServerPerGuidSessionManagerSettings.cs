@@ -6,10 +6,37 @@ using System.Threading.Tasks;
 
 namespace Lussatite.FeatureManagement.SessionManagers.SqlClient
 {
-    /// <summary>Default settings for a Microsoft SQL Server backend.</summary>
+    /// <summary>Default settings for a Microsoft SQL Server backend.  This one differs from
+    /// <see cref="SQLServerSessionManagerSettings"/> in that it uses a GUID to separate
+    /// out per-user feature values.  Note that if you use this with
+    /// <see cref="SqlSessionManager"/> or <see cref="CachedSqlSessionManager"/> that
+    /// everything needs to be registered as "scoped" / "per-request" in the DI container.</summary>
     // ReSharper disable once InconsistentNaming
-    public class SQLServerSessionManagerSettings : SqlSessionManagerSettings
+    public class SQLServerPerGuidSessionManagerSettings : SqlSessionManagerSettings
     {
+        public Guid UserGuid { get; set; }
+
+        protected override string DefaultTableName => "FeatureManagementByGuid";
+
+        private const string DefaultUserGuidColumn = "UserGuid";
+        private string _featureUserGuidColumn = DefaultUserGuidColumn;
+
+        /// <summary>The database column which contains the user (or session) GUID.</summary>
+        public string FeatureUserGuidColumn
+        {
+            get => string.IsNullOrEmpty(_featureUserGuidColumn) ? DefaultUserGuidColumn : _featureUserGuidColumn;
+            set
+            {
+                if (!IsValidColumnName(value))
+                    throw new Exception($"{nameof(FeatureUserGuidColumn)} set to invalid value.")
+                    {
+                        Data = { ["value"] = value }
+                    };
+
+                _featureUserGuidColumn = value;
+            }
+        }
+
         /// <inheritdoc cref="GetConnectionFactory"/>
         public override DbConnection GetConnectionFactory()
         {
@@ -29,12 +56,13 @@ if not exists
 begin
   create table [{FeatureSchemaName}].[{FeatureTableName}]
   (
+    [{FeatureUserGuidColumn}] UNIQUEIDENTIFIER not null,
     [{FeatureNameColumn}] nvarchar(255) not null,
     [{FeatureValueColumn}] bit,
     [{FeatureCreatedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
     [{FeatureModifiedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
-    CONSTRAINT PK_{FeatureTableName} PRIMARY KEY CLUSTERED ({FeatureNameColumn})
-  )
+    CONSTRAINT PK_{FeatureTableName} PRIMARY KEY CLUSTERED ({FeatureUserGuidColumn},{FeatureNameColumn})
+  );
 end
             ";
 
@@ -82,8 +110,9 @@ end
                 $@"
 SELECT [{FeatureNameColumn}], [{FeatureValueColumn}]
 FROM [{FeatureSchemaName}].[{FeatureTableName}]
-WHERE [{FeatureNameColumn}] = @featureName;
+WHERE [{FeatureUserGuidColumn}] = @userGuid and [{FeatureNameColumn}] = @featureName;
                 ";
+            queryCommand.Parameters.Add(new SqlParameter("userGuid", UserGuid));
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
             return queryCommand;
         }
@@ -100,18 +129,19 @@ BEGIN TRANSACTION;
 
 UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
 SET [{FeatureValueColumn}] = @featureEnabled, [{FeatureModifiedColumn}] = GETUTCDATE()
-WHERE [{FeatureNameColumn}] = @featureName;
+WHERE [{FeatureUserGuidColumn}] = @userGuid and [{FeatureNameColumn}] = @featureName;
 
 IF @@ROWCOUNT = 0
 BEGIN
   INSERT [{FeatureSchemaName}].[{FeatureTableName}]
-  ([{FeatureNameColumn}], [{FeatureValueColumn}])
-  VALUES (@featureName, @featureEnabled);
+  ([{FeatureUserGuidColumn}], [{FeatureNameColumn}], [{FeatureValueColumn}])
+  VALUES (@userGuid, @featureName, @featureEnabled);
 END
 
 COMMIT TRANSACTION;
                 ";
 
+            queryCommand.Parameters.Add(new SqlParameter("userGuid", UserGuid));
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
             queryCommand.Parameters.Add(new SqlParameter("featureEnabled", enabled));
 
@@ -130,18 +160,19 @@ BEGIN TRANSACTION;
 
 UPDATE [{FeatureSchemaName}].[{FeatureTableName}] WITH (UPDLOCK, SERIALIZABLE)
 SET [{FeatureValueColumn}] = @featureEnabled, [{FeatureModifiedColumn}] = GETUTCDATE()
-WHERE [{FeatureNameColumn}] = @featureName;
+WHERE [{FeatureUserGuidColumn}] = @userGuid and [{FeatureNameColumn}] = @featureName;
 
 IF @@ROWCOUNT = 0
 BEGIN
   INSERT [{FeatureSchemaName}].[{FeatureTableName}]
-  ([{FeatureNameColumn}], [{FeatureValueColumn}])
-  VALUES (@featureName, @featureEnabled);
+  ([{FeatureUserGuidColumn}], [{FeatureNameColumn}], [{FeatureValueColumn}])
+  VALUES (@userGuid, @featureName, @featureEnabled);
 END
 
 COMMIT TRANSACTION;
                 ";
 
+            queryCommand.Parameters.Add(new SqlParameter("userGuid", UserGuid));
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
             queryCommand.Parameters.Add(new SqlParameter("featureEnabled", SqlDbType.Bit)
             {
