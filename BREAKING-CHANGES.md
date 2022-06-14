@@ -4,9 +4,7 @@ This is only a list of breaking changes.
 
 ## v1.6.0
 
-The SQL database table defined in `SQLServerSessionManagerSettings` now has `Created`/`Modified` columns to track the UTC instant of creation / last-updated.  There is no automatic migration process; so users will need to manually add those columns to their feature value table.
-
-The SQLite table does not have those two columns yet.
+The SQL database table defined in the `SqlSessionManager` classes now have `Created`/`Modified` columns to track the UTC instant of creation / last-updated.  There is no automatic migration process; so users will need to manually add those columns to their existing feature value table.
 
 ## v1.5.0
 
