@@ -82,7 +82,7 @@ end
                 $@"
 SELECT [{FeatureNameColumn}], [{FeatureValueColumn}]
 FROM [{FeatureSchemaName}].[{FeatureTableName}]
-WHERE {FeatureNameColumn} = @featureName;
+WHERE [{FeatureNameColumn}] = @featureName;
                 ";
             queryCommand.Parameters.Add(new SqlParameter("featureName", featureName));
             return queryCommand;
