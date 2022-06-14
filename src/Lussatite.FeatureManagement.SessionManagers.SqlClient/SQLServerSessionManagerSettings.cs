@@ -33,7 +33,7 @@ begin
     [{FeatureValueColumn}] bit,
     [{FeatureCreatedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
     [{FeatureModifiedColumn}] datetimeoffset DEFAULT GETUTCDATE(),
-    CONSTRAINT PK_{FeatureTableName}_{FeatureNameColumn} PRIMARY KEY CLUSTERED ({FeatureNameColumn})
+    CONSTRAINT PK_{FeatureTableName} PRIMARY KEY CLUSTERED ({FeatureNameColumn})
   )
 end
             ";
