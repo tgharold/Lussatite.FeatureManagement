@@ -12,6 +12,7 @@ namespace TestCommon.Standard.MicrosoftSQLServer
 {
     public class SqlServerDatabaseFixture : IDisposable
     {
+        public SQLServerPerGuidSessionManagerSettings SQLServerPerGuidSessionManagerSettings { get; }
         public SqlSessionManagerSettings SqlSessionManagerSettings { get; }
         public string DbName { get; }
 
@@ -32,12 +33,18 @@ namespace TestCommon.Standard.MicrosoftSQLServer
             SqlSessionManagerSettings = new SQLServerSessionManagerSettings
             {
                 ConnectionString = connectionString,
+                EnableSetValueCommand = true,
+            };
 
+            SQLServerPerGuidSessionManagerSettings = new SQLServerPerGuidSessionManagerSettings
+            {
+                ConnectionString = connectionString,
                 EnableSetValueCommand = true,
             };
 
             CreateDatabase();
             SqlSessionManagerSettings.CreateDatabaseTable(connectionString);
+            SQLServerPerGuidSessionManagerSettings.CreateDatabaseTable(connectionString);
         }
 
         private static readonly Random Random = new Random();
