@@ -23,8 +23,10 @@ namespace Lussatite.FeatureManagement.SessionManagers.SQLite
             $@"
 CREATE TABLE IF NOT EXISTS [{FeatureTableName}] (
     [{FeatureNameColumn}] TEXT PRIMARY KEY,
-    [{FeatureValueColumn}] BOOLEAN
-        CHECK ([{FeatureValueColumn}] IN (0, 1))
+    [{FeatureValueColumn}] BOOLEAN,
+    [{FeatureCreatedColumn}] DATETIME DEFAULT CURRENT_TIMESTAMP,
+    [{FeatureModifiedColumn}] DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CHECK ([{FeatureValueColumn}] IN (0, 1))
 );
             ";
 
@@ -90,7 +92,7 @@ INSERT INTO [{FeatureTableName}]
 ([{FeatureNameColumn}], [{FeatureValueColumn}])
 VALUES (@featureName, @featureValue)
 ON CONFLICT([{FeatureNameColumn}])
-DO UPDATE SET [{FeatureValueColumn}]=@featureValue
+DO UPDATE SET [{FeatureValueColumn}]=@featureValue, [{FeatureModifiedColumn}]=DATETIME('now')
                 ";
 
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
@@ -112,7 +114,7 @@ INSERT INTO [{FeatureTableName}]
 ([{FeatureNameColumn}], [{FeatureValueColumn}])
 VALUES (@featureName, @featureValue)
 ON CONFLICT([{FeatureNameColumn}])
-DO UPDATE SET [{FeatureValueColumn}]=@featureValue
+DO UPDATE SET [{FeatureValueColumn}]=@featureValue, [{FeatureModifiedColumn}]=DATETIME('now')
                 ";
 
             queryCommand.Parameters.Add(new SQLiteParameter("featureName", featureName));
