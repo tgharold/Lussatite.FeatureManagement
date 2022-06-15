@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LazyCache;
 using Lussatite.FeatureManagement.Net6.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
@@ -33,6 +34,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         private readonly IDictionary<Guid, SqlSessionManager> _userSessionManagers;
+        private readonly IAppCache _appCache = new CachingService();
 
         private IDictionary<Guid,SqlSessionManager> CreateSuts()
         {
@@ -42,7 +44,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
             {
                 var setting = baseSetting.JsonClone();
                 setting.UserGuid = userGuid;
-                suts[userGuid] = new CachedSqlSessionManager(setting);
+                suts[userGuid] = new CachedSqlSessionManager(setting, appCache: _appCache);
             }
 
             return suts;

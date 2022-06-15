@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using LazyCache;
 using Lussatite.FeatureManagement.Net48.Tests.Testing.SQLServer;
 using Lussatite.FeatureManagement.SessionManagers;
 using TestCommon.Standard;
@@ -12,6 +13,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
     {
         private const string Pfx = TestConstants.Prefix + "CSSMSCT";
         private readonly SqlServerDatabaseFixture _dbFixture;
+        private readonly IAppCache _appCache = new CachingService();
 
         public CachedSqlSessionManagerSqlClient(SqlServerDatabaseFixture dbFixture)
         {
@@ -23,7 +25,8 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
             var settings = _dbFixture.SqlSessionManagerSettings;
 
             return new CachedSqlSessionManager(
-                settings: settings
+                settings: settings,
+                appCache: _appCache
                 );
         }
 
