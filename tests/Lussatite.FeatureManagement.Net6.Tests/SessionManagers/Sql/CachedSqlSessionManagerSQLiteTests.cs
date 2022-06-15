@@ -10,6 +10,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
     [Collection(nameof(SQLiteDatabaseCollection))]
     public class CachedSqlSessionManagerSQLiteTests
     {
+        private const string Pfx = TestConstants.Prefix + "CSSMSQLiteCT";
         private readonly SQLiteDatabaseFixture _dbFixture;
 
         public CachedSqlSessionManagerSQLiteTests(SQLiteDatabaseFixture dbFixture)
@@ -30,15 +31,15 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Return_null_for_nonexistent_key()
         {
             var sut = CreateSut();
-            var result = await sut.GetAsync("someRandomFeatureNonExistentName");
+            var result = await sut.GetAsync(Pfx+"someRandomFeatureNonExistentName");
             Assert.Null(result);
         }
 
 
         [Theory]
-        [InlineData(null, "Net6_A125a_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A125b_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A125c_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A125a_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A125b_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A125c_FeatureSetToTrue", true)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
@@ -56,9 +57,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A349x_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A349y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A349z_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A349x_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A349y_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A349z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
@@ -76,9 +77,9 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net6_A359jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net6_A359ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net6_A359lz_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A359jx_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A359ky_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A359lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
@@ -100,7 +101,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetNullableValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_C997_ExerciseRepeatedly";
+            const string baseName = Pfx+"_C997_ExerciseRepeatedly";
             const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {
@@ -117,7 +118,7 @@ namespace Lussatite.FeatureManagement.Net6.Tests.SessionManagers.Sql
         public async Task Exercise_SetValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net6_C877_ExerciseRepeatedly";
+            const string baseName = Pfx+"_C877_ExerciseRepeatedly";
             const int maxIterations = 1500;
             for (var i = 0; i < maxIterations; i++)
             {

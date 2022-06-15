@@ -8,9 +8,10 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Static
 {
     public class StaticAnswerSessionManagerTests
     {
-        private const string TrueFeature = nameof(TrueFeature);
-        private const string FalseFeature = nameof(FalseFeature);
-        private const string NullFeature = nameof(NullFeature);
+        private const string Pfx = TestConstants.Prefix;
+        private const string TrueFeature = Pfx + nameof(TrueFeature);
+        private const string FalseFeature = Pfx + nameof(FalseFeature);
+        private const string NullFeature = Pfx + nameof(NullFeature);
 
         private readonly StaticAnswerSessionManager _sut = new StaticAnswerSessionManager(
             new Dictionary<string, bool?>(StringComparer.OrdinalIgnoreCase)

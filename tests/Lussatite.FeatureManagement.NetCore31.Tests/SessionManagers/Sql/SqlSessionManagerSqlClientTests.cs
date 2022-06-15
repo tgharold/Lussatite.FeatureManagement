@@ -10,6 +10,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
     [Collection(nameof(SQLServerDatabaseCollection))]
     public class SqlSessionManagerSqlClientTests
     {
+        private const string Pfx = TestConstants.Prefix + "SSMSqlClientCT";
         private readonly SqlServerDatabaseFixture _dbFixture;
 
         public SqlSessionManagerSqlClientTests(SqlServerDatabaseFixture dbFixture)
@@ -30,14 +31,14 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         public async Task Return_null_for_nonexistent_key()
         {
             var sut = CreateSut();
-            var result = await sut.GetAsync("someRandomFeatureNonExistentName");
+            var result = await sut.GetAsync(Pfx+"someRandomFeatureNonExistentName");
             Assert.Null(result);
         }
 
         [Theory]
-        [InlineData(null, "Net48_A125a_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_A125b_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_A125c_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A125a_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A125b_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A125c_FeatureSetToTrue", true)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
@@ -55,9 +56,9 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_A129x_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_A129y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_A129z_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A129x_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A129y_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A129z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
@@ -75,9 +76,9 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_A139jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_A139ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_A139lz_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_A139jx_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_A139ky_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_A139lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
@@ -99,7 +100,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         public async Task Exercise_SetNullableValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net48_A997_ExerciseRepeatedly";
+            const string baseName = Pfx+"_A997_ExerciseRepeatedly";
             const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
@@ -116,7 +117,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         public async Task Exercise_SetValue()
         {
             var sut = CreateSut();
-            const string baseName = "Net48_A877_ExerciseRepeatedly";
+            const string baseName = Pfx+"_A877_ExerciseRepeatedly";
             const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {

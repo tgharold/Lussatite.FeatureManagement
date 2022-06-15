@@ -13,6 +13,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
     [Collection(nameof(SQLServerDatabaseCollection))]
     public class SqlPerGuidSessionManagerSqlClientTests
     {
+        private const string Pfx = TestConstants.Prefix + "SGuidSMSQLCT";
         private readonly SqlServerDatabaseFixture _dbFixture;
         private Guid PrimaryUser => _userGuids.First();
         private readonly List<Guid> _userGuids = new List<Guid>();
@@ -53,14 +54,14 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         public async Task Return_null_for_nonexistent_key()
         {
             var sut = GetSutForUser(PrimaryUser);
-            var result = await sut.GetAsync("someRandomFeatureNonExistentName");
+            var result = await sut.GetAsync(Pfx+"someRandomFeatureNonExistentName");
             Assert.Null(result);
         }
 
         [Theory]
-        [InlineData(null, "Net48_M125a_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_N125b_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_P125c_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_M125a_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_N125b_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_P125c_FeatureSetToTrue", true)]
         public async Task Return_expected_for_inserted_key_value(
             bool? expected,
             string featureName,
@@ -78,9 +79,9 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_J529x_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_K329y_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_L729z_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_J529x_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_K329y_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_L729z_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetNullableValue(
             bool? expected,
             string featureName,
@@ -98,9 +99,9 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         }
 
         [Theory]
-        [InlineData(null, "Net48_D439jx_FeatureSetToNull", null)]
-        [InlineData(false, "Net48_E439ky_FeatureSetToFalse", false)]
-        [InlineData(true, "Net48_F439lz_FeatureSetToTrue", true)]
+        [InlineData(null, Pfx+"_D439jx_FeatureSetToNull", null)]
+        [InlineData(false, Pfx+"_E439ky_FeatureSetToFalse", false)]
+        [InlineData(true, Pfx+"_F439lz_FeatureSetToTrue", true)]
         public async Task Return_expected_for_SetValue(
             bool? expected,
             string featureName,
@@ -121,7 +122,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         [Fact]
         public async Task Exercise_SetNullableValue()
         {
-            const string baseName = "Net48_B473_ExerciseRepeatedly";
+            const string baseName = Pfx+"_B473_ExerciseRepeatedly";
             const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
@@ -139,7 +140,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.Sql
         [Fact]
         public async Task Exercise_SetValue()
         {
-            const string baseName = "Net48_C985_ExerciseRepeatedly";
+            const string baseName = Pfx+"_C985_ExerciseRepeatedly";
             const int maxIterations = 500;
             for (var i = 0; i < maxIterations; i++)
             {
