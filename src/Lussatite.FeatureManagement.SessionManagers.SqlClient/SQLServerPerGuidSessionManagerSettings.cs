@@ -18,6 +18,14 @@ namespace Lussatite.FeatureManagement.SessionManagers.SqlClient
 
         protected override string DefaultTableName => "FeatureManagementByGuid";
 
+        /// <summary>Calculate the cache key to be used when storing data in an application's global cache.
+        /// By including the schema/table name, we generate a unique key for the feature name; even if
+        /// there are multiple feature value tables in use.  This also adds in the GUID as part of
+        /// the key so that users can have their feature values stored in the shared application cache.
+        /// </summary>
+        public override string CacheKey(string featureName) =>
+            $"{CacheKeyPrefix}-{FeatureSchemaName}-{FeatureTableName}-{UserGuid:N}-{featureName}";
+
         private const string DefaultUserGuidColumn = "UserGuid";
         private string _featureUserGuidColumn = DefaultUserGuidColumn;
 

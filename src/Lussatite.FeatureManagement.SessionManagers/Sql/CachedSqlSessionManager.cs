@@ -6,7 +6,9 @@ using LazyCache;
 namespace Lussatite.FeatureManagement.SessionManagers
 {
     /// <summary>A caching version of <see cref="SqlSessionManager"/> which reduces the
-    /// number of calls to the underlying database.</summary>
+    /// number of calls to the underlying database.  If <see cref="IAppCache"/> is
+    /// registered in the Dependency Injection system, it will use the application's
+    /// global LazyCache instance.</summary>
     public class CachedSqlSessionManager : SqlSessionManager
     {
         private readonly IAppCache _cache;
@@ -15,9 +17,11 @@ namespace Lussatite.FeatureManagement.SessionManagers
         /// <summary>Construct the <see cref="CachedSqlSessionManager"/> instance.</summary>
         /// <param name="settings"><see cref="SqlSessionManagerSettings"/></param>
         /// <param name="cacheSettings"><see cref="CachedSqlSessionManagerSettings"/></param>
+        /// <param name="appCache"><see cref="IAppCache"/></param>
         public CachedSqlSessionManager(
             SqlSessionManagerSettings settings,
-            CachedSqlSessionManagerSettings cacheSettings = null
+            CachedSqlSessionManagerSettings cacheSettings = null,
+            IAppCache appCache = null
             ) : base(
             settings: settings
             )
@@ -25,7 +29,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
             _cacheSettings = cacheSettings ?? new CachedSqlSessionManagerSettings();
             if (_cacheSettings.CacheTime.TotalSeconds <= 0)
                 throw new ArgumentOutOfRangeException(nameof(_cacheSettings.CacheTime));
-            _cache = new CachingService();
+            _cache = appCache ?? new CachingService();
         }
 
         /// <inheritdoc cref="SqlSessionManager.GetAsync"/>
@@ -68,10 +72,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
             _cache.Add(cacheKey, ToCacheValue(enabled), absoluteExpiration);
         }
 
-        private static string CalculateCacheKey(string featureName)
-        {
-            return $"Lussatite.FeatureManagement:{nameof(CachedSqlSessionManager)}:{featureName}";
-        }
+        private string CalculateCacheKey(string featureName) => Settings.CacheKey(featureName);
 
         private DateTimeOffset CalculateAbsoluteExpiration()
         {

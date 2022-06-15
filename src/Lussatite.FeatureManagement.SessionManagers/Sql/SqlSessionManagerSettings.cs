@@ -2,6 +2,7 @@ using System;
 using System.Data.Common;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using LazyCache;
 
 // ReSharper disable once CheckNamespace
 namespace Lussatite.FeatureManagement.SessionManagers
@@ -32,6 +33,15 @@ namespace Lussatite.FeatureManagement.SessionManagers
         public virtual bool IsValidSchemaName(string schemaName) => _restrictiveRegex.IsMatch(schemaName);
         public virtual bool IsValidTableName(string tableName) => _restrictiveRegex.IsMatch(tableName);
         public virtual bool IsValidColumnName(string columnName) => _restrictiveRegex.IsMatch(columnName);
+
+        protected virtual string CacheKeyPrefix => $"Lussatite.FeatureManagement-{nameof(SqlSessionManagerSettings)}";
+
+        /// <summary>Calculate the cache key to be used when storing data in an application's global
+        /// <see cref="IAppCache"/>.  By including the schema/table name, we generate a unique
+        /// key for the feature name; even if there are multiple feature value tables in use.
+        /// </summary>
+        public virtual string CacheKey(string featureName) =>
+            $"{CacheKeyPrefix}-{FeatureSchemaName}-{FeatureTableName}-{featureName}";
 
         /// <summary>The database schema name which holds the feature values table.  Not
         /// all providers have the concept of a schema, so this property is optional
