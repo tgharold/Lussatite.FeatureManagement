@@ -9,6 +9,8 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.ClaimsPrin
 {
     public class ClaimsPrincipalSessionManagerTests
     {
+        private const string Pfx = TestConstants.Prefix;
+
         private ClaimsPrincipal CreateClaimsPrincipal(IEnumerable<string> featureFlagValues)
         {
             var claims = featureFlagValues
@@ -27,7 +29,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.ClaimsPrin
         [Fact]
         public async Task GetAsync_returns_true_for_featureName_with_no_prefix()
         {
-            const string featureName = "abc456-true";
+            var featureName = $"{Pfx}-AXJ456-true";
             var principal = CreateClaimsPrincipal(new[]
             {
                 "someOtherFeatureTrue",
@@ -42,7 +44,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.ClaimsPrin
         [Fact]
         public async Task GetAsync_returns_false_for_featureName_with_exclamation_prefix()
         {
-            const string featureName = "Xyz123-false";
+            var featureName = $"{Pfx}-Xyz123-false";
             var principal = CreateClaimsPrincipal(new[]
             {
                 "ThisOtherUnrelatedFeature",
@@ -56,7 +58,7 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests.SessionManagers.ClaimsPrin
         [Fact]
         public async Task GetAsync_returns_null_for_featureName_not_set()
         {
-            const string featureName = "QRS175-null";
+            var featureName = $"{Pfx}-RS232-null";
             var principal = CreateClaimsPrincipal(new[]
             {
                 $"FeatureNot{featureName}",
