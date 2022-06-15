@@ -125,7 +125,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         public async Task Exercise_SetNullableValue()
         {
             const string baseName = Pfx+"_C997_ExerciseRepeatedly";
-            const int maxIterations = 1500;
+            const int maxIterations = 3500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var userGuid = GetRandomUserGuid();
@@ -143,7 +143,7 @@ namespace Lussatite.FeatureManagement.Net48.Tests.SessionManagers.Sql
         public async Task Exercise_SetValue()
         {
             const string baseName = Pfx+"_C877_ExerciseRepeatedly";
-            const int maxIterations = 1500;
+            const int maxIterations = 3500;
             for (var i = 0; i < maxIterations; i++)
             {
                 var userGuid = GetRandomUserGuid();
