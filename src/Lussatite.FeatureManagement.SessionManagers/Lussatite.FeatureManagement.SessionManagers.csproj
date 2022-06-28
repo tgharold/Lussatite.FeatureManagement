@@ -5,6 +5,7 @@
     <WarningsAsErrors>true</WarningsAsErrors>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Title>Lussatite.FeatureManagement.SessionManagers</Title>
