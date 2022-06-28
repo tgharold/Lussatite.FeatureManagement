@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LazyCache;
+using LazyCache.Providers;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.FeatureManagement;
 
 namespace Lussatite.FeatureManagement
@@ -17,7 +19,9 @@ namespace Lussatite.FeatureManagement
     /// </summary>
     public class LussatiteLazyCacheFeatureManager : LussatiteFeatureManager, IFeatureManagerSnapshot
     {
-        IAppCache _cache;
+        readonly IAppCache _cache;
+        private readonly Lazy<ICacheProvider> _cacheProvider = new Lazy<ICacheProvider>(() =>
+            new MemoryCacheProvider(new MemoryCache(new MemoryCacheOptions())));
 
         public LussatiteLazyCacheFeatureManager(
             IEnumerable<string> featureNames,
@@ -27,7 +31,10 @@ namespace Lussatite.FeatureManagement
                 sessionManagers: sessionManagers
                 )
         {
-            _cache = new CachingService();
+            // There's a subtle trap here.  Even though we new up a new caching service, because we
+            // failed to pass in our own CacheProvider, we end up using the static:
+            //      public static Lazy<ICacheProvider> DefaultCacheProvider
+            _cache = new CachingService(_cacheProvider);
         }
 
         /// <summary>Returns the feature's value which will remain the same for the
