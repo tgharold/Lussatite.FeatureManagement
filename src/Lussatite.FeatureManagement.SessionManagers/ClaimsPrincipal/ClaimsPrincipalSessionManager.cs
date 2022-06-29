@@ -14,8 +14,15 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// <para>This type should be registered/constructed on a per-request basis
     /// since it takes dependency on the current user (<see cref="ClaimsPrincipal"/>).</para>
     /// </summary>
-    public class ClaimsPrincipalSessionManager : ISessionManager
+    public class ClaimsPrincipalSessionManager : ISessionManager, IHasNameProperty
     {
+        private string _name;
+        public string Name
+        {
+            get => string.IsNullOrEmpty(_name) ? GetType().Name : _name;
+            set => _name = value;
+        }
+
         /// <summary>The claim type that will be examined when determining whether the
         /// current <see cref="ClaimsPrincipal"/> has the claim for a particular
         /// feature name. The expectation is that the value of this claim will
