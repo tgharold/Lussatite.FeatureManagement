@@ -6,6 +6,10 @@ A light implementation for most of the Microsoft.FeatureManagement interfaces.
 - A basic implementation that is simpler to wire up then the full [Microsoft.FeatureManagement](https://github.com/microsoft/FeatureManagement-Dotnet) package.  This can be useful in situations where there's no support for the [AddFeatureManagement()](https://docs.microsoft.com/en-us/dotnet/api/microsoft.featuremanagement.servicecollectionextensions.addfeaturemanagement) method in your application.
 - A few read-only `ISessionManager` implementations.  Note that this is not quite what Microsoft had in mind for `ISessionManager`, but it serves as a good extension point for injecting values into the IFeatureManager result.
 
+## Status
+
+![Lussatite.FeatureManagement NuGet Version](https://img.shields.io/nuget/v/Lussatite.FeatureManagement.svg) ![Build-Test](https://github.com/tgharold/Lussatite.FeatureManagement/actions/workflows/dotnet.yml/badge.svg)
+
 ## Quickstart
 
 1. Take a dependency on `Lussatite.FeatureManagement`.
@@ -71,10 +75,6 @@ Target: .NET Core 3.1 (also compatible with .NET 5+)
 Target: .NET Framework 4.8
 
 - `ConfigurationValueSessionManager`: A read-only `ISessionManager` implementation that uses the .NET Framework static class `ConfigurationManager`.
-
-## Build Status
-
-![Build-Test](https://github.com/tgharold/Lussatite.FeatureManagement/actions/workflows/dotnet.yml/badge.svg)
 
 ## References
 
