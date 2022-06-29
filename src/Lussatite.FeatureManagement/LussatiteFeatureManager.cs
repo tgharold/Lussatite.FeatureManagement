@@ -36,6 +36,48 @@ namespace Lussatite.FeatureManagement
             return await GetFeatureValueFromProviders(feature).ConfigureAwait(false);
         }
 
+        /// <summary>Checks whether a given feature is enabled and returns information about the
+        /// values returned by the registered session managers.  The session manager that first
+        /// gave a definitive answer will be recorded at the top of the response object.</summary>
+        /// <param name="feature">The name of the feature to check.  If the name was not
+        /// registered in the constructor, it will always return false.</param>
+        /// <returns><see cref="WhyEnabledResponse"/></returns>
+        public virtual async Task<WhyEnabledResponse> WhyIsEnabledAsync(string feature)
+        {
+            var response = new WhyEnabledResponse
+            {
+                FeatureName = feature,
+                Enabled = false,
+                SessionManagerName = "n/a",
+            };
+
+            if (!FeatureIsRegistered(feature)) return response;
+
+            bool? enabled = null;
+            foreach (var sessionManager in _sessionManagers)
+            {
+                var result = await sessionManager.GetAsync(feature).ConfigureAwait(false);
+
+                var sessionManagerNameObject = sessionManager as IHasNameProperty;
+                var name = sessionManagerNameObject?.Name ?? sessionManager.GetType().Name;
+                response.SessionManagers.Add(new WhyEnabledSessionManagerResponse
+                {
+                    Name = name,
+                    Enabled = result,
+                });
+
+                if (enabled is null && result.HasValue)
+                {
+                    enabled = result.Value;
+                    response.Enabled = result.Value;
+                    response.SessionManagerName = name;
+                }
+            }
+
+            response.Enabled = enabled == true;
+            return response;
+        }
+
         /// <summary>WARNING: This is not yet implemented (out of scope for current needs).
         /// Checks whether a given feature is enabled within the TContext.</summary>
         /// <param name="feature">The name of the feature to check.  If the name was not

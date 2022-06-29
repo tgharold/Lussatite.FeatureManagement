@@ -4,7 +4,7 @@ using Lussatite.FeatureManagement.SessionManagers;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Lussatite.FeatureManagement.NetCore31.Tests
+namespace Lussatite.FeatureManagement.NetCore31.Tests.FeatureManagers
 {
     public class LussatiteFeatureManagerTests
     {
@@ -61,8 +61,13 @@ namespace Lussatite.FeatureManagement.NetCore31.Tests
                 sessionManagers: new[] { provider },
                 featureNames: TestFeatures.All.Value
                 );
+
             var result = await sut.IsEnabledAsync(featureName);
             Assert.Equal(expected, result);
+
+            var explanationResult = await sut.WhyIsEnabledAsync(featureName);
+            Assert.Equal(featureName, explanationResult.FeatureName);
+            Assert.Equal(expected, explanationResult.Enabled);
         }
     }
 }

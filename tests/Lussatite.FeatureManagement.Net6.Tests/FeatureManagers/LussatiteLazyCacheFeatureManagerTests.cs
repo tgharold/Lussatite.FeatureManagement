@@ -40,7 +40,6 @@ namespace Lussatite.FeatureManagement.Net6.Tests.FeatureManagers
             Assert.NotNull(sut);
         }
 
-
         [Theory]
         [InlineData(false, TestFeatures.NotInAppConfig)]
         [InlineData(false, TestFeatures.NullInAppConfig)]
@@ -62,8 +61,13 @@ namespace Lussatite.FeatureManagement.Net6.Tests.FeatureManagers
                 sessionManagers: new[] { provider },
                 featureNames: TestFeatures.All.Value
                 );
+
             var result = await sut.IsEnabledAsync(featureName);
             Assert.Equal(expected, result);
+
+            var explanationResult = await sut.WhyIsEnabledAsync(featureName);
+            Assert.Equal(featureName, explanationResult.FeatureName);
+            Assert.Equal(expected, explanationResult.Enabled);
         }
     }
 }
