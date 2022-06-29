@@ -9,7 +9,7 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// which returns a static pre-defined (during the constructor) answer for the feature.
     /// This is mostly useful when doing unit/integration testing and not as a production use case.
     /// </summary>
-    public class StaticAnswerSessionManager : ISessionManager
+    public class StaticAnswerSessionManager : ISessionManager, IHasNameProperty
     {
         private readonly IDictionary<string, bool?> _features;
 
@@ -18,6 +18,13 @@ namespace Lussatite.FeatureManagement.SessionManagers
             )
         {
             _features = features;
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => string.IsNullOrEmpty(_name) ? GetType().Name : _name;
+            set => _name = value;
         }
 
         /// <summary>This is a read-only <see cref="ISessionManager"/> so this method does nothing. </summary>

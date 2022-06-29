@@ -10,8 +10,15 @@ namespace Lussatite.FeatureManagement.SessionManagers
     /// <summary>
     /// <para>A read-only or read-write implementation of <see cref="ISessionManager"/>.</para>
     /// </summary>
-    public class SqlSessionManager : ILussatiteSessionManager
+    public class SqlSessionManager : ILussatiteSessionManager, IHasNameProperty
     {
+        private string _name;
+        public string Name
+        {
+            get => string.IsNullOrEmpty(_name) ? GetType().Name : _name;
+            set => _name = value;
+        }
+
         public SqlSessionManagerSettings Settings { get; }
 
         public SqlSessionManager(
