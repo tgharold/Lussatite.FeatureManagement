@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+## 1.6.4 - 2026-10-01
+
 ### Fixed
 
 - Each package now places its README at the package root by name. The old `PackagePath` could leave nuget.org showing a missing-README warning.
