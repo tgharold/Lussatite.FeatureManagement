@@ -31,7 +31,7 @@
   <ItemGroup>
     <None Update="README.md">
       <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath>README.md</PackagePath>
     </None>
   </ItemGroup>
 
