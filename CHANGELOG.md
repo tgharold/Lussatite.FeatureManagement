@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+## 1.6.5 - 2026-10-02
+
+### Security
+
+- The SqlClient package now depends on `System.Data.SqlClient` 4.8.6, up from 4.8.3. This picks up fixes for an information disclosure issue and a security feature bypass. If your project pins an older `System.Data.SqlClient`, raise the pin to 4.8.6 or later to avoid a package downgrade error (NU1605, or NU1109 if you use Central Package Management).
+
 ## 1.6.4 - 2026-10-01
 
 ### Fixed
