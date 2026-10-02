@@ -6,9 +6,9 @@ on:
 
 name: Create Release on Git Tag
 
-# Needed to create the GitHub release and attach assets.
+# Default to read-only. Each job below grants what it needs.
 permissions:
-  contents: write
+  contents: read
 
 env:
   CONFIG: Release
