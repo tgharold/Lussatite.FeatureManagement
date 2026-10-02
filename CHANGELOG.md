@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+### Security
+
+- `Lussatite.FeatureManagement.SessionManagers.SqlClient` now depends on `System.Data.SqlClient` 4.8.6, up from 4.8.3. This picks up fixes for an information disclosure issue (fixed in 4.8.5) and a security feature bypass (fixed in 4.8.6).
+
 ## 1.6.4 - 2026-10-01
 
 ### Fixed
